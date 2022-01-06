@@ -5,9 +5,9 @@ let obstacles1;
 let obstacles2;
 let obstacles3;
 let items;
-
+let stat;
 function startAnimation() {
-  player = new Components(80, 578, "player", "red");
+  player = new Components(80, 400, "player", "red");
   opponents1 = new Components(200, 100, "opponents", "blue");
   opponents2 = new Components(500, 400, "opponents", "blue");
   obstacles1 = new Components(280, 260, "obstacles", "black", 400, 20);
@@ -40,10 +40,13 @@ function updateAnimationArea() {
   obstacles1.update();
   obstacles2.update();
   obstacles3.update();
+  stat = collisionDetection(player, obstacles3);
+
 }
 
 //handle click
 function handleClick(event) {
+ // player.status = collisionDetection(player, obstacles3);
   if (event.keyCode == "37") {
     player.moveLeft();
   } else if (event.keyCode == "39") {
@@ -53,4 +56,35 @@ function handleClick(event) {
   } else if (event.keyCode == "40") {
     player.moveBottom();
   }
+}
+function collisionDetection(player, obstacles) {
+  let playerLeft = player.x - player.r;
+  let playerTop = player.y - player.r;
+  let playerRight = player.x + player.r;
+  let playerBtm = player.y + player.r;
+  let obstacleLeft = obstacles.x;
+  let obstacleTop = obstacles.y;
+  let obstacleRight = obstacles.x + obstacles.width;
+  let obstacleBtm = obstacles.y + obstacles.height;
+  let collision = true;
+
+  if (
+    playerBtm < obstacleTop ||
+    playerTop > obstacleBtm ||
+    playerRight < obstacleLeft ||
+    playerLeft > obstacleRight
+  ) {
+    collision = false;
+  }
+  return collision;
+  // if (playerBtm < obstacleTop) {
+  //   collision = 1; //btn
+  // } else if (playerTop > obstacleBtm) {
+  //   collision = 2; //top
+  // } else if (playerRight < obstacleLeft) {
+  //   collision = 3; //right
+  // } else if (playerLeft > obstacleRight) {
+  //   collisionLeft = 4;
+  // }
+  // return collision;
 }

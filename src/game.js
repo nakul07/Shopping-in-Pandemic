@@ -1,4 +1,4 @@
-function Components(x, y, type, color, width , height) {
+function Components(x, y, type, color, width, height) {
   this.type = type;
   this.color = color;
   this.height = height;
@@ -8,6 +8,8 @@ function Components(x, y, type, color, width , height) {
   this.r = 20;
   this.dx = 3;
   this.dy = 3;
+  this.collided = false;
+  //update components
   this.update = function () {
     ctx = animationArea.context;
     ctx.fillStyle = this.color;
@@ -30,24 +32,49 @@ function Components(x, y, type, color, width , height) {
       ctx.fill();
     }
   };
+
+  //move left
   this.moveLeft = function () {
-    if (this.x > this.r+3) {
-      this.x -= this.dx;
+    if (this.collided == false) {
+      //this.status = collisionDetection(player, obstacles3);
+      if (this.x > this.r + 3 && !stat) {
+        this.x -= this.dx;
+      } else {
+        this.collided = true;
+      }
+    } else {
+      
+      stat = false;
+      //this.collided = false;
+      console.log(this.collided);
     }
   };
+
+  //move right
   this.moveRight = function () {
-    if (this.x < animationArea.canvas.width - (this.r+3)) {
-      this.x += this.dx;
+    if (this.collided == false) {
+      // this.status = collisionDetection(player, obstacles3);
+      if (this.x < animationArea.canvas.width - (this.r + 3) && !stat) {
+        this.x += this.dx;
+      } else {
+        this.collided = true;
+      }
+    } else {
+      this.collided = false;
+      stat = false;
     }
   };
+
+  //move top
   this.moveTop = function () {
-    if (this.y > this.r+3) {
+    if (this.y > this.r + 3) {
       this.y -= this.dy;
-     
     }
   };
+
+  //move bottom
   this.moveBottom = function () {
-    if (this.y < animationArea.canvas.height - (this.r+3)) {
+    if (this.y < animationArea.canvas.height - (this.r + 3)) {
       this.y += this.dy;
     }
   };
