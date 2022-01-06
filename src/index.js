@@ -35,3 +35,15 @@ function updateAnimationArea() {
 
 
 //handle click 
+function handleClick(event){
+  if (event.keyCode == "37") {
+    player.moveLeft();
+  } else if (event.keyCode == "39") {
+    player.moveRight();
+  }else if (event.keyCode == "38"){
+    player.moveTop();
+  }
+  else if (event.keyCode == "40"){
+    player.moveBottom();
+  }
+}

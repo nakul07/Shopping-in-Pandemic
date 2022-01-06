@@ -5,8 +5,8 @@ function Components(x, y, type, color) {
   this.x = x;
   this.y = y;
   this.r = 20;
-  this.dx = 0;
-  this.dy = 0;
+  this.dx = 2;
+  this.dy = 2;
   this.update = function () {
     ctx = animationArea.context;
     ctx.fillStyle = this.color;
@@ -29,4 +29,17 @@ function Components(x, y, type, color) {
       ctx.fill();
     }
   };
+  this.moveLeft = function(){
+    
+    this.x -= this.dx;
+  }
+  this.moveRight = function(){
+    this.x += this.dx;
+  }
+  this.moveTop = function(){
+    this.y -= this.dy;
+  }
+  this.moveBottom = function(){
+    this.y += this.dy;
+  }
 }
