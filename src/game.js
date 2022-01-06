@@ -1,12 +1,13 @@
-function Components(x, y, type, color) {
+function Components(x, y, type, color, width , height) {
   this.type = type;
   this.color = color;
-  this.height = 500;
+  this.height = height;
+  this.width = width;
   this.x = x;
   this.y = y;
   this.r = 20;
-  this.dx = 2;
-  this.dy = 2;
+  this.dx = 3;
+  this.dy = 3;
   this.update = function () {
     ctx = animationArea.context;
     ctx.fillStyle = this.color;
@@ -21,7 +22,7 @@ function Components(x, y, type, color) {
       ctx.stroke();
       ctx.fill();
     } else if (this.type == "obstacles") {
-      ctx.fillRect(this.x, this.y, 20, this.height);
+      ctx.fillRect(this.x, this.y, this.width, this.height);
     } else if (this.type == "items") {
       ctx.beginPath();
       ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI);
@@ -29,17 +30,25 @@ function Components(x, y, type, color) {
       ctx.fill();
     }
   };
-  this.moveLeft = function(){
-    
-    this.x -= this.dx;
-  }
-  this.moveRight = function(){
-    this.x += this.dx;
-  }
-  this.moveTop = function(){
-    this.y -= this.dy;
-  }
-  this.moveBottom = function(){
-    this.y += this.dy;
-  }
+  this.moveLeft = function () {
+    if (this.x > this.r+3) {
+      this.x -= this.dx;
+    }
+  };
+  this.moveRight = function () {
+    if (this.x < animationArea.canvas.width - (this.r+3)) {
+      this.x += this.dx;
+    }
+  };
+  this.moveTop = function () {
+    if (this.y > this.r+3) {
+      this.y -= this.dy;
+     
+    }
+  };
+  this.moveBottom = function () {
+    if (this.y < animationArea.canvas.height - (this.r+3)) {
+      this.y += this.dy;
+    }
+  };
 }
