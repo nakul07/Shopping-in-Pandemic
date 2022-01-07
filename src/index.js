@@ -40,8 +40,8 @@ function updateAnimationArea() {
   obstacles1.update();
   obstacles2.update();
   obstacles3.update();
-  opponents1.moveOpponents();
-  opponents2.moveOpponents();
+  opponents1.moveOpponentsXaxis();
+  opponents2.moveOpponentsYaxis();
   stat = collisionDetection(player, obstacles3);
 
 }

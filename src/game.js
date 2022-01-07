@@ -9,8 +9,12 @@ function Components(x, y, type, color, width, height) {
   this.dx = 3;
   this.dy = 3;
   this.collided = false;
-  this.position = 0;
+  this.position = this.x;
   this.speed = 1;
+  this.leftPos = 100;
+  this.rightPos = 600;
+  this.topPos = 400;
+  this.btmPos = 550;
   //update components
   this.update = function () {
     ctx = animationArea.context;
@@ -76,14 +80,25 @@ function Components(x, y, type, color, width, height) {
     }
   };// ball.style.top = position + "px";
 
-  this.moveOpponents = function () {
-    if (this.position >=  600) {
-      this.gravity = -this.gravity;
-    } else if (this.position == 0) {
-      this.gravity = 1;
+  this.moveOpponentsXaxis = function () {
+    if (this.position >=  this.rightPos) {
+      this.speed = -this.speed;
+    } else if (this.position == this.leftPos) {
+      this.speed = 1;
     }
 
-    this.position = this.position + this.gravity;
+    this.position = this.position + this.speed;
     this.x = this.position;
+  };
+  this.moveOpponentsYaxis = function () {
+    if (this.position >=  this.btmPos) {
+      this.speed = -this.speed;
+    } else if (this.position == this.topPos) {
+      this.speed = 1;
+    }
+
+    this.position = this.position + this.speed;
+    this.y = this.position;
+  //  console.log(this.position);
   };
 }
