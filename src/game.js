@@ -32,7 +32,7 @@ function Components(x, y, type, color, width, height) {
       ctx.fillRect(this.x, this.y, this.width, this.height);
     } else if (this.type == "items") {
       ctx.beginPath();
-      ctx.arc(this.x, this.y, 5, 0, 2 * Math.PI);
+      ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI);
       ctx.stroke();
       ctx.fill();
     }
@@ -80,7 +80,7 @@ function Components(x, y, type, color, width, height) {
   }; // ball.style.top = position + "px";
 
   this.moveOpponentsXaxis = function () {
-    if (!collisionDetection(player, opponents1)) {
+    if (!collisionDetection(player, opponents[0])) {
       if (this.position >= this.rightPos) {
         this.speed = -this.speed;
       } else if (this.position == this.leftPos) {
@@ -92,7 +92,7 @@ function Components(x, y, type, color, width, height) {
     }
   };
   this.moveOpponentsYaxis = function () {
-    if (!collisionDetection(player, opponents2)) {
+    if (!collisionDetection(player, opponents[1])) {
       if (this.position >= this.btmPos) {
         this.speed = -this.speed;
       } else if (this.position == this.topPos) {
@@ -102,7 +102,6 @@ function Components(x, y, type, color, width, height) {
       this.position = this.position + this.speed;
       this.y = this.position;
     }
-    //  console.log(this.position);
   };
   this.follow = function () {
     // if (calcDist(player.x, player.y, this.x, this.y) < 80) {
@@ -114,9 +113,6 @@ function Components(x, y, type, color, width, height) {
     //   this.x = player.x -60;
     //   this.y = player.y -60
     // }
-
-
-
     setInterval(() => {
       if (calcDist(player.x, player.y, this.x, this.y) < 80) {
         this.x = player.x - 50;

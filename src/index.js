@@ -1,22 +1,16 @@
 let player;
-let opponents1;
-let opponents2;
-let obstacles1;
-let obstacles2;
-let obstacles3;
+let opponents = [];
 let follower;
+let obstacles = [];
 let items = [];
 let stat;
 let health = 5;
 let itemsLeft = 5;
 function startAnimation() {
   player = new Components(70, 575, "player", "red", 50, 50);
-  opponents1 = new Components(200, 100, "opponents", "blue", 50, 50);
-  opponents2 = new Components(500, 400, "opponents", "blue", 50, 50);
+  opponents = getOpponents(2);
   follower = new Components(300, 400, "opponents", "blue", 50, 50);
-  obstacles1 = new Components(280, 260, "obstacles", "black", 400, 20);
-  obstacles2 = new Components(800, 200, "obstacles", "black", 20, 400);
-  obstacles3 = new Components(150, 0, "obstacles", "black", 20, 400);
+  obstacles = getObstacles(3);
   items = getItems(itemsLeft);
   animationArea.start();
 }
@@ -39,25 +33,35 @@ let animationArea = {
 };
 
 function updateAnimationArea() {
-  animationArea.clear();
-  player.update();
-  opponents1.update();
-  opponents2.update();
-  obstacles1.update();
-  obstacles2.update();
-  obstacles3.update();
+  animationArea.clear(); //clears everything on canvas
+  player.update(); // updates the player
+
+  //updates the opponents
+  opponents.forEach((Components) => {
+    Components.update();
+  });
+
+  //updates the obstacles
+  obstacles.forEach((Components) => {
+    Components.update();
+  });
+
   follower.update();
-  opponents1.moveOpponentsXaxis();
-  opponents2.moveOpponentsYaxis();
   follower.follow();
-  healthCalculator();
-  textDisplay(880, 30, "Health", health);
-  textDisplay(700,30,"Items Left",itemsLeft)
+
+  //opponent movement
+  oppMovement();
+
+  healthCalculator(); //calculates health
+  textDisplay(880, 30, "Health", health); //displays health
+  textDisplay(700, 30, "Items Left", itemsLeft); //displays number of remaining items
+
+  //updates the items
   items.forEach((Components) => {
     Components.update();
   });
-  collectItems();
-  stat = collisionDetection(player, obstacles3);
+
+  collectItems(); //collects the items
 }
 
 //handle click
@@ -79,11 +83,13 @@ function handleClick(event) {
 }
 
 function healthCalculator() {
-  if (collisionDetection(player, opponents1)) {
-    health--;
-    player.x = 70;
-    player.y = 575;
-    //console.log(health);
+  for (let i = 0; i < opponents.length; i++) {
+    if (collisionDetection(player, opponents[i])) {
+      health--;
+      player.x = 70;
+      player.y = 575;
+      //console.log(health);
+    }
   }
   if (health == 0) {
     //console.log("game over");
@@ -91,13 +97,17 @@ function healthCalculator() {
   }
 }
 
-
 function collectItems() {
   for (let i = 0; i < items.length; i++) {
     if (calcDist(player.x, player.y, items[i].x, items[i].y) < 50) {
       destruct(i);
-      itemsLeft --;
-     // console.log(calcDist(player.x, player.y, items[i].x, items[i].y));
+      itemsLeft--;
+      // console.log(calcDist(player.x, player.y, items[i].x, items[i].y));
     }
   }
+}
+
+function oppMovement() {
+  opponents[0].moveOpponentsXaxis();
+  opponents[1].moveOpponentsYaxis();
 }
