@@ -2,6 +2,7 @@ let player;
 let follower;
 let entryDoor;
 let exitDoor;
+let floor;
 let obstacles = [];
 let items = [];
 let opponents = [];
@@ -9,9 +10,10 @@ let stat;
 let health = 5;
 let itemsLeft = 5;
 function startAnimation() {
+  floor = new Doors(0, 0, "assets/floor.jpg", 1000, 600);
   entryDoor = new Doors(45, 550, "assets/entry.png", 100, 60);
   exitDoor = new Doors(880, 540, "assets/exit.png", 100, 80);
-  player = new Components(70, 575, "player", "red", 50, 50);
+  player = new Components(70, 550, "player", "red", 50, 50);
   follower = new Components(300, 400, "opponents", "blue", 50, 50);
   opponents = getOpponents(2);
   obstacles = getObstacles(3);
@@ -38,6 +40,7 @@ let animationArea = {
 
 function updateAnimationArea() {
   animationArea.clear(); //clears everything on canvas
+  floor.update();
   entryDoor.update();
   exitDoor.update();
   player.update(); // updates the player
@@ -59,8 +62,8 @@ function updateAnimationArea() {
   oppMovement();
 
   healthCalculator(); //calculates health
-  textDisplay(880, 30, "Health", health); //displays health
-  textDisplay(700, 30, "Items Left", itemsLeft); //displays number of remaining items
+  textDisplay(880, 30, "Health", health, "black"); //displays health
+  textDisplay(695, 30, "Items Left", itemsLeft, "black"); //displays number of remaining items
 
   //updates the items
   items.forEach((Components) => {
@@ -120,7 +123,7 @@ function levelComplete() {
     if (itemsLeft == 0) {
       levelCompleted();
     } else {
-      console.log("missed sth");
+      textDisplay(850, 475, "Items Left ", itemsLeft, "red");
     }
   }
 }

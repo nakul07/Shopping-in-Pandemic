@@ -94,7 +94,8 @@ const destruct = (Components) => {
   items = updatedItems;
 };
 
-function textDisplay(x, y, text, topic) {
+function textDisplay(x, y, text, topic,color) {
+  animationArea.context.fillStyle = color;
   animationArea.context.font = "20px Comic Sans MS";
   animationArea.context.fillText(text + " : " + topic, x, y);
 }
