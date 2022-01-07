@@ -90,10 +90,10 @@ function handleClick(event) {
 //calculates health
 function healthCalculator() {
   for (let i = 0; i < opponents.length; i++) {
-    if (collisionDetection(player, opponents[i])) {
+    if (collisionDetection(player, opponents[i]) || collisionDetection(player, follower)) {
       health--;
       player.x = 70;
-      player.y = 575;
+      player.y = 550; //reset player's position
     }
   }
   if (health == 0) {

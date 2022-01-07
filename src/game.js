@@ -17,7 +17,7 @@ function Components(x, y, type, color, width, height) {
   this.btmPos = 550;
   this.img = document.createElement("img");
   this.isFollow = false;
-  this.followerSpeed = 0.3;
+  this.fSpeed = 1;
 
   //update components
   this.update = function () {
@@ -124,15 +124,15 @@ function Components(x, y, type, color, width, height) {
       isPlayerBottom = true;
     }
 
-    if (calcDist(player.x, player.y, this.x, this.y) < 200) {
+    if (calcDist(player.x, player.y, this.x, this.y) < 300) {
       if (isPlayerRight) {
-        this.x += this.speed;
+        this.x += this.fSpeed;
       } else if (isPlayerLeft) {
-        this.x -= this.speed;
+        this.x -= this.fSpeed;
       } else if (isPlayerTop) {
-        this.y -= this.speed;
+        this.y -= this.fSpeed;
       } else if (isPlayerBottom) {
-        this.y += this.speed;
+        this.y += this.fSpeed;
       }
     }
   };
