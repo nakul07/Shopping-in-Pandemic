@@ -13,7 +13,7 @@ function Components(x, y, type, color, width, height) {
   this.speed = 1;
   this.leftPos = 200;
   this.rightPos = 600;
-  this.topPos = 400;
+  this.topPos = 300;
   this.btmPos = 550;
   this.img = document.createElement("img");
   this.isFollow = false;
