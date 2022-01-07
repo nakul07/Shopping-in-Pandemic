@@ -4,12 +4,14 @@ let opponents2;
 let obstacles1;
 let obstacles2;
 let obstacles3;
+let follower;
 let items;
 let stat;
 function startAnimation() {
   player = new Components(70, 575, "player", "red", 50, 50);
   opponents1 = new Components(200, 100, "opponents", "blue", 50, 50);
   opponents2 = new Components(500, 400, "opponents", "blue", 50, 50);
+  follower = new Components(300, 400, "opponents", "blue", 50, 50);
   obstacles1 = new Components(280, 260, "obstacles", "black", 400, 20);
   obstacles2 = new Components(800, 200, "obstacles", "black", 20, 400);
   obstacles3 = new Components(150, 0, "obstacles", "black", 20, 400);
@@ -40,8 +42,10 @@ function updateAnimationArea() {
   obstacles1.update();
   obstacles2.update();
   obstacles3.update();
+  follower.update();
   opponents1.moveOpponentsXaxis();
   opponents2.moveOpponentsYaxis();
+  follower.follow();
   stat = collisionDetection(player, obstacles3);
 }
 
@@ -62,38 +66,4 @@ function handleClick(event) {
     player.moveBottom();
   }
 }
-function collisionDetection(player, obstacles) {
-  let playerLeft = player.x;
-  let playerTop = player.y;
-  let playerRight = player.x + player.width;
-  let playerBtm = player.y + player.height;
-  let obstacleLeft = obstacles.x;
-  let obstacleTop = obstacles.y;
-  // let obstacleLeft;
-  // let obstacleTop;
-  // let obstacleRight;
-  // let obstacleBtm;
-  // if (obstacleType == "wall") {
-  //not needed when image is placed in place of circles
-  let obstacleRight = obstacles.x + obstacles.width;
-  let obstacleBtm = obstacles.y + obstacles.height;
-  // obstacleLeft = obstacles.x;
-  // obstacleTop = obstacles.y;
-  // } else if (obstacleType == "opp") {
-  //   obstacleRight = obstacles.x + obstacles.r;
-  //   obstacleBtm = obstacles.y + obstacles.r;
-  //   obstacleLeft = obstacles.x - obstacles.r;
-  //   obstacleTop = obstacles.y - obstacles.r;
-  // }
-  let collision = true;
 
-  if (
-    playerBtm < obstacleTop ||
-    playerTop > obstacleBtm ||
-    playerRight < obstacleLeft ||
-    playerLeft > obstacleRight
-  ) {
-    collision = false;
-  }
-  return collision;
-}

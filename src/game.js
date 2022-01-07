@@ -10,12 +10,14 @@ function Components(x, y, type, color, width, height) {
   this.dy = 5;
   this.collided = false;
   this.position = this.x;
-  this.speed = 2;
+  this.speed = 1;
   this.leftPos = 200;
   this.rightPos = 600;
   this.topPos = 400;
   this.btmPos = 550;
   this.img = document.createElement("img");
+  this.isFollow = false;
+  this.followerSpeed = 0.3;
   //update components
   this.update = function () {
     ctx = animationArea.context;
@@ -40,7 +42,7 @@ function Components(x, y, type, color, width, height) {
   this.moveLeft = function () {
     if (!stat) {
       //this.status = collisionDetection(player, obstacles3);
-      if (this.x > this.r + 3) {
+      if (this.x > 0) {
         this.x -= this.dx;
       }
     } else {
@@ -54,7 +56,7 @@ function Components(x, y, type, color, width, height) {
   this.moveRight = function () {
     if (!stat) {
       // this.status = collisionDetection(player, obstacles3);
-      if (this.x < animationArea.canvas.width - (this.r + 3)) {
+      if (this.x < animationArea.canvas.width - (this.width + 3)) {
         this.x += this.dx;
       }
     } else {
@@ -65,14 +67,14 @@ function Components(x, y, type, color, width, height) {
 
   //move top
   this.moveTop = function () {
-    if (this.y > this.r + 3) {
+    if (this.y > 0) {
       this.y -= this.dy;
     }
   };
 
   //move bottom
   this.moveBottom = function () {
-    if (this.y < animationArea.canvas.height - (this.r + 3)) {
+    if (this.y < animationArea.canvas.height - (this.height + 3)) {
       this.y += this.dy;
     }
   }; // ball.style.top = position + "px";
@@ -101,5 +103,22 @@ function Components(x, y, type, color, width, height) {
       this.y = this.position;
     }
     //  console.log(this.position);
+  };
+  this.follow = function () {
+    // if (calcDist(player.x, player.y, this.x, this.y) < 80) {
+    //   this.isFollow = true;
+    // } else {
+    //   this.isFollow = false;
+    // }
+    // if(this.isFollow){
+    //   this.x = player.x -60;
+    //   this.y = player.y -60
+    // }
+    setInterval(() => {
+      if (calcDist(player.x, player.y, this.x, this.y) < 80) {
+        this.x = player.x - 50;
+        this.y = player.y - 50;
+      }
+    }, 5000);
   };
 }
