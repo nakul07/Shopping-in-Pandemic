@@ -6,29 +6,26 @@ function Components(x, y, type, color, width, height) {
   this.x = x;
   this.y = y;
   this.r = 20;
-  this.dx = 3;
-  this.dy = 3;
+  this.dx = 5;
+  this.dy = 5;
   this.collided = false;
   this.position = this.x;
-  this.speed = 1;
-  this.leftPos = 100;
+  this.speed = 2;
+  this.leftPos = 200;
   this.rightPos = 600;
   this.topPos = 400;
   this.btmPos = 550;
+  this.img = document.createElement("img");
   //update components
   this.update = function () {
     ctx = animationArea.context;
     ctx.fillStyle = this.color;
     if (this.type == "player") {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-      ctx.stroke();
-      ctx.fill();
+      this.img.src = "assets/player.svg";
+      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     } else if (this.type == "opponents") {
-      ctx.beginPath();
-      ctx.arc(this.x + 100, this.y, this.r, 0, 2 * Math.PI);
-      ctx.stroke();
-      ctx.fill();
+      this.img.src = "assets/buyer1-left.svg";
+      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     } else if (this.type == "obstacles") {
       ctx.fillRect(this.x, this.y, this.width, this.height);
     } else if (this.type == "items") {
@@ -78,27 +75,31 @@ function Components(x, y, type, color, width, height) {
     if (this.y < animationArea.canvas.height - (this.r + 3)) {
       this.y += this.dy;
     }
-  };// ball.style.top = position + "px";
+  }; // ball.style.top = position + "px";
 
   this.moveOpponentsXaxis = function () {
-    if (this.position >=  this.rightPos) {
-      this.speed = -this.speed;
-    } else if (this.position == this.leftPos) {
-      this.speed = 1;
-    }
+    if (!collisionDetection(player, opponents1)) {
+      if (this.position >= this.rightPos) {
+        this.speed = -this.speed;
+      } else if (this.position == this.leftPos) {
+        this.speed = 1;
+      }
 
-    this.position = this.position + this.speed;
-    this.x = this.position;
+      this.position = this.position + this.speed;
+      this.x = this.position;
+    }
   };
   this.moveOpponentsYaxis = function () {
-    if (this.position >=  this.btmPos) {
-      this.speed = -this.speed;
-    } else if (this.position == this.topPos) {
-      this.speed = 1;
-    }
+    if (!collisionDetection(player, opponents2)) {
+      if (this.position >= this.btmPos) {
+        this.speed = -this.speed;
+      } else if (this.position == this.topPos) {
+        this.speed = 1;
+      }
 
-    this.position = this.position + this.speed;
-    this.y = this.position;
-  //  console.log(this.position);
+      this.position = this.position + this.speed;
+      this.y = this.position;
+    }
+    //  console.log(this.position);
   };
 }
