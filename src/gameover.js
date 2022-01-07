@@ -24,7 +24,7 @@ function gameOver() {
   reLoad.style.position = "absolute";
   reLoad.style.height = "60px";
   reLoad.style.width = "50%";
-  reLoad.style.backgroundImage = "url('assets/replay.png')";
+  reLoad.style.backgroundImage = "url('assets/replay1.png')";
   reLoad.style.backgroundPosition = "center";
   reLoad.style.backgroundSize = "cover";
   reLoad.style.bottom = "0px";

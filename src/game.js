@@ -6,8 +6,8 @@ function Components(x, y, type, color, width, height) {
   this.x = x;
   this.y = y;
   this.r = 20;
-  this.dx = 5;
-  this.dy = 5;
+  this.dx = 3;
+  this.dy = 3;
   this.collided = false;
   this.position = this.x;
   this.speed = 1;
@@ -18,6 +18,7 @@ function Components(x, y, type, color, width, height) {
   this.img = document.createElement("img");
   this.isFollow = false;
   this.fSpeed = 1;
+  this.minDistance = 200;
 
   //update components
   this.update = function () {
@@ -42,42 +43,45 @@ function Components(x, y, type, color, width, height) {
 
   //move left
   this.moveLeft = function () {
-    if (!stat) {
-      //this.status = collisionDetection(player, obstacles3);
-      if (this.x > 0) {
+    for (let i = 0; i < obstacles.length; i++) {
+      if (this.x > 0 && collide(player, obstacles[i]) != "right") {
         this.x -= this.dx;
       }
-    } else {
-      stat = false;
-      //this.collided = false;
-      // console.log(this.collided);
+      // console.log(collide(player, obstacles[i]));
     }
   };
 
   //move right
   this.moveRight = function () {
-    if (!stat) {
-      // this.status = collisionDetection(player, obstacles3);
-      if (this.x < animationArea.canvas.width - (this.width + 3)) {
+    for (let i = 0; i < obstacles.length; i++) {
+      if (
+        this.x < animationArea.canvas.width - (this.width + 3) &&
+        collide(player, obstacles[i]) != "left"
+      ) {
         this.x += this.dx;
       }
-    } else {
-      // this.collided = false;
-      stat = false;
+      // console.log(collide(player, obstacles[i]));
     }
   };
 
   //move top
   this.moveTop = function () {
-    if (this.y > 0) {
-      this.y -= this.dy;
+    for (let i = 0; i < obstacles.length; i++) {
+      if (this.y > 0 && collide(player, obstacles[i]) != "bottom") {
+        this.y -= this.dy;
+      }
     }
   };
 
   //move bottom
   this.moveBottom = function () {
-    if (this.y < animationArea.canvas.height - (this.height + 3)) {
-      this.y += this.dy;
+    for (let i = 0; i < obstacles.length; i++) {
+      if (
+        this.y < animationArea.canvas.height - (this.height + 3) &&
+        collide(player, obstacles[i]) != "top"
+      ) {
+        this.y += this.dy;
+      }
     }
   };
 
@@ -124,7 +128,7 @@ function Components(x, y, type, color, width, height) {
       isPlayerBottom = true;
     }
 
-    if (calcDist(player.x, player.y, this.x, this.y) < 300) {
+    if (calcDist(player.x, player.y, this.x, this.y) < this.minDistance) {
       if (isPlayerRight) {
         this.x += this.fSpeed;
       } else if (isPlayerLeft) {
@@ -138,6 +142,7 @@ function Components(x, y, type, color, width, height) {
   };
 }
 
+//for entry , exit and background
 function Doors(x, y, imgSrc, width, height) {
   this.x = x;
   this.y = y;

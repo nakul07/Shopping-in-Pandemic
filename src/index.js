@@ -78,6 +78,7 @@ function updateAnimationArea() {
 function handleClick(event) {
   if (event.keyCode == "37") {
     player.moveLeft();
+    // moveLeft();
   } else if (event.keyCode == "39") {
     player.moveRight();
   } else if (event.keyCode == "38") {
@@ -90,13 +91,17 @@ function handleClick(event) {
 //calculates health
 function healthCalculator() {
   for (let i = 0; i < opponents.length; i++) {
-    if (collisionDetection(player, opponents[i]) || collisionDetection(player, follower)) {
+    if (
+      collisionDetection(player, opponents[i]) ||
+      collisionDetection(player, follower)
+    ) {
       health--;
       player.x = 70;
       player.y = 550; //reset player's position
     }
   }
-  if (health == 0) {
+  if (health <= 0) {
+    health = 0;
     gameOver();
   }
 }
@@ -127,3 +132,12 @@ function levelComplete() {
     }
   }
 }
+
+// function moveLeft() {
+//   for (let i = 0; i < obstacles.length; i++) {
+//     if (player.x > 0 && collide(player, obstacles[i]) != "right") {
+//       player.x -= player.dx;
+//     }
+//     //if()
+//   }
+// }

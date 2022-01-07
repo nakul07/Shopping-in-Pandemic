@@ -17,10 +17,8 @@ function collisionDetection(player, obstacles) {
   let playerBtm = player.y + player.height;
   let obstacleLeft = obstacles.x;
   let obstacleTop = obstacles.y;
-
   let obstacleRight = obstacles.x + obstacles.width;
   let obstacleBtm = obstacles.y + obstacles.height;
-
   let collision = true;
 
   if (
@@ -94,8 +92,29 @@ const destruct = (Components) => {
   items = updatedItems;
 };
 
-function textDisplay(x, y, text, topic,color) {
+//display texts
+function textDisplay(x, y, text, topic, color) {
   animationArea.context.fillStyle = color;
   animationArea.context.font = "20px Comic Sans MS";
   animationArea.context.fillText(text + " : " + topic, x, y);
+}
+
+//checks collision along with directions
+function collide(player, obstacles) {
+  let dx = player.x + player.width / 2 - (obstacles.x + obstacles.width / 2);
+  let dy = player.y + player.height / 2 - (obstacles.y + obstacles.height / 2);
+  let width = (player.width + obstacles.width) / 2;
+  let height = (player.height + obstacles.height) / 2;
+  let crossWidth = width * dy;
+  let crossHeight = height * dx;
+  let collision = "none";
+  //
+  if (Math.abs(dx) <= width && Math.abs(dy) <= height) {
+    if (crossWidth > crossHeight) {
+      collision = crossWidth > -crossHeight ? "bottom" : "left";
+    } else {
+      collision = crossWidth > -crossHeight ? "right" : "top";
+    }
+  }
+  return collision;
 }
