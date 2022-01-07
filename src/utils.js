@@ -4,6 +4,12 @@ function calcDist(x1, y1, x2, y2) {
   let distance = Math.sqrt(dx * dx + dy * dy);
   return distance;
 }
+
+function getRandom(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
+//collision detection
 function collisionDetection(player, obstacles) {
   let playerLeft = player.x;
   let playerTop = player.y;
@@ -11,22 +17,10 @@ function collisionDetection(player, obstacles) {
   let playerBtm = player.y + player.height;
   let obstacleLeft = obstacles.x;
   let obstacleTop = obstacles.y;
-  // let obstacleLeft;
-  // let obstacleTop;
-  // let obstacleRight;
-  // let obstacleBtm;
-  // if (obstacleType == "wall") {
-  //not needed when image is placed in place of circles
+
   let obstacleRight = obstacles.x + obstacles.width;
   let obstacleBtm = obstacles.y + obstacles.height;
-  // obstacleLeft = obstacles.x;
-  // obstacleTop = obstacles.y;
-  // } else if (obstacleType == "opp") {
-  //   obstacleRight = obstacles.x + obstacles.r;
-  //   obstacleBtm = obstacles.y + obstacles.r;
-  //   obstacleLeft = obstacles.x - obstacles.r;
-  //   obstacleTop = obstacles.y - obstacles.r;
-  // }
+
   let collision = true;
 
   if (
@@ -38,4 +32,28 @@ function collisionDetection(player, obstacles) {
     collision = false;
   }
   return collision;
+}
+
+//get items
+function getItems(noOfItems) {
+  let newItems = [];
+
+  for (let i = 0; i < noOfItems; i++) {
+    newItems.push(
+      new Components(getRandom(10, 880), getRandom(10, 580), "items", "blue")
+    );
+  }
+
+  return newItems;
+}
+
+//destruct the items
+const destruct = (Components) => {
+  const updatedItems = items.filter((items, index) => Components !== index);
+  items = updatedItems;
+};
+
+function textDisplay(x, y, text, topic) {
+  animationArea.context.font = "20px Comic Sans MS";
+  animationArea.context.fillText(text + " : " + topic, x, y);
 }
