@@ -9,6 +9,8 @@ function Components(x, y, type, color, width, height) {
   this.dx = 3;
   this.dy = 3;
   this.collided = false;
+  this.position = 0;
+  this.speed = 1;
   //update components
   this.update = function () {
     ctx = animationArea.context;
@@ -35,32 +37,27 @@ function Components(x, y, type, color, width, height) {
 
   //move left
   this.moveLeft = function () {
-    if (this.collided == false) {
+    if (!stat) {
       //this.status = collisionDetection(player, obstacles3);
-      if (this.x > this.r + 3 && !stat) {
+      if (this.x > this.r + 3) {
         this.x -= this.dx;
-      } else {
-        this.collided = true;
       }
     } else {
-      
       stat = false;
       //this.collided = false;
-      console.log(this.collided);
+      // console.log(this.collided);
     }
   };
 
   //move right
   this.moveRight = function () {
-    if (this.collided == false) {
+    if (!stat) {
       // this.status = collisionDetection(player, obstacles3);
-      if (this.x < animationArea.canvas.width - (this.r + 3) && !stat) {
+      if (this.x < animationArea.canvas.width - (this.r + 3)) {
         this.x += this.dx;
-      } else {
-        this.collided = true;
       }
     } else {
-      this.collided = false;
+      // this.collided = false;
       stat = false;
     }
   };
@@ -77,5 +74,16 @@ function Components(x, y, type, color, width, height) {
     if (this.y < animationArea.canvas.height - (this.r + 3)) {
       this.y += this.dy;
     }
+  };// ball.style.top = position + "px";
+
+  this.moveOpponents = function () {
+    if (this.position >=  600) {
+      this.gravity = -this.gravity;
+    } else if (this.position == 0) {
+      this.gravity = 1;
+    }
+
+    this.position = this.position + this.gravity;
+    this.x = this.position;
   };
 }

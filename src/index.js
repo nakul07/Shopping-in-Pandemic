@@ -40,6 +40,8 @@ function updateAnimationArea() {
   obstacles1.update();
   obstacles2.update();
   obstacles3.update();
+  opponents1.moveOpponents();
+  opponents2.moveOpponents();
   stat = collisionDetection(player, obstacles3);
 
 }
@@ -77,14 +79,5 @@ function collisionDetection(player, obstacles) {
     collision = false;
   }
   return collision;
-  // if (playerBtm < obstacleTop) {
-  //   collision = 1; //btn
-  // } else if (playerTop > obstacleBtm) {
-  //   collision = 2; //top
-  // } else if (playerRight < obstacleLeft) {
-  //   collision = 3; //right
-  // } else if (playerLeft > obstacleRight) {
-  //   collisionLeft = 4;
-  // }
-  // return collision;
+  
 }
