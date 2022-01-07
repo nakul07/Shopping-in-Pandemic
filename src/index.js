@@ -7,6 +7,7 @@ let obstacles3;
 let follower;
 let items;
 let stat;
+let health = 5;
 function startAnimation() {
   player = new Components(70, 575, "player", "red", 50, 50);
   opponents1 = new Components(200, 100, "opponents", "blue", 50, 50);
@@ -46,6 +47,8 @@ function updateAnimationArea() {
   opponents1.moveOpponentsXaxis();
   opponents2.moveOpponentsYaxis();
   follower.follow();
+  healthCalculator();
+  healthDisplay(880, 30);
   stat = collisionDetection(player, obstacles3);
 }
 
@@ -67,3 +70,19 @@ function handleClick(event) {
   }
 }
 
+function healthCalculator(){
+  if(collisionDetection(player, opponents1)){
+    health --;
+    player.x = 70;
+    player.y = 575;
+    //console.log(health);
+  }
+  if(health == 0){
+    //console.log("game over");
+
+  }
+}
+function healthDisplay(x, y) {
+  animationArea.context.font = "20px Comic Sans MS";
+  animationArea.context.fillText("Health: " + health, x, y);
+}
