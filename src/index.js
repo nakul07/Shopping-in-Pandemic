@@ -104,7 +104,7 @@ function healthCalculator() {
 //collects items
 function collectItems() {
   for (let i = 0; i < items.length; i++) {
-    if (calcDist(player.x, player.y, items[i].x, items[i].y) < 50) {
+    if (calcDist(player.x, player.y, items[i].x, items[i].y) < 40) {
       destruct(i);
       itemsLeft--;
     }

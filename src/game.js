@@ -18,6 +18,7 @@ function Components(x, y, type, color, width, height) {
   this.img = document.createElement("img");
   this.isFollow = false;
   this.followerSpeed = 0.3;
+
   //update components
   this.update = function () {
     ctx = animationArea.context;
@@ -78,7 +79,7 @@ function Components(x, y, type, color, width, height) {
     if (this.y < animationArea.canvas.height - (this.height + 3)) {
       this.y += this.dy;
     }
-  }; // ball.style.top = position + "px";
+  };
 
   this.moveOpponentsXaxis = function () {
     if (!collisionDetection(player, opponents[0])) {
@@ -104,22 +105,36 @@ function Components(x, y, type, color, width, height) {
       this.y = this.position;
     }
   };
+
   this.follow = function () {
-    // if (calcDist(player.x, player.y, this.x, this.y) < 80) {
-    //   this.isFollow = true;
-    // } else {
-    //   this.isFollow = false;
-    // }
-    // if(this.isFollow){
-    //   this.x = player.x -60;
-    //   this.y = player.y -60
-    // }
-    setInterval(() => {
-      if (calcDist(player.x, player.y, this.x, this.y) < 80) {
-        this.x = player.x - 50;
-        this.y = player.y - 50;
+    let isPlayerLeft = false;
+    let isPlayerRight = false;
+    let isPlayerTop = false;
+    let isPlayerBottom = false;
+
+    if (player.x > this.x) {
+      isPlayerRight = true;
+    } else if (player.x < this.x) {
+      isPlayerLeft = true;
+    }
+
+    if (player.y < this.y) {
+      isPlayerTop = true;
+    } else if (player.y > this.y) {
+      isPlayerBottom = true;
+    }
+
+    if (calcDist(player.x, player.y, this.x, this.y) < 200) {
+      if (isPlayerRight) {
+        this.x += this.speed;
+      } else if (isPlayerLeft) {
+        this.x -= this.speed;
+      } else if (isPlayerTop) {
+        this.y -= this.speed;
+      } else if (isPlayerBottom) {
+        this.y += this.speed;
       }
-    }, 5000);
+    }
   };
 }
 
