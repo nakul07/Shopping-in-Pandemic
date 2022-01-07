@@ -1,15 +1,19 @@
 let player;
-let opponents = [];
 let follower;
+let entryDoor;
+let exitDoor;
 let obstacles = [];
 let items = [];
+let opponents = [];
 let stat;
 let health = 5;
 let itemsLeft = 5;
 function startAnimation() {
+  entryDoor = new Doors(45, 550, "assets/entry.png", 100, 60);
+  exitDoor = new Doors(880, 540, "assets/exit.png", 100, 80);
   player = new Components(70, 575, "player", "red", 50, 50);
-  opponents = getOpponents(2);
   follower = new Components(300, 400, "opponents", "blue", 50, 50);
+  opponents = getOpponents(2);
   obstacles = getObstacles(3);
   items = getItems(itemsLeft);
   animationArea.start();
@@ -34,6 +38,8 @@ let animationArea = {
 
 function updateAnimationArea() {
   animationArea.clear(); //clears everything on canvas
+  entryDoor.update();
+  exitDoor.update();
   player.update(); // updates the player
 
   //updates the opponents
@@ -62,16 +68,12 @@ function updateAnimationArea() {
   });
 
   collectItems(); //collects the items
+  levelComplete();
 }
 
 //handle click
 function handleClick(event) {
-  // player.status = collisionDetection(player, obstacles3);
   if (event.keyCode == "37") {
-    // } else if(obstacleType == "opp"){
-    //   obstacleRight = obstacles.x + obstacles.r;
-    //   obstacleBtm = obstacles.y + obstacles.r;
-    // }
     player.moveLeft();
   } else if (event.keyCode == "39") {
     player.moveRight();
@@ -82,32 +84,43 @@ function handleClick(event) {
   }
 }
 
+//calculates health
 function healthCalculator() {
   for (let i = 0; i < opponents.length; i++) {
     if (collisionDetection(player, opponents[i])) {
       health--;
       player.x = 70;
       player.y = 575;
-      //console.log(health);
     }
   }
   if (health == 0) {
-    //console.log("game over");
     gameOver();
   }
 }
 
+//collects items
 function collectItems() {
   for (let i = 0; i < items.length; i++) {
     if (calcDist(player.x, player.y, items[i].x, items[i].y) < 50) {
       destruct(i);
       itemsLeft--;
-      // console.log(calcDist(player.x, player.y, items[i].x, items[i].y));
     }
   }
 }
 
+//moves the opponents
 function oppMovement() {
   opponents[0].moveOpponentsXaxis();
   opponents[1].moveOpponentsYaxis();
+}
+
+//detects completion of level
+function levelComplete() {
+  if (collisionDetection(player, exitDoor)) {
+    if (itemsLeft == 0) {
+      levelCompleted();
+    } else {
+      console.log("missed sth");
+    }
+  }
 }

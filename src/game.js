@@ -25,6 +25,7 @@ function Components(x, y, type, color, width, height) {
     if (this.type == "player") {
       this.img.src = "assets/player.svg";
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+      // console.log(this.x + "annnd"+ this.y);
     } else if (this.type == "opponents") {
       this.img.src = "assets/buyer1-left.svg";
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -119,5 +120,19 @@ function Components(x, y, type, color, width, height) {
         this.y = player.y - 50;
       }
     }, 5000);
+  };
+}
+
+function Doors(x, y, imgSrc, width, height) {
+  this.x = x;
+  this.y = y;
+  this.width = width;
+  this.height = height;
+  this.imgSrc = imgSrc;
+  this.img = document.createElement("img");
+  this.update = function () {
+    ctx = animationArea.context;
+    this.img.src = this.imgSrc;
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   };
 }
