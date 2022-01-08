@@ -30,8 +30,9 @@ let animationArea = {
     this.context = this.canvas.getContext("2d");
     this.container.append(this.canvas);
     document.body.addEventListener("keydown", handleClick);
+    document.body.addEventListener("keyup", handleClick1);
 
-    this.interval = setInterval(updateAnimationArea, 16);
+    this.interval = setInterval(updateAnimationArea, 16.6);
   },
   clear: function () {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -78,6 +79,7 @@ function updateAnimationArea() {
 function handleClick(event) {
   if (event.keyCode == "37") {
     player.moveLeft();
+    //player.isMoving = true;
     // moveLeft();
   } else if (event.keyCode == "39") {
     player.moveRight();
@@ -87,7 +89,21 @@ function handleClick(event) {
     player.moveBottom();
   }
 }
+function handleClick1(event) {
+  if (event.keyCode == "38") {
+    player.reset();
 
+    //player.isMoving = true;
+    // moveLeft();
+  }
+  // } else if (event.keyCode == "39") {
+  //   player.moveRight();
+  // } else if (event.keyCode == "38") {
+  //   player.moveTop();
+  // } else if (event.keyCode == "40") {
+  //   player.moveBottom();
+  // }
+}
 //calculates health
 function healthCalculator() {
   for (let i = 0; i < opponents.length; i++) {

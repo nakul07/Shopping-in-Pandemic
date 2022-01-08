@@ -15,7 +15,7 @@ function gameOver() {
   popUp.style.position = "absolute";
   popUp.style.top = "100px";
   popUp.style.marginLeft = "35%";
-  popUp.style.backgroundColor = `rgba(255, 255, 255, 0.2)`;
+  popUp.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
   popUp.style.borderRadius = "15px";
   animationArea.container.append(popUp);
 

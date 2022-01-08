@@ -6,8 +6,8 @@ function Components(x, y, type, color, width, height) {
   this.x = x;
   this.y = y;
   this.r = 20;
-  this.dx = 3;
-  this.dy = 3;
+  this.dx = 4;
+  this.dy = 4;
   this.collided = false;
   this.position = this.x;
   this.speed = 1;
@@ -15,18 +15,31 @@ function Components(x, y, type, color, width, height) {
   this.rightPos = 600;
   this.topPos = 300;
   this.btmPos = 550;
+  this.imgIndex = 1;
+  this.playerImages = ["player-left.svg", "player-right.svg"];
   this.img = document.createElement("img");
+  this.interval = setInterval(() => {
+    this.imgIndex = (this.imgIndex + 1) % 2;
+  }, 500);
   this.isFollow = false;
   this.fSpeed = 1;
-  this.minDistance = 200;
+  this.minDistance = 25;   // area of a follower
+  this.isMoving = false;
 
   //update components
   this.update = function () {
     ctx = animationArea.context;
     ctx.fillStyle = this.color;
     if (this.type == "player") {
-      this.img.src = "assets/player.svg";
-      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+      if (!this.isMoving) {
+        this.img.src = "assets/player.svg";
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+      } else {
+        this.img.src = `assets/${this.playerImages[this.imgIndex]}`;
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        //this.isMoving = false;
+      }
+
       // console.log(this.x + "annnd"+ this.y);
     } else if (this.type == "opponents") {
       this.img.src = "assets/buyer1-left.svg";
@@ -66,11 +79,18 @@ function Components(x, y, type, color, width, height) {
 
   //move top
   this.moveTop = function () {
-    for (let i = 0; i < obstacles.length; i++) {
-      if (this.y > 0 && collide(player, obstacles[i]) != "bottom") {
-        this.y -= this.dy;
-      }
+   // console.log("keydown");
+    // for (let i = 0; i < obstacles.length; i++) {
+    if (this.y > 0 /*&& collide(player, obstacles[i]) != "bottom"*/) {
+      // this.img.src = `assets/${this.playerImages[this.imgIndex]}`;
+      //ctx = animationArea.context;
+      this.isMoving = true;
+      this.y -= this.dy;
+
+      // ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
+    //  }
+    //this.isMoving = false;
   };
 
   //move bottom
@@ -139,6 +159,10 @@ function Components(x, y, type, color, width, height) {
         this.y += this.fSpeed;
       }
     }
+  };
+  this.reset = function () {
+   // console.log("keyup");
+    this.isMoving = false;
   };
 }
 
