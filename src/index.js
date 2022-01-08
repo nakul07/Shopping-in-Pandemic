@@ -16,6 +16,12 @@ let isCollLeft = false;
 let isCollRight = false;
 let isCollBtm = false;
 let isCollTop = false;
+let oppCol = false;
+//let obsCol = false;
+let isFCollTop = false;
+let isFCollBtm = false;
+let isFCollRight = false;
+let isFCollLeft = false;
 
 function startAnimation() {
   floor = new Doors(0, 0, "assets/floor.jpg", 1000, 600);
@@ -82,7 +88,11 @@ function updateAnimationArea() {
     Components.update();
   });
   checksCollision();
+  checksOppCol();
+  checksObsCol();
+  //follower.reset1();
   collectItems(); //collects the items
+  
   levelComplete();
 }
 
@@ -108,19 +118,9 @@ function handleClick(event) {
   }
 }
 function handleClick1(event) {
-  if (event.keyCode == "38") {
+  if ((event.keyCode == "38", "39", "40", "37")) {
     player.reset();
-
-    //player.isMoving = true;
-    // moveLeft();
   }
-  // } else if (event.keyCode == "39") {
-  //   player.moveRight();
-  // } else if (event.keyCode == "38") {
-  //   player.moveTop();
-  // } else if (event.keyCode == "40") {
-  //   player.moveBottom();
-  // }
 }
 //calculates health
 function healthCalculator() {
@@ -184,6 +184,31 @@ function checksCollision() {
       isCollTop = true;
     }
   }
-
-  //console.log(collide(player, obstacles));
 }
+
+function checksOppCol() {
+  for (let i = 0; i < opponents.length; i++) {
+    if (
+      collide(follower, opponents[i]) === "right" ||
+      collide(follower, opponents[i]) === "left" ||
+      collide(follower, opponents[i]) === "top" ||
+      collide(follower, opponents[i]) === "bottom"
+    ) {
+      oppCol = true;
+    }
+  }
+}
+function checksObsCol() {
+  for (let i = 0; i < obstacles.length; i++) {
+    if (collide(follower, obstacles[i]) === "right") {
+      isFCollLeft = true;
+    } else if (collide(follower, obstacles[i]) === "left") {
+      isFCollRight = true;
+    } else if (collide(follower, obstacles[i]) === "top") {
+      isFCollBtm = true;
+    } else if (collide(follower, obstacles[i]) === "bottom") {
+      isFCollTop = true;
+    }
+  }
+}
+

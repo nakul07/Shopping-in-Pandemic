@@ -23,8 +23,9 @@ function Components(x, y, type, color, width, height) {
   }, 400);
   this.isFollow = false;
   this.fSpeed = 1;
-  this.minDistance = 250; // area of a follower
+  this.minDistance = 350; // area of a follower
   this.isMoving = false;
+  this.rotate = false;
 
   //update components
   this.update = function () {
@@ -70,9 +71,9 @@ function Components(x, y, type, color, width, height) {
       return;
     }
     if (isCollLeft) return;
+    this.isMoving = true;
     this.x -= this.dx;
     isCollLeft = false;
-    this.reset();
   };
 
   //move right
@@ -81,8 +82,9 @@ function Components(x, y, type, color, width, height) {
       return;
     }
     if (isCollRight) return;
+    this.rotate = true;
+    this.isMoving = true;
     this.x += this.dx;
-    this.reset();
   };
 
   //move top
@@ -93,7 +95,6 @@ function Components(x, y, type, color, width, height) {
     if (isCollTop) return;
     this.isMoving = true;
     this.y -= this.dy;
-    //  this.reset();
   };
 
   //move bottom
@@ -102,12 +103,14 @@ function Components(x, y, type, color, width, height) {
       return;
     }
     if (isCollBtm) return;
+    this.isMoving = true;
     this.y += this.dy;
-    this.reset();
   };
- 
+
   //petroling opponents in x-axis
   this.moveOpponentsXaxis = function () {
+    // if (oppCol) return;
+
     if (!collisionDetection(player, opponents[0])) {
       if (this.position >= this.rightPos) {
         this.speed = -this.speed;
@@ -122,6 +125,7 @@ function Components(x, y, type, color, width, height) {
 
   //petroling opponents in y-axis
   this.moveOpponentsYaxis = function () {
+    // if (oppCol) return;
     if (!collisionDetection(player, opponents[1])) {
       if (this.position >= this.btmPos) {
         this.speed = -this.speed;
@@ -135,6 +139,8 @@ function Components(x, y, type, color, width, height) {
   };
 
   this.follow = function () {
+    if (oppCol) return;
+
     let isPlayerLeft = false;
     let isPlayerRight = false;
     let isPlayerTop = false;
@@ -154,27 +160,50 @@ function Components(x, y, type, color, width, height) {
 
     if (calcDist(player.x, player.y, this.x, this.y) < this.minDistance) {
       if (isPlayerRight) {
-        this.x += this.fSpeed;
+        if (!isFCollRight) {
+          this.x += this.fSpeed;
+        } else {
+          this.x -= this.fSpeed;
+        }
       } else if (isPlayerLeft) {
-        this.x -= this.fSpeed;
+        if (!isFCollLeft) {
+          this.x -= this.fSpeed;
+        } else {
+          this.x += this.fSpeed;
+        }
       } else if (isPlayerTop) {
-        this.y -= this.fSpeed;
+        if (!isFCollTop) {
+          this.y -= this.fSpeed;
+        } else {
+          this.y += this.fSpeed;
+        }
       } else if (isPlayerBottom) {
-        this.y += this.fSpeed;
+        if (!isFCollBtm) {
+          this.y += this.fSpeed;
+        } else {
+          this.y -= this.fSpeed;
+        }
       }
     }
   };
+
+  //reset
   this.reset = function () {
-    // console.log("keyup");
     this.isMoving = false;
     isCollRight = false;
     isCollLeft = false;
     isCollTop = false;
     isCollBtm = false;
+    oppCol = false;
+    this.rotate = false;
+    isFCollTop = false;
+    isFCollBtm = false;
+    isFCollRight = false;
+    isFCollLeft = false;
   };
 }
 
-//for entry , exit and background
+//for entry, exit and background
 function Doors(x, y, imgSrc, width, height) {
   this.x = x;
   this.y = y;
