@@ -33,16 +33,70 @@ function collisionDetection(player, obstacles) {
 }
 
 //get items
-function getItems(noOfItems) {
-  let newItems = [];
+function getItems(noOfBalls) {
+  let newBall = [];
+  let exportBall = [];
+  let overlapping = false;
+  let possilbeColors = [
+    "blue",
+    "green",
+    "red",
+    "orange",
+    "yellow",
+    "purple",
+    "pink",
+  ];
+  while (newBall.length < noOfBalls) {
+    balls = {};
+    balls.randomColor =
+      possilbeColors[Math.floor(Math.random() * possilbeColors.length)];
 
-  for (let i = 0; i < noOfItems; i++) {
-    let x = getRandom(10, 880);
-    let y = getRandom(10, 580);
-    newItems.push(new Components(x, y, "items", "blue"));
+    balls.randomRadius = 10;
+    balls.randomX = Math.floor(
+      (950 - balls.randomRadius) * Math.random() + balls.randomRadius
+    ); //(max-min)+min max= width
+    balls.randomY = Math.floor(
+      (500 - balls.randomRadius) * Math.random() + balls.randomRadius
+    );
+
+    for (let j = 0; j < newBall.length; j++) {
+      var otherBall = newBall[j];
+
+      var dx1 =
+        balls.randomX +
+        balls.randomRadius -
+        (otherBall.randomX + otherBall.randomRadius);
+
+      var dy1 =
+        balls.randomY +
+        balls.randomRadius -
+        (otherBall.randomY + otherBall.randomRadius);
+      var distance = Math.sqrt(dx1 * dx1 + dy1 * dy1);
+
+      if (distance < balls.randomRadius + otherBall.randomRadius) {
+        //overlapped
+        overlapping = true;
+        break;
+      }
+    }
+
+    if (!overlapping) {
+      newBall.push(balls);
+    }
   }
 
-  return newItems;
+  for (let i = 0; i < newBall.length; i++) {
+    exportBall.push(
+      new Components(
+        newBall[i].randomX,
+        newBall[i].randomY,
+        "items",
+        newBall[i].randomColor
+      )
+    );
+  }
+
+  return exportBall;
 }
 
 //get opponents

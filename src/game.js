@@ -23,7 +23,7 @@ function Components(x, y, type, color, width, height) {
   }, 400);
   this.isFollow = false;
   this.fSpeed = 1;
-  this.minDistance = 250;   // area of a follower
+  this.minDistance = 250; // area of a follower
   this.isMoving = false;
 
   //update components
@@ -39,10 +39,14 @@ function Components(x, y, type, color, width, height) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
         //this.isMoving = false;
       }
-
       // console.log(this.x + "annnd"+ this.y);
     } else if (this.type == "opponents") {
+      ctx.fillStyle = `rgba(0, 255, 255, 0.4)`;
       this.img.src = "assets/buyer1-left.svg";
+      ctx.beginPath();
+      ctx.arc(this.x + 25, this.y + 25, 35, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.fill();
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     } else if (this.type == "obstacles") {
       ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -79,7 +83,7 @@ function Components(x, y, type, color, width, height) {
 
   //move top
   this.moveTop = function () {
-   // console.log("keydown");
+    // console.log("keydown");
     // for (let i = 0; i < obstacles.length; i++) {
     if (this.y > 0 /*&& collide(player, obstacles[i]) != "bottom"*/) {
       // this.img.src = `assets/${this.playerImages[this.imgIndex]}`;
@@ -161,7 +165,7 @@ function Components(x, y, type, color, width, height) {
     }
   };
   this.reset = function () {
-   // console.log("keyup");
+    // console.log("keyup");
     this.isMoving = false;
   };
 }

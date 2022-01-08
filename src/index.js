@@ -8,7 +8,7 @@ let items = [];
 let opponents = [];
 let shop;
 let stat;
-let health = 5;
+let health = 2;
 let itemsLeft = 5;
 let coins = 3;
 let mask = 0;

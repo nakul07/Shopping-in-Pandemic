@@ -49,7 +49,7 @@ function levelCompleted() {
     reLoad.onclick = function () {
       //swoosh.play();
       popUp.style.display = "none"; //hide popup
-      health = 5;
+      health = 2;
       itemsLeft = 5;
       coins = 5;
      // console.log(coins);

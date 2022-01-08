@@ -47,7 +47,7 @@ function gameOver() {
   //reload onclick action
   reLoad.onclick = function () {
     popUp.style.display = "none"; //hide popup
-    health = 5;
+    health = 3;
     itemsLeft = 5;
 
     startAnimation();
