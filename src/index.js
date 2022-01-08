@@ -6,12 +6,16 @@ let floor;
 let obstacles = [];
 let items = [];
 let opponents = [];
+let shop;
 let stat;
 let health = 5;
 let itemsLeft = 5;
+let coins = 3;
+let mask = 0;
 function startAnimation() {
   floor = new Doors(0, 0, "assets/floor.jpg", 1000, 600);
   entryDoor = new Doors(45, 550, "assets/entry.png", 100, 60);
+  shop = new Doors(625, 95, "assets/mask.png", 100, 100);
   exitDoor = new Doors(880, 540, "assets/exit.png", 100, 80);
   player = new Components(70, 550, "player", "red", 50, 50);
   follower = new Components(300, 400, "opponents", "blue", 50, 50);
@@ -42,6 +46,7 @@ let animationArea = {
 function updateAnimationArea() {
   animationArea.clear(); //clears everything on canvas
   floor.update();
+  shop.update();
   entryDoor.update();
   exitDoor.update();
   player.update(); // updates the player
@@ -63,9 +68,10 @@ function updateAnimationArea() {
   oppMovement();
 
   healthCalculator(); //calculates health
-  textDisplay(880, 30, "Health", health, "black"); //displays health
-  textDisplay(695, 30, "Items Left", itemsLeft, "black"); //displays number of remaining items
-
+  textDisplay(885, 30, "Health", health, "black"); //displays health
+  textDisplay(725, 30, "Items Left", itemsLeft, "black"); //displays number of remaining items
+  textDisplay(620, 30, "Coins", coins, "black"); //displays coins
+  textDisplay(520, 30, "Mask", mask, "black"); //displays mask
   //updates the items
   items.forEach((Components) => {
     Components.update();
@@ -87,6 +93,13 @@ function handleClick(event) {
     player.moveTop();
   } else if (event.keyCode == "40") {
     player.moveBottom();
+  } else if (
+    event.keyCode == "32" &&
+    coins >= 3 &&
+    collisionDetection(player, shop)
+  ) {
+    mask++;
+    coins = coins - 3;
   }
 }
 function handleClick1(event) {
@@ -111,7 +124,12 @@ function healthCalculator() {
       collisionDetection(player, opponents[i]) ||
       collisionDetection(player, follower)
     ) {
-      health--;
+      if (mask != 0) {
+        mask--;
+      } else {
+        health--;
+      }
+
       player.x = 70;
       player.y = 550; //reset player's position
     }

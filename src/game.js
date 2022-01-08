@@ -20,10 +20,10 @@ function Components(x, y, type, color, width, height) {
   this.img = document.createElement("img");
   this.interval = setInterval(() => {
     this.imgIndex = (this.imgIndex + 1) % 2;
-  }, 500);
+  }, 400);
   this.isFollow = false;
   this.fSpeed = 1;
-  this.minDistance = 25;   // area of a follower
+  this.minDistance = 250;   // area of a follower
   this.isMoving = false;
 
   //update components

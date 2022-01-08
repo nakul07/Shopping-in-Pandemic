@@ -51,6 +51,8 @@ function levelCompleted() {
       popUp.style.display = "none"; //hide popup
       health = 5;
       itemsLeft = 5;
+      coins = 5;
+     // console.log(coins);
       startAnimation();
     };
   }
