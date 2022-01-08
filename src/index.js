@@ -12,6 +12,11 @@ let health = 2;
 let itemsLeft = 5;
 let coins = 3;
 let mask = 0;
+let isCollLeft = false;
+let isCollRight = false;
+let isCollBtm = false;
+let isCollTop = false;
+
 function startAnimation() {
   floor = new Doors(0, 0, "assets/floor.jpg", 1000, 600);
   entryDoor = new Doors(45, 550, "assets/entry.png", 100, 60);
@@ -76,7 +81,7 @@ function updateAnimationArea() {
   items.forEach((Components) => {
     Components.update();
   });
-
+  checksCollision();
   collectItems(); //collects the items
   levelComplete();
 }
@@ -167,11 +172,18 @@ function levelComplete() {
   }
 }
 
-// function moveLeft() {
-//   for (let i = 0; i < obstacles.length; i++) {
-//     if (player.x > 0 && collide(player, obstacles[i]) != "right") {
-//       player.x -= player.dx;
-//     }
-//     //if()
-//   }
-// }
+function checksCollision() {
+  for (let i = 0; i < obstacles.length; i++) {
+    if (collide(player, obstacles[i]) === "right") {
+      isCollLeft = true;
+    } else if (collide(player, obstacles[i]) === "left") {
+      isCollRight = true;
+    } else if (collide(player, obstacles[i]) === "top") {
+      isCollBtm = true;
+    } else if (collide(player, obstacles[i]) === "bottom") {
+      isCollTop = true;
+    }
+  }
+
+  //console.log(collide(player, obstacles));
+}

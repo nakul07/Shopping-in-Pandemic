@@ -30,6 +30,8 @@ function Components(x, y, type, color, width, height) {
   this.update = function () {
     ctx = animationArea.context;
     ctx.fillStyle = this.color;
+
+    //player update
     if (this.type == "player") {
       if (!this.isMoving) {
         this.img.src = "assets/player.svg";
@@ -37,9 +39,9 @@ function Components(x, y, type, color, width, height) {
       } else {
         this.img.src = `assets/${this.playerImages[this.imgIndex]}`;
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        //this.isMoving = false;
       }
-      // console.log(this.x + "annnd"+ this.y);
+
+      // opponents update
     } else if (this.type == "opponents") {
       ctx.fillStyle = `rgba(0, 255, 255, 0.4)`;
       this.img.src = "assets/buyer1-left.svg";
@@ -48,8 +50,12 @@ function Components(x, y, type, color, width, height) {
       ctx.stroke();
       ctx.fill();
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+
+      //obstacles update
     } else if (this.type == "obstacles") {
       ctx.fillRect(this.x, this.y, this.width, this.height);
+
+      //items update
     } else if (this.type == "items") {
       ctx.beginPath();
       ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI);
@@ -60,55 +66,47 @@ function Components(x, y, type, color, width, height) {
 
   //move left
   this.moveLeft = function () {
-    for (let i = 0; i < obstacles.length; i++) {
-      if (this.x > 0 && collide(player, obstacles[i]) != "right") {
-        this.x -= this.dx;
-      }
-      // console.log(collide(player, obstacles[i]));
+    if (this.x < 0) {
+      return;
     }
+    if (isCollLeft) return;
+    this.x -= this.dx;
+    isCollLeft = false;
+    this.reset();
   };
 
   //move right
   this.moveRight = function () {
-    for (let i = 0; i < obstacles.length; i++) {
-      if (
-        this.x < animationArea.canvas.width - (this.width + 3) &&
-        collide(player, obstacles[i]) != "left"
-      ) {
-        this.x += this.dx;
-      }
-      // console.log(collide(player, obstacles[i]));
+    if (this.x > animationArea.canvas.width - (this.width + 3)) {
+      return;
     }
+    if (isCollRight) return;
+    this.x += this.dx;
+    this.reset();
   };
 
   //move top
   this.moveTop = function () {
-    // console.log("keydown");
-    // for (let i = 0; i < obstacles.length; i++) {
-    if (this.y > 0 /*&& collide(player, obstacles[i]) != "bottom"*/) {
-      // this.img.src = `assets/${this.playerImages[this.imgIndex]}`;
-      //ctx = animationArea.context;
-      this.isMoving = true;
-      this.y -= this.dy;
-
-      // ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    if (this.y < 0) {
+      return;
     }
-    //  }
-    //this.isMoving = false;
+    if (isCollTop) return;
+    this.isMoving = true;
+    this.y -= this.dy;
+    //  this.reset();
   };
 
   //move bottom
   this.moveBottom = function () {
-    for (let i = 0; i < obstacles.length; i++) {
-      if (
-        this.y < animationArea.canvas.height - (this.height + 3) &&
-        collide(player, obstacles[i]) != "top"
-      ) {
-        this.y += this.dy;
-      }
+    if (this.y > animationArea.canvas.height - (this.height + 3)) {
+      return;
     }
+    if (isCollBtm) return;
+    this.y += this.dy;
+    this.reset();
   };
-
+ 
+  //petroling opponents in x-axis
   this.moveOpponentsXaxis = function () {
     if (!collisionDetection(player, opponents[0])) {
       if (this.position >= this.rightPos) {
@@ -121,6 +119,8 @@ function Components(x, y, type, color, width, height) {
       this.x = this.position;
     }
   };
+
+  //petroling opponents in y-axis
   this.moveOpponentsYaxis = function () {
     if (!collisionDetection(player, opponents[1])) {
       if (this.position >= this.btmPos) {
@@ -167,6 +167,10 @@ function Components(x, y, type, color, width, height) {
   this.reset = function () {
     // console.log("keyup");
     this.isMoving = false;
+    isCollRight = false;
+    isCollLeft = false;
+    isCollTop = false;
+    isCollBtm = false;
   };
 }
 
