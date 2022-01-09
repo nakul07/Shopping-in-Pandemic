@@ -37,43 +37,39 @@ function getItems(noOfBalls) {
   let newBall = [];
   let exportBall = [];
   let overlapping = false;
-  let possilbeColors = [
-    "blue",
-    "green",
-    "red",
-    "orange",
-    "yellow",
-    "purple",
-    "pink",
+  let possilbeItems = [
+    "assets/items/honey.svg",
+    "assets/items/carrot.svg",
+    "assets/items/milk.svg",
+    "assets/items/paper.svg",
+    "assets/items/tomato.svg",
+    "assets/items/juice.svg",
+    "assets/items/bread.svg",
   ];
   while (newBall.length < noOfBalls) {
     balls = {};
-    balls.randomColor =
-      possilbeColors[Math.floor(Math.random() * possilbeColors.length)];
+    balls.randomItem =
+      possilbeItems[Math.floor(Math.random() * possilbeItems.length)];
 
-    balls.randomRadius = 10;
+    balls.width = 40;
     balls.randomX = Math.floor(
-      (950 - balls.randomRadius) * Math.random() + balls.randomRadius
+      (950 - balls.width) * Math.random() + balls.width
     ); //(max-min)+min max= width
     balls.randomY = Math.floor(
-      (500 - balls.randomRadius) * Math.random() + balls.randomRadius
+      (500 - balls.width) * Math.random() + balls.width
     );
 
     for (let j = 0; j < newBall.length; j++) {
-      var otherBall = newBall[j];
+      let otherBall = newBall[j];
 
-      var dx1 =
-        balls.randomX +
-        balls.randomRadius -
-        (otherBall.randomX + otherBall.randomRadius);
+      let distance = calcDist(
+        balls.randomX,
+        balls.randomY,
+        otherBall.randomX,
+        otherBall.randomY
+      );
 
-      var dy1 =
-        balls.randomY +
-        balls.randomRadius -
-        (otherBall.randomY + otherBall.randomRadius);
-      var distance = Math.sqrt(dx1 * dx1 + dy1 * dy1);
-
-      if (distance < balls.randomRadius + otherBall.randomRadius) {
+      if (distance < balls.width + otherBall.width) {
         //overlapped
         overlapping = true;
         break;
@@ -87,12 +83,7 @@ function getItems(noOfBalls) {
 
   for (let i = 0; i < newBall.length; i++) {
     exportBall.push(
-      new Components(
-        newBall[i].randomX,
-        newBall[i].randomY,
-        "items",
-        newBall[i].randomColor
-      )
+      new Items(newBall[i].randomX, newBall[i].randomY, newBall[i].randomItem)
     );
   }
 

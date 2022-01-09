@@ -111,7 +111,7 @@ function Components(x, y, type, color, width, height) {
         }
       } else if (this.isOppTop) {
         if (!this.isOppMoving) {
-          this.img.src = "assets/opponent-top.png";
+          this.img.src = "assets/opponent-up.png";
           ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
         } else {
           this.img.src = `assets/${this.oppImagesT[this.imgIndex]}`;
@@ -131,13 +131,6 @@ function Components(x, y, type, color, width, height) {
       //obstacles update
     } else if (this.type == "obstacles") {
       ctx.fillRect(this.x, this.y, this.width, this.height);
-
-      //items update
-    } else if (this.type == "items") {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI);
-      ctx.stroke();
-      ctx.fill();
     }
   };
 
@@ -244,6 +237,7 @@ function Components(x, y, type, color, width, height) {
   };
 
   this.follow = function () {
+    this.isOppMoving = false;
     if (oppCol) return;
 
     let isPlayerLeft = false;
@@ -311,7 +305,7 @@ function Components(x, y, type, color, width, height) {
       //     this.y += 1;
       //   }
       // }
-    }else{
+    } else {
       this.isOppMoving = false;
     }
   };

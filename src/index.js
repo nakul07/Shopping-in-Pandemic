@@ -101,11 +101,10 @@ function updateAnimationArea() {
   textDisplay(520, 30, "Mask", mask, "black"); //displays mask
   textDisplay(420, 30, "Level", currentLevel, "black"); //displayes level
 
-  //updates the items
-  items.forEach((Components) => {
-    Components.update();
+  // updates the items
+  items.forEach((Items) => {
+    Items.update();
   });
-
   checksCollision();
   checksOppCol();
   checksObsCol();
