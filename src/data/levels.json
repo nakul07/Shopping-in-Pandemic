@@ -12,7 +12,8 @@
     "opponentRightPosition": 600,
     "opponentTopPosition": 300,
     "opponentBtmPosition": 540,
-    "obstacleNumber" : 3
+    "obstacleNumber" : 3,
+    "followerRange" : 100
   },
   "2": {
     "obstacleXCoordinates": [170, 800, 150],
@@ -27,7 +28,8 @@
     "opponentRightPosition": 800,
     "opponentTopPosition": 250,
     "opponentBtmPosition": 540,
-    "obstacleNumber" : 3
+    "obstacleNumber" : 3,
+    "followerRange" : 150
   },
   "3": {
     "obstacleXCoordinates": [400, 580, 165],
@@ -42,7 +44,8 @@
     "opponentRightPosition": 900,
     "opponentTopPosition": 20,
     "opponentBtmPosition": 190,
-    "obstacleNumber" : 3
+    "obstacleNumber" : 3,
+    "followerRange" : 200
   },
   "4": {
     "obstacleXCoordinates": [500, 800, 150],
@@ -57,7 +60,8 @@
     "opponentRightPosition": 700,
     "opponentTopPosition": 430,
     "opponentBtmPosition": 540,
-    "obstacleNumber" : 3
+    "obstacleNumber" : 3,
+    "followerRange" : 300
   },
   "5": {
     "obstacleXCoordinates": [280, 800, 150, 470],
@@ -72,6 +76,7 @@
     "opponentRightPosition": 400,
     "opponentTopPosition": 300,
     "opponentBtmPosition": 550,
-    "obstacleNumber" : 4
+    "obstacleNumber" : 4,
+    "followerRange" : 400
   }
 }

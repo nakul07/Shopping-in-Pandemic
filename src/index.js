@@ -47,7 +47,7 @@ function startAnimation() {
       follower = new Components(300, 400, "opponents", "blue", 50, 50);
       opponents = getOpponents(2);
       obstacles = getObstacles(levels[currentLevel].obstacleNumber);
-     // items = getItems(itemsLeft);
+      items = getItems(itemsLeft);
       animationArea.start();
     });
 }
@@ -102,9 +102,9 @@ function updateAnimationArea() {
   textDisplay(420, 30, "Level", currentLevel, "black"); //displayes level
 
   // updates the items
-  // items.forEach((Items) => {
-  //   Items.update();
-  // });
+  items.forEach((Items) => {
+    Items.update();
+  });
   checksCollision();
   checksOppCol();
   checksObsCol();

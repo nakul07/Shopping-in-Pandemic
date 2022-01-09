@@ -34,7 +34,7 @@ function Components(x, y, type, color, width, height) {
   }, 400);
   this.isFollow = false;
   this.fSpeed = 1;
-  this.minDistance = 10; // area of a follower
+  this.minDistance = levels[currentLevel].followerRange;
   this.isMoving = false;
   this.isOppMoving = false;
   this.isPlayerDown = false;
@@ -220,7 +220,6 @@ function Components(x, y, type, color, width, height) {
 
   //petroling opponents in y-axis
   this.moveOpponentsYaxis = function () {
-    
     this.isOppMoving = true;
     //this.isOppRight = false;
     if (!collisionDetection(player, opponents[1])) {
