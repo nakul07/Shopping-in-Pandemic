@@ -17,6 +17,9 @@ function Components(x, y, type, color, width, height) {
   this.btmPos = 550;
   this.imgIndex = 1;
   this.playerImages = ["player-left.svg", "player-right.svg"];
+  this.playerImagesD = ["playerleftdown.png", "playerrightdown.png"];
+  this.playerImagesL = ["playerleftleft.png", "playerrightleft.png"];
+  this.playerImagesR = ["playerleftright.png", "playerrightright.png"];
   this.img = document.createElement("img");
   this.interval = setInterval(() => {
     this.imgIndex = (this.imgIndex + 1) % 2;
@@ -25,7 +28,11 @@ function Components(x, y, type, color, width, height) {
   this.fSpeed = 1;
   this.minDistance = 350; // area of a follower
   this.isMoving = false;
-  this.rotate = false;
+  this.isPlayerDown = false;
+  this.isPlayerTop = false;
+  this.isPlayerRight = false;
+  this.isPlayerLeft = false;
+  //this.rotate = false;
 
   //update components
   this.update = function () {
@@ -34,12 +41,38 @@ function Components(x, y, type, color, width, height) {
 
     //player update
     if (this.type == "player") {
-      if (!this.isMoving) {
-        this.img.src = "assets/player.svg";
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+      if (this.isPlayerDown) {
+        if (!this.isMoving) {
+          this.img.src = "assets/playerdown.png";
+          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        } else {
+          this.img.src = `assets/${this.playerImagesD[this.imgIndex]}`;
+          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        }
+      } else if (this.isPlayerLeft) {
+        if (!this.isMoving) {
+          this.img.src = "assets/playerleft.png";
+          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        } else {
+          this.img.src = `assets/${this.playerImagesL[this.imgIndex]}`;
+          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        }
+      } else if (this.isPlayerRight) {
+        if (!this.isMoving) {
+          this.img.src = "assets/playerright.png";
+          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        } else {
+          this.img.src = `assets/${this.playerImagesR[this.imgIndex]}`;
+          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        }
       } else {
-        this.img.src = `assets/${this.playerImages[this.imgIndex]}`;
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        if (!this.isMoving) {
+          this.img.src = "assets/player.svg";
+          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        } else {
+          this.img.src = `assets/${this.playerImages[this.imgIndex]}`;
+          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        }
       }
 
       // opponents update
@@ -72,8 +105,13 @@ function Components(x, y, type, color, width, height) {
     }
     if (isCollLeft) return;
     this.isMoving = true;
+    this.isPlayerLeft = true;
     this.x -= this.dx;
-    isCollLeft = false;
+    this.isPlayerDown = false;
+    this.isPlayerRight = false;
+
+    // playerPosY.push(this.y);
+    // playerPosX.push(this.x);
   };
 
   //move right
@@ -82,9 +120,14 @@ function Components(x, y, type, color, width, height) {
       return;
     }
     if (isCollRight) return;
-    this.rotate = true;
     this.isMoving = true;
+    this.isPlayerRight = true;
     this.x += this.dx;
+    this.isPlayerDown = false;
+    this.isPlayerLeft = false;
+
+    // playerPosY.push(this.y);
+    // playerPosX.push(this.x);
   };
 
   //move top
@@ -94,7 +137,14 @@ function Components(x, y, type, color, width, height) {
     }
     if (isCollTop) return;
     this.isMoving = true;
+    this.isPlayerTop = true;
     this.y -= this.dy;
+    this.isPlayerDown = false;
+    this.isPlayerRight = false;
+    this.isPlayerLeft = false;
+
+    // playerPosY.push(this.y);
+    // playerPosX.push(this.x);
   };
 
   //move bottom
@@ -104,7 +154,12 @@ function Components(x, y, type, color, width, height) {
     }
     if (isCollBtm) return;
     this.isMoving = true;
+    this.isPlayerDown = true;
     this.y += this.dy;
+    this.isPlayerRight = false;
+    this.isPlayerLeft = false;
+    // playerPosY.push(this.y);
+    // playerPosX.push(this.x);
   };
 
   //petroling opponents in x-axis
@@ -179,6 +234,13 @@ function Components(x, y, type, color, width, height) {
           this.y -= this.fSpeed;
         }
       }
+
+      // for (let i = 0; i < playerPosX.length; i++) {
+      //   while (this.x == playerPosX[i] && this.y == playerPosY[i]) {
+      //     this.x += 1;
+      //     this.y += 1;
+      //   }
+      // }
     }
   };
 

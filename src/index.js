@@ -17,13 +17,14 @@ let isCollRight = false;
 let isCollBtm = false;
 let isCollTop = false;
 let oppCol = false;
-//let obsCol = false;
 let isFCollTop = false;
 let isFCollBtm = false;
 let isFCollRight = false;
 let isFCollLeft = false;
 let levels;
 let currentLevel = 1;
+let playerPosX =[];
+let playerPosY = []; 
 
 function startAnimation() {
   // window.onload = function () {
@@ -112,6 +113,7 @@ function updateAnimationArea() {
   collectItems(); //collects the items
 
   levelComplete();
+  
 }
 
 //handle click
@@ -185,7 +187,7 @@ function levelComplete() {
     if (itemsLeft == 0) {
       levelCompleted();
     } else {
-      textDisplay(850, 475, "Items Left ", itemsLeft, "red");
+      textDisplay(835, 475, "Collect all Items ", itemsLeft, "red");
     }
   }
 }
