@@ -53,6 +53,9 @@ function levelCompleted() {
     itemsLeft = 5;
     coins = coins + 5;
     currentLevel++;
+    if (currentLevel > 5) {
+      currentLevel = 1;
+    }
     // console.log(coins);
     startAnimation();
   };
