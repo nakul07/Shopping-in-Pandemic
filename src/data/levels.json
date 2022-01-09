@@ -26,5 +26,47 @@
     "opponentRightPosition": 600,
     "opponentTopPosition": 300,
     "opponentBtmPosition": 550
+  },
+  "3": {
+    "obstacleXCoordinates": [280, 800, 150],
+    "obstacleYCoordinates": [260, 200, 0],
+    "obstacleWidths": [400, 20, 20],
+    "obstacleHeights": [20, 400, 400],
+    "opponentXCoordinates": [200, 500],
+    "opponentYCoordinates": [100, 400],
+    "shopXCoordinates": [625],
+    "shopYCoordinates": [95],
+    "opponentLeftPosition": 200,
+    "opponentRightPosition": 600,
+    "opponentTopPosition": 300,
+    "opponentBtmPosition": 550
+  },
+  "4": {
+    "obstacleXCoordinates": [280, 800, 150],
+    "obstacleYCoordinates": [260, 200, 0],
+    "obstacleWidths": [400, 20, 20],
+    "obstacleHeights": [20, 400, 400],
+    "opponentXCoordinates": [200, 500],
+    "opponentYCoordinates": [100, 400],
+    "shopXCoordinates": [625],
+    "shopYCoordinates": [95],
+    "opponentLeftPosition": 200,
+    "opponentRightPosition": 600,
+    "opponentTopPosition": 300,
+    "opponentBtmPosition": 550
+  },
+  "5": {
+    "obstacleXCoordinates": [280, 800, 150],
+    "obstacleYCoordinates": [260, 200, 0],
+    "obstacleWidths": [400, 20, 20],
+    "obstacleHeights": [20, 400, 400],
+    "opponentXCoordinates": [200, 500],
+    "opponentYCoordinates": [100, 400],
+    "shopXCoordinates": [625],
+    "shopYCoordinates": [95],
+    "opponentLeftPosition": 200,
+    "opponentRightPosition": 600,
+    "opponentTopPosition": 300,
+    "opponentBtmPosition": 550
   }
 }

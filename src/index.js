@@ -100,6 +100,7 @@ function updateAnimationArea() {
   textDisplay(725, 30, "Items Left", itemsLeft, "black"); //displays number of remaining items
   textDisplay(620, 30, "Coins", coins, "black"); //displays coins
   textDisplay(520, 30, "Mask", mask, "black"); //displays mask
+  textDisplay(420, 30, "Level", currentLevel, "black"); //displayes level
   //updates the items
   items.forEach((Components) => {
     Components.update();
