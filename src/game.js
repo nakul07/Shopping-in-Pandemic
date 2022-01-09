@@ -9,12 +9,13 @@ function Components(x, y, type, color, width, height) {
   this.dx = 5;
   this.dy = 5;
   this.collided = false;
-  this.position = this.x;
+  this.positionX = this.x;
+  this.positionY = this.y;
   this.speed = 1;
-  this.leftPos = 200;
-  this.rightPos = 600;
-  this.topPos = 300;
-  this.btmPos = 550;
+  this.leftPos = levels[currentLevel].opponentLeftPosition;
+  this.rightPos = levels[currentLevel].opponentRightPosition;
+  this.topPos = levels[currentLevel].opponentTopPosition;
+  this.btmPos = levels[currentLevel].opponentBtmPosition;
   this.imgIndex = 1;
   //player images array
   this.playerImages = ["player-left.svg", "player-right.svg"];
@@ -33,7 +34,7 @@ function Components(x, y, type, color, width, height) {
   }, 400);
   this.isFollow = false;
   this.fSpeed = 1;
-  this.minDistance = 350; // area of a follower
+  this.minDistance = 10; // area of a follower
   this.isMoving = false;
   this.isOppMoving = false;
   this.isPlayerDown = false;
@@ -202,37 +203,41 @@ function Components(x, y, type, color, width, height) {
   this.moveOpponentsXaxis = function () {
     this.isOppMoving = true;
     if (!collisionDetection(player, opponents[0])) {
-      if (this.position >= this.rightPos) {
+      if (this.positionX >= this.rightPos) {
         this.speed = -this.speed;
         this.isOppLeft = true;
         this.isOppRight = false;
-      } else if (this.position == this.leftPos) {
+      } else if (this.positionX == this.leftPos) {
         this.speed = 1;
         this.isOppRight = true;
         this.isOppLeft = false;
       }
 
-      this.position = this.position + this.speed;
-      this.x = this.position;
+      this.positionX = this.positionX + this.speed;
+      this.x = this.positionX;
     }
   };
 
   //petroling opponents in y-axis
   this.moveOpponentsYaxis = function () {
+    
     this.isOppMoving = true;
+    //this.isOppRight = false;
     if (!collisionDetection(player, opponents[1])) {
-      if (this.position >= this.btmPos) {
+      if (this.positionY >= this.btmPos) {
         this.speed = -this.speed;
         this.isOppTop = true;
         this.isOppDown = false;
-      } else if (this.position == this.topPos) {
+      } else if (this.positionY == this.topPos) {
         this.speed = 1;
-        this.isOppTop = false;
         this.isOppDown = true;
+        this.isOppTop = false;
+        // this.isOppRight = false;
+        // this.isOppLeft = false;
       }
 
-      this.position = this.position + this.speed;
-      this.y = this.position;
+      this.positionY = this.positionY + this.speed;
+      this.y = this.positionY;
     }
   };
 

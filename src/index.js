@@ -22,7 +22,7 @@ let isFCollBtm = false;
 let isFCollRight = false;
 let isFCollLeft = false;
 let levels;
-let currentLevel = 1;
+let currentLevel = 5;
 let playerPosX = [];
 let playerPosY = [];
 
@@ -46,8 +46,8 @@ function startAnimation() {
       player = new Components(70, 550, "player", "red", 50, 50);
       follower = new Components(300, 400, "opponents", "blue", 50, 50);
       opponents = getOpponents(2);
-      obstacles = getObstacles(3);
-      items = getItems(itemsLeft);
+      obstacles = getObstacles(levels[currentLevel].obstacleNumber);
+     // items = getItems(itemsLeft);
       animationArea.start();
     });
 }
@@ -102,9 +102,9 @@ function updateAnimationArea() {
   textDisplay(420, 30, "Level", currentLevel, "black"); //displayes level
 
   // updates the items
-  items.forEach((Items) => {
-    Items.update();
-  });
+  // items.forEach((Items) => {
+  //   Items.update();
+  // });
   checksCollision();
   checksOppCol();
   checksObsCol();
