@@ -109,8 +109,6 @@ function Components(x, y, type, color, width, height) {
 
   //petroling opponents in x-axis
   this.moveOpponentsXaxis = function () {
-    // if (oppCol) return;
-
     if (!collisionDetection(player, opponents[0])) {
       if (this.position >= this.rightPos) {
         this.speed = -this.speed;
@@ -125,7 +123,6 @@ function Components(x, y, type, color, width, height) {
 
   //petroling opponents in y-axis
   this.moveOpponentsYaxis = function () {
-    // if (oppCol) return;
     if (!collisionDetection(player, opponents[1])) {
       if (this.position >= this.btmPos) {
         this.speed = -this.speed;
@@ -150,9 +147,7 @@ function Components(x, y, type, color, width, height) {
       isPlayerRight = true;
     } else if (player.x < this.x) {
       isPlayerLeft = true;
-    }
-
-    if (player.y < this.y) {
+    } else if (player.y < this.y) {
       isPlayerTop = true;
     } else if (player.y > this.y) {
       isPlayerBottom = true;

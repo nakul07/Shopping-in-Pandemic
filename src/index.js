@@ -22,18 +22,35 @@ let isFCollTop = false;
 let isFCollBtm = false;
 let isFCollRight = false;
 let isFCollLeft = false;
+let levels;
+let currentLevel = 1;
 
 function startAnimation() {
-  floor = new Doors(0, 0, "assets/floor.jpg", 1000, 600);
-  entryDoor = new Doors(45, 550, "assets/entry.png", 100, 60);
-  shop = new Doors(625, 95, "assets/mask.png", 100, 100);
-  exitDoor = new Doors(880, 540, "assets/exit.png", 100, 80);
-  player = new Components(70, 550, "player", "red", 50, 50);
-  follower = new Components(300, 400, "opponents", "blue", 50, 50);
-  opponents = getOpponents(2);
-  obstacles = getObstacles(3);
-  items = getItems(itemsLeft);
-  animationArea.start();
+  // window.onload = function () {
+  fetch("src/data/levels.json")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      levels = data;
+      floor = new Doors(0, 0, "assets/floor.jpg", 1000, 600);
+      entryDoor = new Doors(45, 550, "assets/entry.png", 100, 60);
+      shop = new Doors(
+        levels[currentLevel].shopXCoordinates,
+        levels[currentLevel].shopYCoordinates,
+        "assets/mask.png",
+        100,
+        100
+      );
+      exitDoor = new Doors(880, 540, "assets/exit.png", 100, 80);
+      player = new Components(70, 550, "player", "red", 50, 50);
+      follower = new Components(300, 400, "opponents", "blue", 50, 50);
+      opponents = getOpponents(2);
+      obstacles = getObstacles(3);
+      items = getItems(itemsLeft);
+      animationArea.start();
+    });
+  //};
 }
 
 let animationArea = {
@@ -92,7 +109,7 @@ function updateAnimationArea() {
   checksObsCol();
   //follower.reset1();
   collectItems(); //collects the items
-  
+
   levelComplete();
 }
 
@@ -211,4 +228,3 @@ function checksObsCol() {
     }
   }
 }
-

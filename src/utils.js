@@ -102,8 +102,8 @@ function getItems(noOfBalls) {
 //get opponents
 function getOpponents(number) {
   let newOpponents = [];
-  let xCoordinates = [200, 500];
-  let yCoordinates = [100, 400];
+  let xCoordinates = levels[currentLevel].opponentXCoordinates;
+  let yCoordinates = levels[currentLevel].opponentYCoordinates;
   for (let i = 0; i < number; i++) {
     newOpponents.push(
       new Components(
@@ -122,10 +122,10 @@ function getOpponents(number) {
 //get obstacles
 function getObstacles(number) {
   let newObstacles = [];
-  let xCoordinates = [280, 800, 150];
-  let yCoordinates = [260, 200, 0];
-  let widths = [400, 20, 20];
-  let heights = [20, 400, 400];
+  let xCoordinates = levels[currentLevel].obstacleXCoordinates;
+  let yCoordinates = levels[currentLevel].obstacleYCoordinates;
+  let widths = levels[currentLevel].obstacleWidths;
+  let heights = levels[currentLevel].obstacleHeights;
   for (let i = 0; i < number; i++) {
     newObstacles.push(
       new Components(
