@@ -22,7 +22,7 @@ let isFCollBtm = false;
 let isFCollRight = false;
 let isFCollLeft = false;
 let levels;
-let currentLevel = 5;
+let currentLevel = 1;
 let playerPosX = [];
 let playerPosY = [];
 
