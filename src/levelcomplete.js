@@ -51,7 +51,7 @@ function levelCompleted() {
     popUp.style.display = "none"; //hide popup
     health = 2;
     itemsLeft = 5;
-    coins = 5;
+    coins = coins + 5;
     currentLevel++;
     // console.log(coins);
     startAnimation();

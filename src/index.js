@@ -23,11 +23,10 @@ let isFCollRight = false;
 let isFCollLeft = false;
 let levels;
 let currentLevel = 1;
-let playerPosX =[];
-let playerPosY = []; 
+let playerPosX = [];
+let playerPosY = [];
 
 function startAnimation() {
-  // window.onload = function () {
   fetch("src/data/levels.json")
     .then((response) => {
       return response.json();
@@ -43,7 +42,7 @@ function startAnimation() {
         100,
         100
       );
-      exitDoor = new Doors(880, 540, "assets/exit.png", 100, 80);
+      exitDoor = new Doors(880, 550, "assets/exit.png", 90, 50);
       player = new Components(70, 550, "player", "red", 50, 50);
       follower = new Components(300, 400, "opponents", "blue", 50, 50);
       opponents = getOpponents(2);
@@ -51,7 +50,6 @@ function startAnimation() {
       items = getItems(itemsLeft);
       animationArea.start();
     });
-  //};
 }
 
 let animationArea = {
@@ -102,18 +100,18 @@ function updateAnimationArea() {
   textDisplay(620, 30, "Coins", coins, "black"); //displays coins
   textDisplay(520, 30, "Mask", mask, "black"); //displays mask
   textDisplay(420, 30, "Level", currentLevel, "black"); //displayes level
+
   //updates the items
   items.forEach((Components) => {
     Components.update();
   });
+
   checksCollision();
   checksOppCol();
   checksObsCol();
-  //follower.reset1();
   collectItems(); //collects the items
 
   levelComplete();
-  
 }
 
 //handle click
