@@ -65,7 +65,7 @@ let animationArea = {
     document.body.addEventListener("keydown", handleClick);
     document.body.addEventListener("keyup", handleClick1);
 
-    this.interval = setInterval(updateAnimationArea, 16.6);
+    this.interval = setInterval(updateAnimationArea, 16.67);
   },
   clear: function () {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
