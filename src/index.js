@@ -18,7 +18,7 @@ let isCollRight = false;
 let isCollBtm = false;
 let isCollTop = false;
 let levels;
-let currentLevel = 5; //level
+let currentLevel = 1; //level
 let playerPosX = [];
 let playerPosY = [];
 
