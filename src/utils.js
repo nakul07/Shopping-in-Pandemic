@@ -125,3 +125,14 @@ function getFollower(number) {
   }
   return newFollower;
 }
+
+//get virus
+function getVirus(number) {
+  let newVirus = [];
+  let xCoordinates = levels[currentLevel].virusXCoordinates;
+  let yCoordinates = levels[currentLevel].virusYCoordinates;
+  for (let i = 0; i < number; i++) {
+    newVirus.push(new Virus(xCoordinates[i], yCoordinates[i]));
+  }
+  return newVirus;
+}

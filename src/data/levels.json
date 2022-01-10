@@ -15,8 +15,11 @@
     "opponentTopPosition": 300,
     "opponentBtmPosition": 540,
     "obstacleNumber": 3,
-    "followerRange": 100,
-    "followerNumber": 0
+    "followerRange": 150,
+    "followerNumber": 1,
+    "virusXCoordinates": [3],
+    "virusYCoordinates": [530],
+    "virusNumber": 1
   },
   "2": {
     "obstacleXCoordinates": [170, 800, 150],
@@ -35,7 +38,10 @@
     "opponentBtmPosition": 540,
     "obstacleNumber": 3,
     "followerRange": 250,
-    "followerNumber" :1
+    "followerNumber": 1,
+    "virusXCoordinates": [825],
+    "virusYCoordinates": [530],
+    "virusNumber": 1
   },
   "3": {
     "obstacleXCoordinates": [400, 580, 165],
@@ -54,7 +60,10 @@
     "opponentBtmPosition": 190,
     "obstacleNumber": 3,
     "followerRange": 300,
-    "followerNumber" :1
+    "followerNumber": 1,
+    "virusXCoordinates": [400, 700],
+    "virusYCoordinates": [550, 560],
+    "virusNumber": 2
   },
   "4": {
     "obstacleXCoordinates": [500, 800, 150],
@@ -63,8 +72,8 @@
     "obstacleHeights": [400, 400, 400],
     "opponentXCoordinates": [200, 785],
     "opponentYCoordinates": [100, 400],
-    "followerXCoordinates": [300,690],
-    "followerYCoordinates": [400,300],
+    "followerXCoordinates": [300, 690],
+    "followerYCoordinates": [400, 300],
     "shopXCoordinates": [855],
     "shopYCoordinates": [20],
     "opponentLeftPosition": 200,
@@ -73,11 +82,14 @@
     "opponentBtmPosition": 540,
     "obstacleNumber": 3,
     "followerRange": 200,
-    "followerNumber" :2
+    "followerNumber": 2,
+    "virusXCoordinates": [5, 350, 700],
+    "virusYCoordinates": [5, 5, 550],
+    "virusNumber": 3
   },
   "5": {
     "obstacleXCoordinates": [280, 800, 150, 470],
-    "obstacleYCoordinates": [260, 200, 0, 110],
+    "obstacleYCoordinates": [260, 200, 0, 90],
     "obstacleWidths": [400, 20, 20, 20],
     "obstacleHeights": [20, 400, 400, 400],
     "opponentXCoordinates": [200, 720],
@@ -92,6 +104,9 @@
     "opponentBtmPosition": 550,
     "obstacleNumber": 4,
     "followerRange": 250,
-    "followerNumber" :2
+    "followerNumber": 2,
+    "virusXCoordinates": [5, 350, 465, 830],
+    "virusYCoordinates": [5, 5, 560, 550],
+    "virusNumber": 4
   }
 }

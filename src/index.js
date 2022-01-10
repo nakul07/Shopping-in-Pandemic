@@ -6,6 +6,7 @@ let follower = [];
 let obstacles = [];
 let items = [];
 let opponents = [];
+let virus = [];
 let shop;
 let stat;
 let health = 2;
@@ -17,7 +18,7 @@ let isCollRight = false;
 let isCollBtm = false;
 let isCollTop = false;
 let levels;
-let currentLevel = 1; //level
+let currentLevel = 5; //level
 let playerPosX = [];
 let playerPosY = [];
 
@@ -43,6 +44,7 @@ function startAnimation() {
       opponents = getOpponents(2);
       obstacles = getObstacles(levels[currentLevel].obstacleNumber);
       items = getItems(itemsLeft);
+      virus = getVirus(levels[currentLevel].virusNumber);
       animationArea.start();
     });
 }
@@ -83,9 +85,15 @@ function updateAnimationArea() {
     Components.update();
   });
 
+  //update the followers
   follower.forEach((Components) => {
     Components.update();
     Components.follow();
+  });
+
+  //updates the virus
+  virus.forEach((Virus) => {
+    Virus.update();
   });
 
   //opponent movement
@@ -106,7 +114,6 @@ function updateAnimationArea() {
   checksOppCol();
   checksObsCol();
   collectItems(); //collects the items
-
   levelComplete();
 }
 
@@ -144,18 +151,21 @@ function handleClick1(event) {
 function healthCalculator() {
   for (let i = 0; i < opponents.length; i++) {
     for (let j = 0; j < follower.length; j++) {
-      if (
-        collisionDetection(player, opponents[i]) ||
-        collisionDetection(player, follower[j])
-      ) {
-        if (mask != 0) {
-          mask--;
-        } else {
-          health--;
-        }
+      for (let k = 0; k < virus.length; k++) {
+        if (
+          collisionDetection(player, opponents[i]) ||
+          collisionDetection(player, follower[j]) ||
+          collisionDetection(player, virus[k])
+        ) {
+          if (mask != 0) {
+            mask--;
+          } else {
+            health--;
+          }
 
-        player.x = 70;
-        player.y = 550; //reset player's position
+          player.x = 70;
+          player.y = 550; //reset player's position
+        }
       }
     }
   }
@@ -235,3 +245,5 @@ function checksObsCol() {
     }
   }
 }
+
+
