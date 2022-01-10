@@ -43,7 +43,7 @@ function getOpponents(number) {
         xCoordinates[i],
         yCoordinates[i],
         "opponents",
-        "blue",
+        `rgba(0, 255, 255, 0.4)`,
         50,
         50
       )
@@ -104,4 +104,24 @@ function collide(player, obstacles) {
     }
   }
   return collision;
+}
+
+//get followers
+function getFollower(number) {
+  let newFollower = [];
+  let xCoordinates = levels[currentLevel].followerXCoordinates;
+  let yCoordinates = levels[currentLevel].followerYCoordinates;
+  for (let i = 0; i < number; i++) {
+    newFollower.push(
+      new Components(
+        xCoordinates[i],
+        yCoordinates[i],
+        "opponents",
+        `rgba(255, 0, 0, 0.5)`,
+        50,
+        50
+      )
+    );
+  }
+  return newFollower;
 }

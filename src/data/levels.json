@@ -6,14 +6,17 @@
     "obstacleHeights": [20, 400, 400],
     "opponentXCoordinates": [200, 500],
     "opponentYCoordinates": [100, 400],
+    "followerXCoordinates": [300],
+    "followerYCoordinates": [400],
     "shopXCoordinates": [625],
     "shopYCoordinates": [95],
     "opponentLeftPosition": 200,
     "opponentRightPosition": 600,
     "opponentTopPosition": 300,
     "opponentBtmPosition": 540,
-    "obstacleNumber" : 3,
-    "followerRange" : 100
+    "obstacleNumber": 3,
+    "followerRange": 100,
+    "followerNumber": 0
   },
   "2": {
     "obstacleXCoordinates": [170, 800, 150],
@@ -22,14 +25,17 @@
     "obstacleHeights": [20, 400, 300],
     "opponentXCoordinates": [300, 710],
     "opponentYCoordinates": [100, 400],
+    "followerXCoordinates": [300],
+    "followerYCoordinates": [400],
     "shopXCoordinates": [25],
     "shopYCoordinates": [95],
     "opponentLeftPosition": 300,
     "opponentRightPosition": 800,
     "opponentTopPosition": 250,
     "opponentBtmPosition": 540,
-    "obstacleNumber" : 3,
-    "followerRange" : 150
+    "obstacleNumber": 3,
+    "followerRange": 250,
+    "followerNumber" :1
   },
   "3": {
     "obstacleXCoordinates": [400, 580, 165],
@@ -38,14 +44,17 @@
     "obstacleHeights": [20, 400, 400],
     "opponentXCoordinates": [680, 150],
     "opponentYCoordinates": [500, 50],
+    "followerXCoordinates": [350],
+    "followerYCoordinates": [400],
     "shopXCoordinates": [495],
     "shopYCoordinates": [210],
     "opponentLeftPosition": 640,
     "opponentRightPosition": 900,
     "opponentTopPosition": 20,
     "opponentBtmPosition": 190,
-    "obstacleNumber" : 3,
-    "followerRange" : 200
+    "obstacleNumber": 3,
+    "followerRange": 300,
+    "followerNumber" :1
   },
   "4": {
     "obstacleXCoordinates": [500, 800, 150],
@@ -54,14 +63,17 @@
     "obstacleHeights": [400, 400, 400],
     "opponentXCoordinates": [200, 785],
     "opponentYCoordinates": [100, 400],
+    "followerXCoordinates": [300,690],
+    "followerYCoordinates": [400,300],
     "shopXCoordinates": [855],
     "shopYCoordinates": [20],
     "opponentLeftPosition": 200,
     "opponentRightPosition": 700,
     "opponentTopPosition": 430,
     "opponentBtmPosition": 540,
-    "obstacleNumber" : 3,
-    "followerRange" : 300
+    "obstacleNumber": 3,
+    "followerRange": 200,
+    "followerNumber" :2
   },
   "5": {
     "obstacleXCoordinates": [280, 800, 150, 470],
@@ -70,13 +82,16 @@
     "obstacleHeights": [20, 400, 400, 400],
     "opponentXCoordinates": [200, 720],
     "opponentYCoordinates": [198, 400],
+    "followerXCoordinates": [300, 550],
+    "followerYCoordinates": [400, 130],
     "shopXCoordinates": [625],
     "shopYCoordinates": [95],
     "opponentLeftPosition": 200,
     "opponentRightPosition": 400,
     "opponentTopPosition": 300,
     "opponentBtmPosition": 550,
-    "obstacleNumber" : 4,
-    "followerRange" : 400
+    "obstacleNumber": 4,
+    "followerRange": 250,
+    "followerNumber" :2
   }
 }

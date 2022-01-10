@@ -46,6 +46,12 @@ function Components(x, y, type, color, width, height) {
   this.isPlayerLeft = false;
   this.isOppLeft = false;
 
+  //for follower
+  this.oppCol = false;
+  this.isFCollTop = false;
+  this.isFCollBtm = false;
+  this.isFCollRight = false;
+  this.isFCollLeft = false;
   //update components
   this.update = function () {
     ctx = animationArea.context;
@@ -89,7 +95,7 @@ function Components(x, y, type, color, width, height) {
 
       // opponents update
     } else if (this.type == "opponents") {
-      ctx.fillStyle = `rgba(0, 255, 255, 0.4)`;
+      ctx.fillStyle = color;
       ctx.beginPath();
       ctx.arc(this.x + 25, this.y + 25, 35, 0, 2 * Math.PI);
       ctx.stroke();
@@ -242,7 +248,7 @@ function Components(x, y, type, color, width, height) {
 
   this.follow = function () {
     this.isOppMoving = false;
-    if (oppCol) return;
+    if (this.oppCol) return;
 
     let isPlayerLeft = false;
     let isPlayerRight = false;
@@ -262,7 +268,7 @@ function Components(x, y, type, color, width, height) {
     if (calcDist(player.x, player.y, this.x, this.y) < this.minDistance) {
       this.isOppMoving = true;
       if (isPlayerRight) {
-        if (!isFCollRight) {
+        if (!this.isFCollRight) {
           this.x += this.fSpeed;
           this.isOppRight = true;
           this.isOppDown = false;
@@ -270,9 +276,13 @@ function Components(x, y, type, color, width, height) {
           this.isOppTop = false;
         } else {
           this.x -= this.fSpeed;
+          this.isOppRight = false;
+          this.isOppDown = false;
+          this.isOppLeft = true;
+          this.isOppTop = false;
         }
       } else if (isPlayerLeft) {
-        if (!isFCollLeft) {
+        if (!this.isFCollLeft) {
           this.x -= this.fSpeed;
           this.isOppRight = false;
           this.isOppDown = false;
@@ -280,9 +290,13 @@ function Components(x, y, type, color, width, height) {
           this.isOppTop = false;
         } else {
           this.x += this.fSpeed;
+          this.isOppRight = true;
+          this.isOppDown = false;
+          this.isOppLeft = false;
+          this.isOppTop = false;
         }
       } else if (isPlayerTop) {
-        if (!isFCollTop) {
+        if (!this.isFCollTop) {
           this.y -= this.fSpeed;
           this.isOppRight = false;
           this.isOppDown = false;
@@ -290,9 +304,13 @@ function Components(x, y, type, color, width, height) {
           this.isOppTop = true;
         } else {
           this.y += this.fSpeed;
+          this.isOppRight = false;
+          this.isOppDown = true;
+          this.isOppLeft = false;
+          this.isOppTop = false;
         }
       } else if (isPlayerBottom) {
-        if (!isFCollBtm) {
+        if (!this.isFCollBtm) {
           this.y += this.fSpeed;
           this.isOppRight = false;
           this.isOppDown = true;
@@ -300,6 +318,10 @@ function Components(x, y, type, color, width, height) {
           this.isOppTop = false;
         } else {
           this.y -= this.fSpeed;
+          this.isOppRight = false;
+          this.isOppDown = false;
+          this.isOppLeft = false;
+          this.isOppTop = true;
         }
       }
 
@@ -321,12 +343,12 @@ function Components(x, y, type, color, width, height) {
     isCollLeft = false;
     isCollTop = false;
     isCollBtm = false;
-    oppCol = false;
+    this.oppCol = false;
     this.rotate = false;
-    isFCollTop = false;
-    isFCollBtm = false;
-    isFCollRight = false;
-    isFCollLeft = false;
+    this.isFCollTop = false;
+    this.isFCollBtm = false;
+    this.isFCollRight = false;
+    this.isFCollLeft = false;
   };
 }
 

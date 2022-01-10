@@ -1,8 +1,8 @@
 let player;
-let follower;
 let entryDoor;
 let exitDoor;
 let floor;
+let follower = [];
 let obstacles = [];
 let items = [];
 let opponents = [];
@@ -10,19 +10,14 @@ let shop;
 let stat;
 let health = 2;
 let itemsLeft = 5;
-let coins = 3;
+let coins = 5;
 let mask = 0;
 let isCollLeft = false;
 let isCollRight = false;
 let isCollBtm = false;
 let isCollTop = false;
-let oppCol = false;
-let isFCollTop = false;
-let isFCollBtm = false;
-let isFCollRight = false;
-let isFCollLeft = false;
 let levels;
-let currentLevel = 1;
+let currentLevel = 1; //level
 let playerPosX = [];
 let playerPosY = [];
 
@@ -44,7 +39,7 @@ function startAnimation() {
       );
       exitDoor = new Doors(880, 550, "assets/exit.png", 90, 50);
       player = new Components(70, 550, "player", "red", 50, 50);
-      follower = new Components(300, 400, "opponents", "blue", 50, 50);
+      follower = getFollower(levels[currentLevel].followerNumber);
       opponents = getOpponents(2);
       obstacles = getObstacles(levels[currentLevel].obstacleNumber);
       items = getItems(itemsLeft);
@@ -88,8 +83,10 @@ function updateAnimationArea() {
     Components.update();
   });
 
-  follower.update();
-  follower.follow();
+  follower.forEach((Components) => {
+    Components.update();
+    Components.follow();
+  });
 
   //opponent movement
   oppMovement();
@@ -127,33 +124,39 @@ function handleClick(event) {
     player.moveBottom();
   } else if (
     event.keyCode == "32" &&
-    coins >= 3 &&
+    coins >= 5 &&
     collisionDetection(player, shop)
   ) {
     mask++;
-    coins = coins - 3;
+    coins = coins - 5;
   }
 }
 function handleClick1(event) {
   if ((event.keyCode == "38", "39", "40", "37")) {
     player.reset();
+    for (let i = 0; i < follower.length; i++) {
+      follower[i].reset();
+    }
   }
 }
-//calculates health
+
+//calculates health and game over
 function healthCalculator() {
   for (let i = 0; i < opponents.length; i++) {
-    if (
-      collisionDetection(player, opponents[i]) ||
-      collisionDetection(player, follower)
-    ) {
-      if (mask != 0) {
-        mask--;
-      } else {
-        health--;
-      }
+    for (let j = 0; j < follower.length; j++) {
+      if (
+        collisionDetection(player, opponents[i]) ||
+        collisionDetection(player, follower[j])
+      ) {
+        if (mask != 0) {
+          mask--;
+        } else {
+          health--;
+        }
 
-      player.x = 70;
-      player.y = 550; //reset player's position
+        player.x = 70;
+        player.y = 550; //reset player's position
+      }
     }
   }
   if (health <= 0) {
@@ -205,26 +208,30 @@ function checksCollision() {
 
 function checksOppCol() {
   for (let i = 0; i < opponents.length; i++) {
-    if (
-      collide(follower, opponents[i]) === "right" ||
-      collide(follower, opponents[i]) === "left" ||
-      collide(follower, opponents[i]) === "top" ||
-      collide(follower, opponents[i]) === "bottom"
-    ) {
-      oppCol = true;
+    for (let j = 0; j < follower.length; j++) {
+      if (
+        collide(follower[j], opponents[i]) === "right" ||
+        collide(follower[j], opponents[i]) === "left" ||
+        collide(follower[j], opponents[i]) === "top" ||
+        collide(follower[j], opponents[i]) === "bottom"
+      ) {
+        follower[j].oppCol = true;
+      }
     }
   }
 }
 function checksObsCol() {
   for (let i = 0; i < obstacles.length; i++) {
-    if (collide(follower, obstacles[i]) === "right") {
-      isFCollLeft = true;
-    } else if (collide(follower, obstacles[i]) === "left") {
-      isFCollRight = true;
-    } else if (collide(follower, obstacles[i]) === "top") {
-      isFCollBtm = true;
-    } else if (collide(follower, obstacles[i]) === "bottom") {
-      isFCollTop = true;
+    for (let j = 0; j < follower.length; j++) {
+      if (collide(follower[j], obstacles[i]) === "right") {
+        follower[j].isFCollLeft = true;
+      } else if (collide(follower[j], obstacles[i]) === "left") {
+        follower[j].isFCollRight = true;
+      } else if (collide(follower[j], obstacles[i]) === "top") {
+        follower[j].isFCollBtm = true;
+      } else if (collide(follower[j], obstacles[i]) === "bottom") {
+        follower[j].isFCollTop = true;
+      }
     }
   }
 }
