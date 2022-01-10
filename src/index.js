@@ -30,11 +30,13 @@ let coughSound;
 let lifeSound;
 let clearThroatSound;
 let footSteps;
+let backgroundSound;
 
 function startAnimation() {
   // if (localStorage.getItem("currentLevel") !== null) {
   //   currentLevel = localStorage.getItem("currentLevel");
   // }
+
   fetch("src/data/levels.json")
     .then((response) => {
       return response.json();
@@ -61,10 +63,23 @@ function startAnimation() {
       winSound = new Sound("assets/audio/win.mp3");
       lossSound = new Sound("assets/audio/loss.mp3");
       illegalsound = new Sound("assets/audio/illegal.mp3");
-      coughSound = new Sound("assets/audio/background.mp3");
+      backgroundSound = new Sound("assets/audio/background.mp3");
+      coughSound = new Sound("assets/audio/cough-female602.mp3");
       lifeSound = new Sound("assets/audio/life.mp3");
       clearThroatSound = new Sound("assets/audio/clearing-throat-female.mp3");
       footSteps = new Audio("assets/audio/footsteps2.mp3");
+      setInterval(() => {
+        clearThroatSound.play();
+        setTimeout(() => {
+          clearThroatSound.stop();
+        }, 2000);
+      }, 9000);
+      setInterval(() => {
+        coughSound.play();
+        setTimeout(() => {
+          coughSound.stop();
+        }, 2000);
+      }, 12000);
       animationArea.start();
     });
 }
@@ -276,5 +291,5 @@ function checksObsCol() {
 }
 
 function playSoundInInterval() {
-  coughSound.play();
+  backgroundSound.play();
 }

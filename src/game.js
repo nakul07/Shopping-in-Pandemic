@@ -272,9 +272,7 @@ function Components(x, y, type, color, width, height) {
     }
 
     if (calcDist(player.x, player.y, this.x, this.y) < this.minDistance) {
-      // setInterval(() => {
-      //   coughSound.play();
-      // }, 3000);
+     
       this.isOppMoving = true;
       if (isPlayerRight) {
         if (!this.isFCollRight) {
