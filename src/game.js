@@ -150,6 +150,7 @@ function Components(x, y, type, color, width, height) {
     this.isMoving = true;
     this.isPlayerLeft = true;
     this.x -= this.dx;
+    footSteps.play();
     this.isPlayerDown = false;
     this.isPlayerRight = false;
 
@@ -166,6 +167,7 @@ function Components(x, y, type, color, width, height) {
     this.isMoving = true;
     this.isPlayerRight = true;
     this.x += this.dx;
+    footSteps.play();
     this.isPlayerDown = false;
     this.isPlayerLeft = false;
 
@@ -182,6 +184,7 @@ function Components(x, y, type, color, width, height) {
     this.isMoving = true;
     this.isPlayerTop = true;
     this.y -= this.dy;
+    footSteps.play();
     this.isPlayerDown = false;
     this.isPlayerRight = false;
     this.isPlayerLeft = false;
@@ -199,6 +202,7 @@ function Components(x, y, type, color, width, height) {
     this.isMoving = true;
     this.isPlayerDown = true;
     this.y += this.dy;
+    footSteps.play();
     this.isPlayerRight = false;
     this.isPlayerLeft = false;
     // playerPosY.push(this.y);
@@ -213,6 +217,7 @@ function Components(x, y, type, color, width, height) {
         this.speed = -this.speed;
         this.isOppLeft = true;
         this.isOppRight = false;
+       // coughSound.play();
       } else if (this.positionX == this.leftPos) {
         this.speed = 1;
         this.isOppRight = true;
@@ -233,6 +238,7 @@ function Components(x, y, type, color, width, height) {
         this.speed = -this.speed;
         this.isOppTop = true;
         this.isOppDown = false;
+       // clearThroatSound.play();
       } else if (this.positionY == this.topPos) {
         this.speed = 1;
         this.isOppDown = true;
@@ -266,6 +272,9 @@ function Components(x, y, type, color, width, height) {
     }
 
     if (calcDist(player.x, player.y, this.x, this.y) < this.minDistance) {
+      // setInterval(() => {
+      //   coughSound.play();
+      // }, 3000);
       this.isOppMoving = true;
       if (isPlayerRight) {
         if (!this.isFCollRight) {
@@ -333,6 +342,7 @@ function Components(x, y, type, color, width, height) {
       // }
     } else {
       this.isOppMoving = false;
+      
     }
   };
 

@@ -1,7 +1,8 @@
 //initial screen setting up
-//let swoosh; //sound
+let click; //sound
 function onLoad() {
-  // swoosh = new sound("audio/swoosh.wav");
+  click = new Sound("assets/audio/click1.wav");
+  //background.play();
   const initialScreen = document.createElement("div");
   initialScreen.id = "initialScreen";
   initialScreen.style.height = "600px";
@@ -43,8 +44,9 @@ function onLoad() {
 
   //click event on start game
   startGame.addEventListener("mousedown", (Event) => {
-    // swoosh.play();
+    click.play();
     startAnimation();
     initialScreen.style.display = "none";
+
   });
 }

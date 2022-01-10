@@ -21,6 +21,15 @@ let levels;
 let currentLevel = 1; //level
 let playerPosX = [];
 let playerPosY = [];
+//sounds
+let pointSound;
+let winSound;
+let lossSound;
+let illegalsound;
+let coughSound;
+let lifeSound;
+let clearThroatSound;
+let footSteps;
 
 function startAnimation() {
   // if (localStorage.getItem("currentLevel") !== null) {
@@ -48,6 +57,14 @@ function startAnimation() {
       obstacles = getObstacles(levels[currentLevel].obstacleNumber);
       items = getItems(itemsLeft);
       virus = getVirus(levels[currentLevel].virusNumber);
+      pointSound = new Sound("assets/audio/point.mp3");
+      winSound = new Sound("assets/audio/win.mp3");
+      lossSound = new Sound("assets/audio/loss.mp3");
+      illegalsound = new Sound("assets/audio/illegal.mp3");
+      coughSound = new Sound("assets/audio/background.mp3");
+      lifeSound = new Sound("assets/audio/life.mp3");
+      clearThroatSound = new Sound("assets/audio/clearing-throat-female.mp3");
+      footSteps = new Audio("assets/audio/footsteps2.mp3");
       animationArea.start();
     });
 }
@@ -118,6 +135,7 @@ function updateAnimationArea() {
   checksObsCol();
   collectItems(); //collects the items
   levelComplete();
+  playSoundInInterval();
 }
 
 //handle click
@@ -137,6 +155,7 @@ function handleClick(event) {
     coins >= 5 &&
     collisionDetection(player, shop)
   ) {
+    pointSound.play();
     mask++;
     coins = coins - 5;
   }
@@ -165,6 +184,9 @@ function healthCalculator() {
           } else {
             health--;
           }
+          if (health !== 0) {
+            lifeSound.play();
+          }
 
           player.x = 70;
           player.y = 550; //reset player's position
@@ -175,6 +197,7 @@ function healthCalculator() {
   if (health <= 0) {
     health = 0;
     gameOver();
+    lossSound.play();
   }
 }
 
@@ -184,6 +207,7 @@ function collectItems() {
     if (calcDist(player.x, player.y, items[i].x, items[i].y) < 40) {
       destruct(i);
       itemsLeft--;
+      pointSound.play();
     }
   }
 }
@@ -199,8 +223,10 @@ function levelComplete() {
   if (collisionDetection(player, exitDoor)) {
     if (itemsLeft == 0) {
       levelCompleted();
+      winSound.play();
     } else {
       textDisplay(835, 475, "Collect all Items ", itemsLeft, "red");
+      illegalsound.play();
     }
   }
 }
@@ -247,4 +273,8 @@ function checksObsCol() {
       }
     }
   }
+}
+
+function playSoundInInterval() {
+  coughSound.play();
 }
