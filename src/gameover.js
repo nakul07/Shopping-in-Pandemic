@@ -49,7 +49,7 @@ function gameOver() {
     popUp.style.display = "none"; //hide popup
     health = 3;
     itemsLeft = 5;
-    coins =3;
+    coins =coins;
 
     startAnimation();
   };

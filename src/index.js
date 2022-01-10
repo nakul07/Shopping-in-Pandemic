@@ -11,7 +11,7 @@ let shop;
 let stat;
 let health = 2;
 let itemsLeft = 5;
-let coins = 5;
+let coins = 3;
 let mask = 0;
 let isCollLeft = false;
 let isCollRight = false;
