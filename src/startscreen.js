@@ -26,7 +26,7 @@ function onLoad() {
   instructions.style.color = "purple";
   instructions.style.fontFamily = "'Ubuntu', sans-serif ";
   instructions.innerText =
-    "Collect all the items without being contaminated with Corona Virus. Mask can save your health only once. You can buy a Mask at shop for 5 coins "; //instructions
+    "Collect all the items without being contaminated with Corona Virus. Mask can save your health only once. You can buy a Mask at shop for 5 coins using Space Bar. Use arrow keys to move the player "; //instructions
   instructionWrapper.append(instructions);
   initialScreen.append(instructionWrapper);
   const startGame = document.createElement("div");
@@ -37,7 +37,7 @@ function onLoad() {
   startGame.style.backgroundSize = "cover";
   startGame.style.backgroundRepeat = "no-repeat";
   startGame.style.position = "absolute";
-  startGame.style.marginTop = "39px";
+  startGame.style.marginTop = "19px";
   startGame.style.left = "15%";
   startGame.style.cursor = "pointer";
   instructionWrapper.append(startGame);
