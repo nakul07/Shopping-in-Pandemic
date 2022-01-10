@@ -1,8 +1,5 @@
 function levelCompleted() {
-  //highscore
-  // if (score > highscore) {
-  //   localStorage.setItem("highscore1", score);
-  // }
+ // localStorage.setItem("currentLevel", currentLevel + 1);
 
   clearInterval(animationArea.interval);
   animationArea.container.position = "relative";

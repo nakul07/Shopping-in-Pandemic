@@ -23,6 +23,9 @@ let playerPosX = [];
 let playerPosY = [];
 
 function startAnimation() {
+  // if (localStorage.getItem("currentLevel") !== null) {
+  //   currentLevel = localStorage.getItem("currentLevel");
+  // }
   fetch("src/data/levels.json")
     .then((response) => {
       return response.json();
@@ -245,5 +248,3 @@ function checksObsCol() {
     }
   }
 }
-
-

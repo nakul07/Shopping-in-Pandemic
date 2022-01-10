@@ -1,0 +1,12 @@
+canvas {
+  background-color: rgb(201, 196, 201);
+  border: 3px solid black;
+}
+#canvas-container {
+  width: 100%;
+  text-align: center;
+}
+#startGame:hover {
+  transform: scale(0.9);
+  transition: 0.1s ease;
+}

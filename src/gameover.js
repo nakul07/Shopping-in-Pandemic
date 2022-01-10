@@ -1,7 +1,7 @@
 function gameOver() {
   //highscore
   // if (score > highscore) {
-  //   localStorage.setItem("highscore1", score);
+  // localStorage.setItem("currentLevel", currentLevel);
   // }
 
   clearInterval(animationArea.interval);
@@ -49,7 +49,7 @@ function gameOver() {
     popUp.style.display = "none"; //hide popup
     health = 3;
     itemsLeft = 5;
-    coins =coins;
+    coins = coins;
 
     startAnimation();
   };
