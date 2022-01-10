@@ -1,8 +1,4 @@
 function gameOver() {
-  //highscore
-  // if (score > highscore) {
-
-  // }
 
   clearInterval(animationArea.interval);
   animationArea.container.position = "relative";

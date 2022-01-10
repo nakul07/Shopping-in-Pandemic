@@ -21,6 +21,9 @@ let levels;
 let currentLevel = 1; //level
 let playerPosX = [];
 let playerPosY = [];
+let audioControl;
+let audioControlSrc = "assets/son.png";
+let isMuted = false;
 //sounds
 let pointSound;
 let winSound;
@@ -61,6 +64,8 @@ function startAnimation() {
       obstacles = getObstacles(levels[currentLevel].obstacleNumber);
       items = getItems(itemsLeft);
       virus = getVirus(levels[currentLevel].virusNumber);
+      audioControl = new SoundControl(350, 9, audioControlSrc);
+
       pointSound = new Sound("assets/audio/point.mp3");
       winSound = new Sound("assets/audio/win.mp3");
       lossSound = new Sound("assets/audio/loss.mp3");
@@ -70,6 +75,7 @@ function startAnimation() {
       lifeSound = new Sound("assets/audio/life.mp3");
       clearThroatSound = new Sound("assets/audio/clearing-throat-female.mp3");
       footSteps = new Audio("assets/audio/footsteps2.mp3");
+
       setInterval(() => {
         clearThroatSound.play();
         setTimeout(() => {
@@ -96,6 +102,8 @@ let animationArea = {
     this.container.append(this.canvas);
     document.body.addEventListener("keydown", handleClick);
     document.body.addEventListener("keyup", handleClick1);
+    document.body.addEventListener("mousedown", handleClick2);
+    document.body.addEventListener("mousemove", handleClick3);
 
     this.interval = setInterval(updateAnimationArea, 16.67);
   },
@@ -136,6 +144,9 @@ function updateAnimationArea() {
   //opponent movement
   oppMovement();
 
+  //audio icons update
+  audioControl.update();
+
   healthCalculator(); //calculates health
   textDisplay(885, 30, "Health", health, "black"); //displays health
   textDisplay(725, 30, "Items Left", itemsLeft, "black"); //displays number of remaining items
@@ -147,6 +158,7 @@ function updateAnimationArea() {
   items.forEach((Items) => {
     Items.update();
   });
+
   checksCollision();
   checksOppCol();
   checksObsCol();
@@ -294,4 +306,36 @@ function checksObsCol() {
 
 function playSoundInInterval() {
   backgroundSound.play();
+}
+
+function handleClick2(event) {
+  click.play();
+  if (
+    event.offsetX > audioControl.x &&
+    event.offsetX < audioControl.x + audioControl.width &&
+    event.offsetY > audioControl.y &&
+    event.offsetY < audioControl.y + audioControl.height
+  ) {
+    if (!isMuted) {
+      isMuted = true;
+      backgroundSound.stop();
+      audioControl.img.src = "assets/soff.png";
+    } else if (isMuted) {
+      isMuted = false;
+      audioControl.img.src = "assets/son.png";
+    }
+  }
+}
+
+function handleClick3(event) {
+  if (
+    event.offsetX > audioControl.x &&
+    event.offsetX < audioControl.x + audioControl.width &&
+    event.offsetY > audioControl.y &&
+    event.offsetY < audioControl.y + audioControl.height
+  ) {
+    animationArea.canvas.style.cursor = "pointer";
+  } else {
+    animationArea.canvas.style.cursor = "default";
+  }
 }
