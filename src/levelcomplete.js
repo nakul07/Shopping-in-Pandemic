@@ -55,6 +55,9 @@ function levelCompleted() {
     localStorage.setItem("currentLevel", currentLevel);
     backgroundSound.stop();
     coughSound.stop();
+    clearThroatSound.stop();
+    clearInterval(soundA);
+    clearInterval(soundB);
     // console.log(coins);
     startAnimation();
   };

@@ -1,5 +1,4 @@
 function gameOver() {
-
   clearInterval(animationArea.interval);
   animationArea.container.position = "relative";
 
@@ -50,6 +49,9 @@ function gameOver() {
     click.play();
     backgroundSound.stop();
     coughSound.stop();
+    clearThroatSound.stop();
+    clearInterval(soundA);
+    clearInterval(soundB);
     startAnimation();
   };
 }

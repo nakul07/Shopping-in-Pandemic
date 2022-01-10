@@ -22,8 +22,9 @@ let currentLevel = 1; //level
 let playerPosX = [];
 let playerPosY = [];
 let audioControl;
-let audioControlSrc = "assets/son.png";
+let audioControlSrc;
 let isMuted = false;
+
 //sounds
 let pointSound;
 let winSound;
@@ -34,6 +35,8 @@ let lifeSound;
 let clearThroatSound;
 let footSteps;
 let backgroundSound;
+let soundA;
+let soundB;
 
 function startAnimation() {
   if (localStorage.getItem("currentLevel") !== null) {
@@ -41,7 +44,11 @@ function startAnimation() {
   } else {
     currentLevel = 1;
   }
-
+  if (isMuted) {
+    audioControlSrc = "assets/soff.png";
+  } else {
+    audioControlSrc = "assets/son.png";
+  }
   fetch("src/data/levels.json")
     .then((response) => {
       return response.json();
@@ -74,15 +81,15 @@ function startAnimation() {
       coughSound = new Sound("assets/audio/cough-female602.mp3");
       lifeSound = new Sound("assets/audio/life.mp3");
       clearThroatSound = new Sound("assets/audio/clearing-throat-female.mp3");
-      footSteps = new Audio("assets/audio/footsteps2.mp3");
+      footSteps = new Sound("assets/audio/footsteps2.mp3");
 
-      setInterval(() => {
+      soundA = setInterval(() => {
         clearThroatSound.play();
         setTimeout(() => {
           clearThroatSound.stop();
         }, 2000);
       }, 9000);
-      setInterval(() => {
+      soundB = setInterval(() => {
         coughSound.play();
         setTimeout(() => {
           coughSound.stop();
