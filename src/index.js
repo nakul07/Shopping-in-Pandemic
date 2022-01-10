@@ -33,9 +33,11 @@ let footSteps;
 let backgroundSound;
 
 function startAnimation() {
-  // if (localStorage.getItem("currentLevel") !== null) {
-  //   currentLevel = localStorage.getItem("currentLevel");
-  // }
+  if (localStorage.getItem("currentLevel") !== null) {
+    currentLevel = localStorage.getItem("currentLevel");
+  } else {
+    currentLevel = 1;
+  }
 
   fetch("src/data/levels.json")
     .then((response) => {
@@ -165,14 +167,14 @@ function handleClick(event) {
     player.moveTop();
   } else if (event.keyCode == "40") {
     player.moveBottom();
-  } else if (
-    event.keyCode == "32" &&
-    coins >= 5 &&
-    collisionDetection(player, shop)
-  ) {
-    pointSound.play();
-    mask++;
-    coins = coins - 5;
+  } else if (event.keyCode == "32") {
+    if (coins >= 5 && collisionDetection(player, shop)) {
+      pointSound.play();
+      mask++;
+      coins = coins - 5;
+    } else {
+      illegalsound.play();
+    }
   }
 }
 function handleClick1(event) {

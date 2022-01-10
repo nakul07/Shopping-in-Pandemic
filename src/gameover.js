@@ -1,9 +1,9 @@
 function gameOver() {
   //highscore
   // if (score > highscore) {
-  // localStorage.setItem("currentLevel", currentLevel);
+
   // }
-  
+
   clearInterval(animationArea.interval);
   animationArea.container.position = "relative";
 
@@ -46,11 +46,13 @@ function gameOver() {
 
   //reload onclick action
   reLoad.onclick = function () {
+    localStorage.setItem("currentLevel", currentLevel);
     popUp.style.display = "none"; //hide popup
     health = 3;
     itemsLeft = 5;
     coins = coins;
     click.play();
+    backgroundSound.stop();
     coughSound.stop();
     startAnimation();
   };

@@ -1,6 +1,4 @@
 function levelCompleted() {
-  // localStorage.setItem("currentLevel", currentLevel + 1);
-
   clearInterval(animationArea.interval);
   animationArea.container.position = "relative";
 
@@ -54,6 +52,8 @@ function levelCompleted() {
     if (currentLevel > 5) {
       currentLevel = 1;
     }
+    localStorage.setItem("currentLevel", currentLevel);
+    backgroundSound.stop();
     coughSound.stop();
     // console.log(coins);
     startAnimation();
