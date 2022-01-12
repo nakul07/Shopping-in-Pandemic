@@ -12,7 +12,7 @@ let shop;
 let stat;
 let health = 2;
 let itemsLeft = 5;
-let coins = 3;
+let coins = 5;
 let mask = 0;
 let isCollLeft = false;
 let isCollRight = false;
@@ -67,7 +67,14 @@ function startAnimation() {
         100
       );
       exitDoor = new Doors(880, 550, "assets/exit.png", 90, 50);
-      player = new Components(70, 550, "player", "red", 50, 50);
+      player = new Components(
+        70,
+        550,
+        "player",
+        `rgba(52, 224, 2, 0.5)`,
+        50,
+        50
+      );
       follower = getFollower(levels[currentLevel].followerNumber);
       opponents = getOpponents(2);
       obstacles = getObstacles(levels[currentLevel].obstacleNumber);
@@ -176,6 +183,7 @@ function updateAnimationArea() {
   collectItems(); //collects the items
   levelComplete();
   playSoundInInterval();
+  maskIndicator();
 }
 
 //handle click
@@ -348,5 +356,13 @@ function handleClick3(event) {
     animationArea.canvas.style.cursor = "pointer";
   } else {
     animationArea.canvas.style.cursor = "default";
+  }
+}
+
+function maskIndicator() {
+  if (mask > 0) {
+    player.isMaskOn = true;
+  } else {
+    player.isMaskOn = false;
   }
 }

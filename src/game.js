@@ -45,6 +45,7 @@ function Components(x, y, type, color, width, height) {
   this.isOppRight = false;
   this.isPlayerLeft = false;
   this.isOppLeft = false;
+  this.isMaskOn = false;
 
   //for follower
   this.oppCol = false;
@@ -59,6 +60,13 @@ function Components(x, y, type, color, width, height) {
 
     //player update
     if (this.type == "player") {
+      if (this.isMaskOn) {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(this.x + 25, this.y + 25, 35, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
+      }
       if (this.isPlayerDown) {
         if (!this.isMoving) {
           this.img.src = "assets/playerdown.png";
@@ -217,7 +225,7 @@ function Components(x, y, type, color, width, height) {
         this.speed = -this.speed;
         this.isOppLeft = true;
         this.isOppRight = false;
-       // coughSound.play();
+        // coughSound.play();
       } else if (this.positionX == this.leftPos) {
         this.speed = 1;
         this.isOppRight = true;
@@ -238,7 +246,7 @@ function Components(x, y, type, color, width, height) {
         this.speed = -this.speed;
         this.isOppTop = true;
         this.isOppDown = false;
-       // clearThroatSound.play();
+        // clearThroatSound.play();
       } else if (this.positionY == this.topPos) {
         this.speed = 1;
         this.isOppDown = true;
@@ -272,7 +280,6 @@ function Components(x, y, type, color, width, height) {
     }
 
     if (calcDist(player.x, player.y, this.x, this.y) < this.minDistance) {
-     
       this.isOppMoving = true;
       if (isPlayerRight) {
         if (!this.isFCollRight) {
@@ -340,7 +347,6 @@ function Components(x, y, type, color, width, height) {
       // }
     } else {
       this.isOppMoving = false;
-      
     }
   };
 
