@@ -1,415 +1,476 @@
-function Components(x, y, type, color, width, height) {
-  this.type = type;
-  this.color = color;
-  this.height = height;
-  this.width = width;
-  this.x = x;
-  this.y = y;
-  this.r = 20;
-  this.dx = 5;
-  this.dy = 5;
-  this.collided = false;
-  this.positionX = this.x;
-  this.positionY = this.y;
-  this.speed = 1;
-  this.speedx = 1;
-  this.speedy = 0;
-  this.moveTurn = "x";
-  this.imgIndex = 1;
-  this.count = 0;
-  //player images array
-  this.playerImages = ["player-left.svg", "player-right.svg"];
-  this.playerImagesD = ["playerleftdown.png", "playerrightdown.png"];
-  this.playerImagesL = ["playerleftleft.png", "playerrightleft.png"];
-  this.playerImagesR = ["playerleftright.png", "playerrightright.png"];
-  //opponents images array
-  this.oppImagesT = ["buyer1-left.svg", "buyer1-right.svg"];
-  this.oppImagesR = ["buyer-left-right.png", "buyer-right-right.png"];
-  this.oppImagesL = ["buyer-left-left.png", "buyer-right-left.png"];
-  this.oppImagesD = ["buyer-left-down.png", "buyer-right-down.png"];
+let player;
+let entryDoor;
+let exitDoor;
+let floor;
+let dashBoard;
+let follower = [];
+let obstacles = [];
+let items = [];
+let opponents = [];
+let virus = [];
+let shop;
+let stat;
+let health = 2;
+let itemsLeft = 6;
+let coins = 5;
+let mask = 0;
+let levels;
+let playerPosX = [];
+let playerPosY = [];
+let audioControl;
+let audioControlSrc;
+let isMuted = false;
 
-  this.img = document.createElement("img");
-  this.interval = setInterval(() => {
-    this.imgIndex = (this.imgIndex + 1) % 2;
-  }, 400);
-  this.isFollow = false;
-  this.fSpeed = 1;
-  this.minDistance = levels[currentLevel].followerRange;
-  this.isMoving = false;
-  this.isOppMoving = false;
-  this.isPlayerDown = false;
-  this.isOppDown = false;
-  this.isPlayerTop = false;
-  this.isOppTop = false;
-  this.isPlayerRight = false;
-  this.isOppRight = false;
-  this.isPlayerLeft = false;
-  this.isOppLeft = false;
-  this.isMaskOn = false;
+//sounds
+let pointSound;
+let winSound;
+let lossSound;
+let illegalsound;
+let coughSound;
+let lifeSound;
+let clearThroatSound;
+let footSteps;
+let backgroundSound;
+let soundA; //cough sound
+let soundB; //clear throat sound
 
-  //for follower
-  this.oppCol = false;
-  this.isFCollTop = false;
-  this.isFCollBtm = false;
-  this.isFCollRight = false;
-  this.isFCollLeft = false;
-  //update components
-  this.update = function () {
-    ctx = animationArea.context;
-    ctx.fillStyle = this.color;
+function startAnimation() {
+  if (localStorage.getItem("currentLevel") !== null) {
+    currentLevel = localStorage.getItem("currentLevel");
+  } else {
+    currentLevel = 1;
+  }
+  if (isMuted) {
+    audioControlSrc = loadedImages.soundOff;
+  } else {
+    audioControlSrc = loadedImages.soundOn;
+  }
+  fetch("src/data/levels.json")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      levels = data;
+      floor = new Entity(0, 0, loadedImages.floor, 1000, 600);
+      dashBoard = new Entity(1000, 0, loadedImages.dashboard, 200, 600);
+      entryDoor = new Entity(45, 550, loadedImages.entry, 100, 60);
+      shop = new Entity(
+        levels[currentLevel].shopXCoordinates,
+        levels[currentLevel].shopYCoordinates,
+        loadedImages.mask,
+        100,
+        100
+      );
+      exitDoor = new Entity(880, 550, loadedImages.exit, 90, 50);
+      player = new Components(
+        70,
+        550,
+        "player",
+        `rgba(52, 224, 2, 0.5)`,
+        50,
+        50
+      );
+      follower = getFollower(levels[currentLevel].followerNumber);
+      opponents = getOpponents(levels[currentLevel].noOpp);
+      obstacles = getObstacles(levels[currentLevel].obstacleNumber);
+      items = getItems(itemsLeft);
+      virus = getVirus(levels[currentLevel].virusNumber);
+      audioControl = new SoundControl(1060, 50, audioControlSrc);
 
-    //player update
-    if (this.type == "player") {
-      if (this.isMaskOn) {
-        ctx.fillStyle = color;
-        ctx.beginPath();
-        ctx.arc(this.x + 25, this.y + 25, 35, 0, 2 * Math.PI);
-        ctx.stroke();
-        ctx.fill();
-      }
-      if (this.isPlayerDown) {
-        if (!this.isMoving) {
-          this.img.src = "assets/playerdown.png";
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        } else {
-          this.img.src = `assets/${this.playerImagesD[this.imgIndex]}`;
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        }
-      } else if (this.isPlayerLeft) {
-        if (!this.isMoving) {
-          this.img.src = "assets/playerleft.png";
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        } else {
-          this.img.src = `assets/${this.playerImagesL[this.imgIndex]}`;
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        }
-      } else if (this.isPlayerRight) {
-        if (!this.isMoving) {
-          this.img.src = "assets/playerright.png";
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        } else {
-          this.img.src = `assets/${this.playerImagesR[this.imgIndex]}`;
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        }
-      } else {
-        if (!this.isMoving) {
-          this.img.src = "assets/player.svg";
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        } else {
-          this.img.src = `assets/${this.playerImages[this.imgIndex]}`;
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        }
-      }
+      pointSound = new Sound("assets/audio/point.mp3");
+      winSound = new Sound("assets/audio/win.mp3");
+      lossSound = new Sound("assets/audio/loss.mp3");
+      illegalsound = new Sound("assets/audio/illegal.mp3");
+      backgroundSound = new Sound("assets/audio/background.mp3");
+      coughSound = new Sound("assets/audio/cough-female602.mp3");
+      lifeSound = new Sound("assets/audio/life.mp3");
+      clearThroatSound = new Sound("assets/audio/clearing-throat-female.mp3");
+      footSteps = new Sound("assets/audio/footsteps2.mp3");
 
-      // opponents update
-    } else if (this.type == "opponents") {
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(this.x + 25, this.y + 25, 35, 0, 2 * Math.PI);
-      ctx.stroke();
-      ctx.fill();
-      if (this.isOppDown) {
-        if (!this.isOppMoving) {
-          this.img.src = "assets/opponent-down.png";
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        } else {
-          this.img.src = `assets/${this.oppImagesD[this.imgIndex]}`;
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        }
-      } else if (this.isOppLeft) {
-        if (!this.isOppMoving) {
-          this.img.src = "assets/opponent-left.png";
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        } else {
-          this.img.src = `assets/${this.oppImagesL[this.imgIndex]}`;
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        }
-      } else if (this.isOppTop) {
-        if (!this.isOppMoving) {
-          this.img.src = "assets/opponent-up.png";
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        } else {
-          this.img.src = `assets/${this.oppImagesT[this.imgIndex]}`;
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        }
-      } else {
-        // (this.isPlayerRight) {
-        if (!this.isOppMoving) {
-          this.img.src = "assets/opponent-right.png";
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        } else {
-          this.img.src = `assets/${this.oppImagesR[this.imgIndex]}`;
-          ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        }
-      }
+      soundA = setInterval(() => {
+        clearThroatSound.play();
+        setTimeout(() => {
+          clearThroatSound.stop();
+        }, 2000);
+      }, 9000);
+      soundB = setInterval(() => {
+        coughSound.play();
+        setTimeout(() => {
+          coughSound.stop();
+        }, 2000);
+      }, 12000);
+      animationArea.start();
+    });
+}
 
-      //obstacles update
-    } else if (this.type == "obstacles") {
-      ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-  };
+let animationArea = {
+  container: document.getElementById("canvas-container"),
+  canvas: document.createElement("canvas"),
+  start: function () {
+    this.canvas.width = 1200;
+    this.canvas.width1 = 1000;
+    this.canvas.height = 600;
+    this.context = this.canvas.getContext("2d");
+    this.container.append(this.canvas);
+    document.body.addEventListener("keydown", handleClick);
+    document.body.addEventListener("keyup", handleClick1);
+    document.body.addEventListener("mousedown", handleClick2);
+    document.body.addEventListener("mousemove", handleClick3);
 
-  //move left
-  this.moveLeft = function () {
-    if (this.x < 0) {
-      return;
-    }
-    if (isCollLeft) return;
-    this.isMoving = true;
-    this.isPlayerLeft = true;
-    this.x -= this.dx;
-    footSteps.play();
-    this.isPlayerDown = false;
-    this.isPlayerRight = false;
+    this.interval = setInterval(updateAnimationArea, 16.67);
+  },
+  clear: function () {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  },
+};
 
-    // playerPosY.push(this.y);
-    // playerPosX.push(this.x);
-  };
+//updates the games in each frame
+function updateAnimationArea() {
+  animationArea.clear(); //clears everything on canvas
+  floor.update();
+  dashBoard.update();
+  shop.update();
+  entryDoor.update();
+  exitDoor.update();
+  player.update(); // updates the player
 
-  //move right
-  this.moveRight = function () {
-    if (this.x > animationArea.canvas.width1 - (this.width + 3)) {
-      return;
-    }
-    if (isCollRight) return;
-    this.isMoving = true;
-    this.isPlayerRight = true;
-    this.x += this.dx;
-    footSteps.play();
-    this.isPlayerDown = false;
-    this.isPlayerLeft = false;
+  //updates the opponents
+  opponents.forEach((Components) => {
+    Components.update();
+  });
 
-    // playerPosY.push(this.y);
-    // playerPosX.push(this.x);
-  };
+  //updates the obstacles
+  obstacles.forEach((Components) => {
+    Components.update();
+  });
 
-  //move top
-  this.moveTop = function () {
-    if (this.y < 0) {
-      return;
-    }
-    if (isCollTop) return;
-    this.isMoving = true;
-    this.isPlayerTop = true;
-    this.y -= this.dy;
-    footSteps.play();
-    this.isPlayerDown = false;
-    this.isPlayerRight = false;
-    this.isPlayerLeft = false;
+  //update the followers
+  follower.forEach((Components) => {
+    Components.update();
+    Components.follow();
+  });
 
-    // playerPosY.push(this.y);
-    // playerPosX.push(this.x);
-  };
+  //updates the virus
+  virus.forEach((Virus) => {
+    Virus.update();
+  });
 
-  //move bottom
-  this.moveBottom = function () {
-    if (this.y > animationArea.canvas.height - (this.height + 3)) {
-      return;
-    }
-    if (isCollBtm) return;
-    this.isMoving = true;
-    this.isPlayerDown = true;
-    this.y += this.dy;
-    footSteps.play();
-    this.isPlayerRight = false;
-    this.isPlayerLeft = false;
-  };
+  //opponent movement
+  oppMovement();
 
-  // opponents movement
-  this.moveOpponents = function (oppNo, left, right, top, btm) {
-    this.isOppMoving = true;
-    if (!collisionDetection(player, opponents[oppNo])) {
-      if (Math.floor(Date.now() / 10) % 200 === 0) {
-        if (this.moveTurn === "x") {
-          this.speedy = 0;
-          this.speedx = getRandom(0, 1);
-          if (!this.speedx) this.speedx = -1;
-          this.moveTurn = "y";
-        } else {
-          this.speedx = 0;
-          this.speedy = getRandom(0, 1);
-          if (!this.speedy) this.speedy = -1;
-          this.moveTurn = "x";
-        }
-      }
+  //audio icons update
+  audioControl.update();
 
-      if (this.x + this.speedx > left && this.x + this.speedx < right) {
-        this.x = this.x + this.speedx;
-        this.changeAnimation();
-      } else {
-        if (this.moveTurn === "x") {
-          this.speedy = 0;
-          this.speedx = getRandom(0, 1);
-          if (!this.speedx) this.speedx = -1;
-          this.moveTurn = "y";
-        } else {
-          this.speedx = 0;
-          this.speedy = getRandom(0, 1);
-          if (!this.speedy) this.speedy = -1;
-          this.moveTurn = "x";
-        }
-      }
-      if (this.y + this.speedy > top && this.y + this.speedy < btm) {
-        this.y = this.y + this.speedy;
-        this.changeAnimation();
-      } else {
-        if (this.moveTurn === "x") {
-          this.speedy = 0;
-          this.speedx = getRandom(0, 1);
-          if (!this.speedx) this.speedx = -1;
-          this.moveTurn = "y";
-        } else {
-          this.speedx = 0;
-          this.speedy = getRandom(0, 1);
-          if (!this.speedy) this.speedy = -1;
-          this.moveTurn = "x";
-        }
-      }
-    }
-  };
+  healthCalculator(); //calculates health
+  textDisplay(1020, 200, "Level", currentLevel, "black"); //displayes level
+  textDisplay(1020, 250, "Health", health, "black"); //displays health
+  textDisplay(1020, 300, "Items Left", itemsLeft, "black"); //displays number of remaining items
+  textDisplay(1020, 350, "Coins", coins, "black"); //displays coins
+  textDisplay(1020, 400, "Mask", mask, "black"); //displays mask
 
-  //for oppponent's animation
-  this.changeAnimation = function () {
-    if (this.speedx === 1) {
-      // console.log("moving right");
-      this.isOppRight = true;
-      this.isOppLeft = false;
-      this.isOppTop = false;
-      this.isOppDown = false;
-    } else if (this.speedx === -1) {
-      // console.log("moving left");
-      this.isOppRight = false;
-      this.isOppLeft = true;
-      this.isOppTop = false;
-      this.isOppDown = false;
-    } else if (this.speedy === 1) {
-      // console.log("moving btm");
-      this.isOppRight = false;
-      this.isOppLeft = false;
-      this.isOppTop = false;
-      this.isOppDown = true;
-    } else if (this.speedy === -1) {
-      // console.log("moving top");
-      this.isOppRight = false;
-      this.isOppLeft = false;
-      this.isOppTop = true;
-      this.isOppDown = false;
-    }
-  };
+  // updates the items
+  items.forEach((Items) => {
+    Items.update();
+  });
 
-  this.follow = function () {
-    this.isOppMoving = false;
-    if (this.oppCol) return;
+  checksCollision();
+  checksOppCol();
+  checksObsCol();
+  collectItems(); //collects the items
+  levelComplete();
+  playSoundInInterval();
+  maskIndicator();
+}
 
-    let isPlayerLeft = false;
-    let isPlayerRight = false;
-    let isPlayerTop = false;
-    let isPlayerBottom = false;
+//get opponents
+function getOpponents(number) {
+  let newOpponents = [];
+  let xCoordinates = levels[currentLevel].opponentXCoordinates;
+  let yCoordinates = levels[currentLevel].opponentYCoordinates;
+  for (let i = 0; i < number; i++) {
+    newOpponents.push(
+      new Components(
+        xCoordinates[i],
+        yCoordinates[i],
+        "opponents",
+        `rgba(0, 255, 255, 0.4)`,
+        50,
+        50
+      )
+    );
+  }
+  return newOpponents;
+}
 
-    if (player.x > this.x) {
-      isPlayerRight = true;
-    } else if (player.x < this.x) {
-      isPlayerLeft = true;
-    } else if (player.y < this.y) {
-      isPlayerTop = true;
-    } else if (player.y > this.y) {
-      isPlayerBottom = true;
-    }
+//get obstacles
+function getObstacles(number) {
+  let newObstacles = [];
+  let xCoordinates = levels[currentLevel].obstacleXCoordinates;
+  let yCoordinates = levels[currentLevel].obstacleYCoordinates;
+  let widths = levels[currentLevel].obstacleWidths;
+  let heights = levels[currentLevel].obstacleHeights;
+  for (let i = 0; i < number; i++) {
+    newObstacles.push(
+      new Components(
+        xCoordinates[i],
+        yCoordinates[i],
+        "obstacles",
+        "black",
+        widths[i],
+        heights[i]
+      )
+    );
+  }
+  return newObstacles;
+}
 
-    if (calcDist(player.x, player.y, this.x, this.y) < this.minDistance) {
-      this.isOppMoving = true;
-      if (isPlayerRight) {
-        if (!this.isFCollRight) {
-          this.x += this.fSpeed;
-          this.isOppRight = true;
-          this.isOppDown = false;
-          this.isOppLeft = false;
-          this.isOppTop = false;
-        } else {
-          this.x -= this.fSpeed;
-          this.isOppRight = false;
-          this.isOppDown = false;
-          this.isOppLeft = true;
-          this.isOppTop = false;
-        }
-      } else if (isPlayerLeft) {
-        if (!this.isFCollLeft) {
-          this.x -= this.fSpeed;
-          this.isOppRight = false;
-          this.isOppDown = false;
-          this.isOppLeft = true;
-          this.isOppTop = false;
-        } else {
-          this.x += this.fSpeed;
-          this.isOppRight = true;
-          this.isOppDown = false;
-          this.isOppLeft = false;
-          this.isOppTop = false;
-        }
-      } else if (isPlayerTop) {
-        if (!this.isFCollTop) {
-          this.y -= this.fSpeed;
-          this.isOppRight = false;
-          this.isOppDown = false;
-          this.isOppLeft = false;
-          this.isOppTop = true;
-        } else {
-          this.y += this.fSpeed;
-          this.isOppRight = false;
-          this.isOppDown = true;
-          this.isOppLeft = false;
-          this.isOppTop = false;
-        }
-      } else if (isPlayerBottom) {
-        if (!this.isFCollBtm) {
-          this.y += this.fSpeed;
-          this.isOppRight = false;
-          this.isOppDown = true;
-          this.isOppLeft = false;
-          this.isOppTop = false;
-        } else {
-          this.y -= this.fSpeed;
-          this.isOppRight = false;
-          this.isOppDown = false;
-          this.isOppLeft = false;
-          this.isOppTop = true;
-        }
-      }
+//get followers
+function getFollower(number) {
+  let newFollower = [];
+  let xCoordinates = levels[currentLevel].followerXCoordinates;
+  let yCoordinates = levels[currentLevel].followerYCoordinates;
+  for (let i = 0; i < number; i++) {
+    newFollower.push(
+      new Components(
+        xCoordinates[i],
+        yCoordinates[i],
+        "opponents",
+        `rgba(255, 0, 0, 0.5)`,
+        50,
+        50
+      )
+    );
+  }
+  return newFollower;
+}
+
+//get virus
+function getVirus(number) {
+  let newVirus = [];
+  let xCoordinates = levels[currentLevel].virusXCoordinates;
+  let yCoordinates = levels[currentLevel].virusYCoordinates;
+  for (let i = 0; i < number; i++) {
+    newVirus.push(new Virus(xCoordinates[i], yCoordinates[i]));
+  }
+  return newVirus;
+}
+
+function getItems(noOfBalls) {
+  //let newBall = [];
+  let exportBall = [];
+  //let overlapping = false;
+  let possilbeItems = [
+    loadedImages.i1,
+    loadedImages.i2,
+    loadedImages.i3,
+    loadedImages.i4,
+    loadedImages.i5,
+    loadedImages.i6,
+    loadedImages.i7,
+    loadedImages.i8,
+    loadedImages.i9,
+    loadedImages.i10,
+    loadedImages.i11,
+  ];
+
+  for (let i = 0; i < noOfBalls; i++) {
+    let randomItem =
+      possilbeItems[Math.floor(Math.random() * possilbeItems.length)];
+    let randomX = Math.floor((950 - 40) * Math.random() + 40);
+    let randomY = Math.floor((500 - 40) * Math.random() + 40);
+    exportBall.push(new Items(randomX, randomY, randomItem));
+  }
+
+  return exportBall;
+}
+
+//handle click
+function handleClick(event) {
+  if (event.keyCode == "37") {
+    player.moveLeft();
+  } else if (event.keyCode == "39") {
+    player.moveRight();
+  } else if (event.keyCode == "38") {
+    player.moveTop();
+  } else if (event.keyCode == "40") {
+    player.moveBottom();
+  } else if (event.keyCode == "32") {
+    if (coins >= 5 && collisionDetection(player, shop)) {
+      pointSound.play();
+      mask++;
+      coins = coins - 5;
     } else {
-      this.isOppMoving = false;
+      illegalsound.play();
     }
-  };
-
-  //reset
-  this.reset = function () {
-    this.isMoving = false;
-    isCollRight = false;
-    isCollLeft = false;
-    isCollTop = false;
-    isCollBtm = false;
-    this.oppCol = false;
-    this.rotate = false;
-    this.isFCollTop = false;
-    this.isFCollBtm = false;
-    this.isFCollRight = false;
-    this.isFCollLeft = false;
-  };
+  }
 }
 
-//for entry, exit and background
-function Doors(x, y, imgSrc, width, height) {
-  this.x = x;
-  this.y = y;
-  this.width = width;
-  this.height = height;
-  this.imgSrc = imgSrc;
-  this.img = document.createElement("img");
-  this.update = function () {
-    ctx = animationArea.context;
-    this.img.src = this.imgSrc;
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-  };
+//for keyup
+function handleClick1(event) {
+  if ((event.keyCode == "38", "39", "40", "37")) {
+    player.reset();
+    for (let i = 0; i < follower.length; i++) {
+      follower[i].reset();
+    }
+  }
 }
 
+//calculates health and game over
+function healthCalculator() {
+  for (let i = 0; i < opponents.length; i++) {
+    for (let j = 0; j < follower.length; j++) {
+      for (let k = 0; k < virus.length; k++) {
+        if (
+          collisionDetection(player, opponents[i]) ||
+          collisionDetection(player, follower[j]) ||
+          collisionDetection(player, virus[k])
+        ) {
+          if (mask != 0) {
+            mask--;
+          } else {
+            health--;
+          }
+          if (health !== 0) {
+            lifeSound.play();
+          }
 
-//export default { Components, Doors };
+          player.x = 70;
+          player.y = 550; //reset player's position
+        }
+      }
+    }
+  }
+  if (health <= 0) {
+    health = 0;
+    gameOver();
+    lossSound.play();
+  }
+}
+
+//collects items
+function collectItems() {
+  for (let i = 0; i < items.length; i++) {
+    if (calcDist(player.x, player.y, items[i].x, items[i].y) < 40) {
+      destruct(i);
+      itemsLeft--;
+      pointSound.play();
+    }
+  }
+}
+
+//moves the opponents
+function oppMovement() {
+  for (let i = 0; i < levels[currentLevel].noOpp; i++) {
+    opponents[i].moveOpponents(
+      i,
+      levels[currentLevel].opponentLeftPosition[i],
+      levels[currentLevel].opponentRightPosition[i],
+      levels[currentLevel].opponentTopPosition[i],
+      levels[currentLevel].opponentBtmPosition[i]
+    );
+  }
+}
+
+//detects completion of level
+function levelComplete() {
+  if (collisionDetection(player, exitDoor)) {
+    if (itemsLeft == 0) {
+      levelCompleted();
+      winSound.play();
+    } else {
+      textDisplay(835, 475, "Collect all Items ", itemsLeft, "red");
+      illegalsound.play();
+    }
+  }
+}
+//checks collision between player and walls
+function checksCollision() {
+  for (let i = 0; i < obstacles.length; i++) {
+    if (collide(player, obstacles[i]) === "right") {
+      player.isCollLeft = true;
+    } else if (collide(player, obstacles[i]) === "left") {
+      player.isCollRight = true;
+    } else if (collide(player, obstacles[i]) === "top") {
+      player.isCollBtm = true;
+    } else if (collide(player, obstacles[i]) === "bottom") {
+      player.isCollTop = true;
+    }
+  }
+}
+
+//checks collision between follower and opponents
+function checksOppCol() {
+  for (let i = 0; i < opponents.length; i++) {
+    for (let j = 0; j < follower.length; j++) {
+      if (
+        collide(follower[j], opponents[i]) === "right" ||
+        collide(follower[j], opponents[i]) === "left" ||
+        collide(follower[j], opponents[i]) === "top" ||
+        collide(follower[j], opponents[i]) === "bottom"
+      ) {
+        follower[j].oppCol = true;
+      }
+    }
+  }
+}
+
+//checks collision between obstacles and follwer
+function checksObsCol() {
+  for (let i = 0; i < obstacles.length; i++) {
+    for (let j = 0; j < follower.length; j++) {
+      if (collide(follower[j], obstacles[i]) === "right") {
+        follower[j].isFCollLeft = true;
+      } else if (collide(follower[j], obstacles[i]) === "left") {
+        follower[j].isFCollRight = true;
+      } else if (collide(follower[j], obstacles[i]) === "top") {
+        follower[j].isFCollBtm = true;
+      } else if (collide(follower[j], obstacles[i]) === "bottom") {
+        follower[j].isFCollTop = true;
+      }
+    }
+  }
+}
+
+function playSoundInInterval() {
+  backgroundSound.play();
+}
+
+function handleClick2(event) {
+  click.play();
+  if (
+    event.offsetX > audioControl.x &&
+    event.offsetX < audioControl.x + audioControl.width &&
+    event.offsetY > audioControl.y &&
+    event.offsetY < audioControl.y + audioControl.height
+  ) {
+    if (!isMuted) {
+      isMuted = true;
+      backgroundSound.stop();
+      audioControl.img = loadedImages.soundOff;
+    } else if (isMuted) {
+      isMuted = false;
+      audioControl.img = loadedImages.soundOn;
+    }
+  }
+}
+
+function handleClick3(event) {
+  if (
+    event.offsetX > audioControl.x &&
+    event.offsetX < audioControl.x + audioControl.width &&
+    event.offsetY > audioControl.y &&
+    event.offsetY < audioControl.y + audioControl.height
+  ) {
+    animationArea.canvas.style.cursor = "pointer";
+  } else {
+    animationArea.canvas.style.cursor = "default";
+  }
+}
+
+function maskIndicator() {
+  if (mask > 0) {
+    player.isMaskOn = true;
+  } else {
+    player.isMaskOn = false;
+  }
+}

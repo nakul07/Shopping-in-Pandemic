@@ -15,35 +15,28 @@ function gameOver() {
   animationArea.container.append(popUp);
 
   //reload button
-  const reLoad = document.createElement("div");
-  reLoad.style.position = "absolute";
-  reLoad.style.height = "60px";
-  reLoad.style.width = "50%";
-  reLoad.style.backgroundImage = "url('assets/replay1.png')";
-  reLoad.style.backgroundPosition = "center";
-  reLoad.style.backgroundSize = "cover";
-  reLoad.style.bottom = "0px";
-  reLoad.style.left = "26%";
-  reLoad.style.marginBottom = "30px";
-  reLoad.style.borderRadius = "5px";
-  reLoad.style.cursor = "pointer";
-  popUp.append(reLoad);
+  loadedImages.replay.id = "replayBtn";
+  loadedImages.replay.style.position = "absolute";
+  loadedImages.replay.style.height = "60px";
+  loadedImages.replay.style.width = "50%";
+  loadedImages.replay.style.bottom = "0px";
+  loadedImages.replay.style.left = "26%";
+  loadedImages.replay.style.marginBottom = "30px";
+  loadedImages.replay.style.borderRadius = "5px";
+  loadedImages.replay.style.cursor = "pointer";
+  popUp.append(loadedImages.replay);
 
   //gameover display
-  const h1 = document.createElement("div");
-  h1.style.backgroundImage = "url('assets/gameover.png')";
-  h1.style.height = "200px";
-  h1.style.width = "100px;";
-  h1.style.backgroundPosition = "center";
-  h1.style.backgroundRepeat = "no-repeat";
-  h1.style.top = "50px";
-  popUp.append(h1);
+  loadedImages.gameOver.style.height = "100px";
+  loadedImages.gameOver.style.width = "350px";
+  loadedImages.gameOver.style.marginTop = "50px";
+  popUp.append(loadedImages.gameOver);
 
   //reload onclick action
-  reLoad.onclick = function () {
+  loadedImages.replay.onclick = function () {
     localStorage.setItem("currentLevel", currentLevel);
     popUp.style.display = "none"; //hide popup
-    health = 3;
+    health = 2;
     itemsLeft = 5;
     coins = coins;
     click.play();

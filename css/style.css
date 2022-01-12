@@ -6,7 +6,19 @@ canvas {
   width: 100%;
   text-align: center;
 }
-#startGame:hover, #reStartGame:hover {
+#startGame:hover,
+#reStartGame:hover,
+#continueBtn:hover,
+#replayBtn:hover {
   transform: scale(0.9);
   transition: 0.1s ease;
+}
+#loading {
+  height: 600px;
+  width: 100%;
+  background-color: rgba(131, 55, 55, 0.5);
+  text-align: center;
+  font-size: 60px;
+  font-family: "Ubuntu", sans-serif;
+  padding-top: 300px;
 }

@@ -15,33 +15,25 @@ function levelCompleted() {
   animationArea.container.append(popUp);
 
   //reload button
-  const reLoad = document.createElement("div");
-  reLoad.style.position = "absolute";
-  reLoad.style.height = "60px";
-  reLoad.style.width = "50%";
-  reLoad.style.backgroundImage = "url('assets/replay.png')";
-  reLoad.style.backgroundPosition = "center";
-  reLoad.style.backgroundSize = "cover";
-  reLoad.style.bottom = "0px";
-  reLoad.style.left = "26%";
-  reLoad.style.marginBottom = "30px";
-  reLoad.style.borderRadius = "5px";
-  reLoad.style.cursor = "pointer";
-  popUp.append(reLoad);
+  loadedImages.continue.id = "continueBtn";
+  loadedImages.continue.style.position = "absolute";
+  loadedImages.continue.style.height = "100px";
+  loadedImages.continue.style.width = "50%";
+  loadedImages.continue.style.bottom = "0px";
+  loadedImages.continue.style.left = "26%";
+  loadedImages.continue.style.marginBottom = "30px";
+  loadedImages.continue.style.borderRadius = "5px";
+  loadedImages.continue.style.cursor = "pointer";
+  popUp.append(loadedImages.continue);
 
-  //gameover display
-  const h1 = document.createElement("div");
-  h1.style.backgroundImage = "url('assets/complete.png')";
-  h1.style.height = "200px";
-  h1.style.width = "100px;";
-  h1.style.backgroundPosition = "center";
-  h1.style.backgroundRepeat = "no-repeat";
-  h1.style.backgroundSize = "cover";
-  h1.style.top = "50px";
-  popUp.append(h1);
+  //level completed display
+  loadedImages.levelUp.style.height = "200px";
+  loadedImages.levelUp.style.width = "350px";
+  loadedImages.gameOver.style.marginTop = "50px";
+  popUp.append(loadedImages.levelUp);
 
   //reload onclick action
-  reLoad.onclick = function () {
+  loadedImages.continue.onclick = function () {
     //swoosh.play();
     popUp.style.display = "none"; //hide popup
     click.play();

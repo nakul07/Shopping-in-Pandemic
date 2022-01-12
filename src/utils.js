@@ -32,47 +32,6 @@ function collisionDetection(player, obstacles) {
   return collision;
 }
 
-//get opponents
-function getOpponents(number) {
-  let newOpponents = [];
-  let xCoordinates = levels[currentLevel].opponentXCoordinates;
-  let yCoordinates = levels[currentLevel].opponentYCoordinates;
-  for (let i = 0; i < number; i++) {
-    newOpponents.push(
-      new Components(
-        xCoordinates[i],
-        yCoordinates[i],
-        "opponents",
-        `rgba(0, 255, 255, 0.4)`,
-        50,
-        50
-      )
-    );
-  }
-  return newOpponents;
-}
-
-//get obstacles
-function getObstacles(number) {
-  let newObstacles = [];
-  let xCoordinates = levels[currentLevel].obstacleXCoordinates;
-  let yCoordinates = levels[currentLevel].obstacleYCoordinates;
-  let widths = levels[currentLevel].obstacleWidths;
-  let heights = levels[currentLevel].obstacleHeights;
-  for (let i = 0; i < number; i++) {
-    newObstacles.push(
-      new Components(
-        xCoordinates[i],
-        yCoordinates[i],
-        "obstacles",
-        "black",
-        widths[i],
-        heights[i]
-      )
-    );
-  }
-  return newObstacles;
-}
 //destruct the items
 const destruct = (Components) => {
   const updatedItems = items.filter((items, index) => Components !== index);
@@ -104,35 +63,4 @@ function collide(player, obstacles) {
     }
   }
   return collision;
-}
-
-//get followers
-function getFollower(number) {
-  let newFollower = [];
-  let xCoordinates = levels[currentLevel].followerXCoordinates;
-  let yCoordinates = levels[currentLevel].followerYCoordinates;
-  for (let i = 0; i < number; i++) {
-    newFollower.push(
-      new Components(
-        xCoordinates[i],
-        yCoordinates[i],
-        "opponents",
-        `rgba(255, 0, 0, 0.5)`,
-        50,
-        50
-      )
-    );
-  }
-  return newFollower;
-}
-
-//get virus
-function getVirus(number) {
-  let newVirus = [];
-  let xCoordinates = levels[currentLevel].virusXCoordinates;
-  let yCoordinates = levels[currentLevel].virusYCoordinates;
-  for (let i = 0; i < number; i++) {
-    newVirus.push(new Virus(xCoordinates[i], yCoordinates[i]));
-  }
-  return newVirus;
 }
