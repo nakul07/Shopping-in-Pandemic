@@ -2,6 +2,7 @@ let player;
 let entryDoor;
 let exitDoor;
 let floor;
+let dashBoard;
 let follower = [];
 let obstacles = [];
 let items = [];
@@ -56,6 +57,7 @@ function startAnimation() {
     .then((data) => {
       levels = data;
       floor = new Doors(0, 0, "assets/floor.jpg", 1000, 600);
+      dashBoard = new Doors(1000, 0, "assets/dashboard.jpg", 200, 600);
       entryDoor = new Doors(45, 550, "assets/entry.png", 100, 60);
       shop = new Doors(
         levels[currentLevel].shopXCoordinates,
@@ -123,6 +125,7 @@ let animationArea = {
 function updateAnimationArea() {
   animationArea.clear(); //clears everything on canvas
   floor.update();
+  dashBoard.update();
   shop.update();
   entryDoor.update();
   exitDoor.update();
@@ -161,7 +164,6 @@ function updateAnimationArea() {
   textDisplay(1020, 300, "Items Left", itemsLeft, "black"); //displays number of remaining items
   textDisplay(1020, 350, "Coins", coins, "black"); //displays coins
   textDisplay(1020, 400, "Mask", mask, "black"); //displays mask
-  
 
   // updates the items
   items.forEach((Items) => {
