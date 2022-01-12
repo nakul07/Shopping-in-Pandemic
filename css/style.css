@@ -6,7 +6,7 @@ canvas {
   width: 100%;
   text-align: center;
 }
-#startGame:hover {
+#startGame:hover, #reStartGame:hover {
   transform: scale(0.9);
   transition: 0.1s ease;
 }

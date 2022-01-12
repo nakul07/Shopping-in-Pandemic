@@ -160,7 +160,7 @@ function Components(x, y, type, color, width, height) {
 
   //move right
   this.moveRight = function () {
-    if (this.x > animationArea.canvas.width - (this.width + 3)) {
+    if (this.x > animationArea.canvas.width1 - (this.width + 3)) {
       return;
     }
     if (isCollRight) return;

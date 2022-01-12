@@ -1,5 +1,6 @@
 //initial screen setting up
 let click; //sound
+let currentLevel = 1;
 function onLoad() {
   click = new Sound("assets/audio/click1.wav");
   //background.play();
@@ -31,22 +32,41 @@ function onLoad() {
   initialScreen.append(instructionWrapper);
   const startGame = document.createElement("div");
   startGame.id = "startGame";
-  startGame.style.height = "150px";
-  startGame.style.width = "510px";
-  startGame.style.backgroundImage = "url('assets/letsgo.png')";
-  startGame.style.backgroundSize = "cover";
+  startGame.style.height = "80px";
+  startGame.style.width = "250px";
+  startGame.style.backgroundImage = "url('assets/continue.png')";
+  startGame.style.backgroundSize = "contain";
   startGame.style.backgroundRepeat = "no-repeat";
   startGame.style.position = "absolute";
-  startGame.style.marginTop = "19px";
-  startGame.style.left = "15%";
+  startGame.style.marginTop = "30px";
+  startGame.style.left = "60%";
   startGame.style.cursor = "pointer";
   instructionWrapper.append(startGame);
+
+  const reStartGame = document.createElement("div");
+
+  reStartGame.id = "reStartGame";
+  reStartGame.style.height = "80px";
+  reStartGame.style.width = "250px";
+  reStartGame.style.backgroundImage = "url('assets/newgame.png')";
+  reStartGame.style.backgroundSize = "contain";
+  reStartGame.style.backgroundRepeat = "no-repeat";
+  reStartGame.style.position = "absolute";
+  reStartGame.style.marginTop = "30px";
+  reStartGame.style.left = "10%";
+  reStartGame.style.cursor = "pointer";
+  instructionWrapper.append(reStartGame);
 
   //click event on start game
   startGame.addEventListener("mousedown", (Event) => {
     click.play();
     startAnimation();
     initialScreen.style.display = "none";
-
+  });
+  reStartGame.addEventListener("mousedown", (Event) => {
+    click.play();
+    localStorage.setItem("currentLevel", currentLevel);
+    startAnimation();
+    initialScreen.style.display = "none";
   });
 }

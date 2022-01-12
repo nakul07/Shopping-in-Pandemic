@@ -1,8 +1,8 @@
 function SoundControl(x, y, src) {
   this.x = x;
   this.y = y;
-  this.width = 30;
-  this.height = 30;
+  this.width = 50;
+  this.height = 50;
   this.img = document.createElement("img");
   this.img.src = src;
   this.update = function () {

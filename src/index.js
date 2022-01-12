@@ -18,7 +18,7 @@ let isCollRight = false;
 let isCollBtm = false;
 let isCollTop = false;
 let levels;
-let currentLevel = 1; //level
+//let currentLevel = 1; //level
 let playerPosX = [];
 let playerPosY = [];
 let audioControl;
@@ -71,7 +71,7 @@ function startAnimation() {
       obstacles = getObstacles(levels[currentLevel].obstacleNumber);
       items = getItems(itemsLeft);
       virus = getVirus(levels[currentLevel].virusNumber);
-      audioControl = new SoundControl(350, 9, audioControlSrc);
+      audioControl = new SoundControl(1060, 50, audioControlSrc);
 
       pointSound = new Sound("assets/audio/point.mp3");
       winSound = new Sound("assets/audio/win.mp3");
@@ -103,7 +103,8 @@ let animationArea = {
   container: document.getElementById("canvas-container"),
   canvas: document.createElement("canvas"),
   start: function () {
-    this.canvas.width = 1000;
+    this.canvas.width = 1200;
+    this.canvas.width1 = 1000;
     this.canvas.height = 600;
     this.context = this.canvas.getContext("2d");
     this.container.append(this.canvas);
@@ -155,11 +156,12 @@ function updateAnimationArea() {
   audioControl.update();
 
   healthCalculator(); //calculates health
-  textDisplay(885, 30, "Health", health, "black"); //displays health
-  textDisplay(725, 30, "Items Left", itemsLeft, "black"); //displays number of remaining items
-  textDisplay(620, 30, "Coins", coins, "black"); //displays coins
-  textDisplay(520, 30, "Mask", mask, "black"); //displays mask
-  textDisplay(420, 30, "Level", currentLevel, "black"); //displayes level
+  textDisplay(1020, 200, "Level", currentLevel, "black"); //displayes level
+  textDisplay(1020, 250, "Health", health, "black"); //displays health
+  textDisplay(1020, 300, "Items Left", itemsLeft, "black"); //displays number of remaining items
+  textDisplay(1020, 350, "Coins", coins, "black"); //displays coins
+  textDisplay(1020, 400, "Mask", mask, "black"); //displays mask
+  
 
   // updates the items
   items.forEach((Items) => {
