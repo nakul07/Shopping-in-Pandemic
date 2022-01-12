@@ -1,5 +1,6 @@
 //to play audio
 //takes audio source as a parameter
+//import { Doors } from "game.js";
 function Sound(src) {
   this.sound = document.createElement("audio");
   this.sound.src = src;

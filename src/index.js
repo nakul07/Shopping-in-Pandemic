@@ -1,3 +1,5 @@
+//import {Components, Doors} from   "game.js";
+
 let player;
 let entryDoor;
 let exitDoor;

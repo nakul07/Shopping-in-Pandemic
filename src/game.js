@@ -213,7 +213,6 @@ function Components(x, y, type, color, width, height) {
     footSteps.play();
     this.isPlayerRight = false;
     this.isPlayerLeft = false;
- 
   };
 
   // opponents movement
@@ -237,7 +236,7 @@ function Components(x, y, type, color, width, height) {
       if (this.x + this.speedx > left && this.x + this.speedx < right) {
         this.x = this.x + this.speedx;
         this.changeAnimation();
-      } else  {
+      } else {
         if (this.moveTurn === "x") {
           this.speedy = 0;
           this.speedx = getRandom(0, 1);
@@ -272,25 +271,25 @@ function Components(x, y, type, color, width, height) {
   //for oppponent's animation
   this.changeAnimation = function () {
     if (this.speedx === 1) {
-     // console.log("moving right");
+      // console.log("moving right");
       this.isOppRight = true;
       this.isOppLeft = false;
       this.isOppTop = false;
       this.isOppDown = false;
     } else if (this.speedx === -1) {
-     // console.log("moving left");
+      // console.log("moving left");
       this.isOppRight = false;
       this.isOppLeft = true;
       this.isOppTop = false;
       this.isOppDown = false;
     } else if (this.speedy === 1) {
-     // console.log("moving btm");
+      // console.log("moving btm");
       this.isOppRight = false;
       this.isOppLeft = false;
       this.isOppTop = false;
       this.isOppDown = true;
     } else if (this.speedy === -1) {
-     // console.log("moving top");
+      // console.log("moving top");
       this.isOppRight = false;
       this.isOppLeft = false;
       this.isOppTop = true;
@@ -411,3 +410,6 @@ function Doors(x, y, imgSrc, width, height) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   };
 }
+
+
+//export default { Components, Doors };
