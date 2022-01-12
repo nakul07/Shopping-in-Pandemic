@@ -12,11 +12,11 @@ function Components(x, y, type, color, width, height) {
   this.positionX = this.x;
   this.positionY = this.y;
   this.speed = 1;
-  this.leftPos = levels[currentLevel].opponentLeftPosition;
-  this.rightPos = levels[currentLevel].opponentRightPosition;
-  this.topPos = levels[currentLevel].opponentTopPosition;
-  this.btmPos = levels[currentLevel].opponentBtmPosition;
+  this.speedx = 1;
+  this.speedy = 0;
+  this.moveTurn = "x";
   this.imgIndex = 1;
+  this.count = 0;
   //player images array
   this.playerImages = ["player-left.svg", "player-right.svg"];
   this.playerImagesD = ["playerleftdown.png", "playerrightdown.png"];
@@ -217,48 +217,131 @@ function Components(x, y, type, color, width, height) {
     // playerPosX.push(this.x);
   };
 
-  //petroling opponents in x-axis
-  this.moveOpponentsXaxis = function () {
+  // opponents movement
+  this.moveOpponents = function (oppNo, left, right, top, btm) {
     this.isOppMoving = true;
-    if (!collisionDetection(player, opponents[0])) {
-      if (this.positionX >= this.rightPos) {
-        this.speed = -this.speed;
-        this.isOppLeft = true;
-        this.isOppRight = false;
-        // coughSound.play();
-      } else if (this.positionX == this.leftPos) {
-        this.speed = 1;
-        this.isOppRight = true;
-        this.isOppLeft = false;
+    if (!collisionDetection(player, opponents[oppNo])) {
+      // console.log('here...')
+      if (Math.floor(Date.now() / 10) % 200 === 0) {
+        if (this.moveTurn === "x") {
+          this.speedy = 0;
+          this.speedx = getRandom(0, 1);
+          if (!this.speedx) this.speedx = -1;
+          this.moveTurn = "y";
+        } else {
+          this.speedx = 0;
+          this.speedy = getRandom(0, 1);
+          if (!this.speedy) this.speedy = -1;
+          this.moveTurn = "x";
+        }
+        // console.log(this.speedx, this.speedy);
       }
 
-      this.positionX = this.positionX + this.speed;
-      this.x = this.positionX;
+      if (this.x + this.speedx > left && this.x + this.speedx < right) {
+        // console.log('inside...')
+        this.x = this.x + this.speedx;
+        this.changeAnimation();
+      } else {
+        if (this.moveTurn === "x") {
+          this.speedy = 0;
+          this.speedx = getRandom(0, 1);
+          if (!this.speedx) this.speedx = -1;
+          this.moveTurn = "y";
+        } else {
+          this.speedx = 0;
+          this.speedy = getRandom(0, 1);
+          if (!this.speedy) this.speedy = -1;
+          this.moveTurn = "x";
+        }
+      }
+      // console.log(this.btmPos1, this.topPos1);
+      if (this.y + this.speedy > top && this.y + this.speedy < btm) {
+        this.y = this.y + this.speedy;
+        this.changeAnimation();
+      } else {
+        if (this.moveTurn === "x") {
+          this.speedy = 0;
+          this.speedx = getRandom(0, 1);
+          if (!this.speedx) this.speedx = -1;
+          this.moveTurn = "y";
+        } else {
+          this.speedx = 0;
+          this.speedy = getRandom(0, 1);
+          if (!this.speedy) this.speedy = -1;
+          this.moveTurn = "x";
+        }
+      }
     }
   };
+  this.changeAnimation = function () {
+    if (this.speedx === 1) {
+      console.log("moving right");
+      this.isOppRight = true;
+      this.isOppLeft = false;
+      this.isOppTop = false;
+      this.isOppDown = false;
+    } else if (this.speedx === -1) {
+      console.log("moving left");
+      this.isOppRight = false;
+      this.isOppLeft = true;
+      this.isOppTop = false;
+      this.isOppDown = false;
+    }else if (this.speedy === 1) {
+      console.log("moving btm");
+      this.isOppRight = false;
+      this.isOppLeft = false;
+      this.isOppTop = false;
+      this.isOppDown = true;
+    } else if (this.speedy === -1){
+      console.log("moving top");
+      this.isOppRight = false;
+      this.isOppLeft = false;
+      this.isOppTop = true;
+      this.isOppDown = false;
+    }
+  };
+  //petroling opponents in x-axis
+  // this.moveOpponentsXaxis = function () {
+  //   this.isOppMoving = true;
+  //   if (!collisionDetection(player, opponents[0])) {
+  //     if (this.positionX >= this.rightPos) {
+  //       this.speed = -this.speed;
+  //       this.isOppLeft = true;
+  //       this.isOppRight = false;
+  //       // coughSound.play();
+  //     } else if (this.positionX == this.leftPos) {
+  //       this.speed = 1;
+  //       this.isOppRight = true;
+  //       this.isOppLeft = false;
+  //     }
+
+  //     this.positionX = this.positionX + this.speed;
+  //     this.x = this.positionX;
+  //   }
+  // };
 
   //petroling opponents in y-axis
-  this.moveOpponentsYaxis = function () {
-    this.isOppMoving = true;
-    //this.isOppRight = false;
-    if (!collisionDetection(player, opponents[1])) {
-      if (this.positionY >= this.btmPos) {
-        this.speed = -this.speed;
-        this.isOppTop = true;
-        this.isOppDown = false;
-        // clearThroatSound.play();
-      } else if (this.positionY == this.topPos) {
-        this.speed = 1;
-        this.isOppDown = true;
-        this.isOppTop = false;
-        // this.isOppRight = false;
-        // this.isOppLeft = false;
-      }
+  // this.moveOpponentsYaxis = function () {
+  //   this.isOppMoving = true;
+  //   //this.isOppRight = false;
+  //   if (!collisionDetection(player, opponents[1])) {
+  //     if (this.positionY >= this.btmPos) {
+  //       this.speed = -this.speed;
+  //       this.isOppTop = true;
+  //       this.isOppDown = false;
+  //       // clearThroatSound.play();
+  //     } else if (this.positionY == this.topPos) {
+  //       this.speed = 1;
+  //       this.isOppDown = true;
+  //       this.isOppTop = false;
+  //       // this.isOppRight = false;
+  //       // this.isOppLeft = false;
+  //     }
 
-      this.positionY = this.positionY + this.speed;
-      this.y = this.positionY;
-    }
-  };
+  //     this.positionY = this.positionY + this.speed;
+  //     this.y = this.positionY;
+  //   }
+  // };
 
   this.follow = function () {
     this.isOppMoving = false;
@@ -338,13 +421,6 @@ function Components(x, y, type, color, width, height) {
           this.isOppTop = true;
         }
       }
-
-      // for (let i = 0; i < playerPosX.length; i++) {
-      //   while (this.x == playerPosX[i] && this.y == playerPosY[i]) {
-      //     this.x += 1;
-      //     this.y += 1;
-      //   }
-      // }
     } else {
       this.isOppMoving = false;
     }

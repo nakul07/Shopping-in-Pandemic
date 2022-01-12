@@ -76,7 +76,7 @@ function startAnimation() {
         50
       );
       follower = getFollower(levels[currentLevel].followerNumber);
-      opponents = getOpponents(2);
+      opponents = getOpponents(levels[currentLevel].noOpp);
       obstacles = getObstacles(levels[currentLevel].obstacleNumber);
       items = getItems(itemsLeft);
       virus = getVirus(levels[currentLevel].virusNumber);
@@ -262,8 +262,15 @@ function collectItems() {
 
 //moves the opponents
 function oppMovement() {
-  opponents[0].moveOpponentsXaxis();
-  opponents[1].moveOpponentsYaxis();
+  for (let i = 0; i < levels[currentLevel].noOpp; i++) {
+    opponents[i].moveOpponents(
+      i,
+      levels[currentLevel].opponentLeftPosition[i],
+      levels[currentLevel].opponentRightPosition[i],
+      levels[currentLevel].opponentTopPosition[i],
+      levels[currentLevel].opponentBtmPosition[i]
+    );
+  }
 }
 
 //detects completion of level
