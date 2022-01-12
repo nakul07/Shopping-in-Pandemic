@@ -272,25 +272,25 @@ function Components(x, y, type, color, width, height) {
   //for oppponent's animation
   this.changeAnimation = function () {
     if (this.speedx === 1) {
-      console.log("moving right");
+     // console.log("moving right");
       this.isOppRight = true;
       this.isOppLeft = false;
       this.isOppTop = false;
       this.isOppDown = false;
     } else if (this.speedx === -1) {
-      console.log("moving left");
+     // console.log("moving left");
       this.isOppRight = false;
       this.isOppLeft = true;
       this.isOppTop = false;
       this.isOppDown = false;
     } else if (this.speedy === 1) {
-      console.log("moving btm");
+     // console.log("moving btm");
       this.isOppRight = false;
       this.isOppLeft = false;
       this.isOppTop = false;
       this.isOppDown = true;
     } else if (this.speedy === -1) {
-      console.log("moving top");
+     // console.log("moving top");
       this.isOppRight = false;
       this.isOppLeft = false;
       this.isOppTop = true;
