@@ -213,15 +213,13 @@ function Components(x, y, type, color, width, height) {
     footSteps.play();
     this.isPlayerRight = false;
     this.isPlayerLeft = false;
-    // playerPosY.push(this.y);
-    // playerPosX.push(this.x);
+ 
   };
 
   // opponents movement
   this.moveOpponents = function (oppNo, left, right, top, btm) {
     this.isOppMoving = true;
     if (!collisionDetection(player, opponents[oppNo])) {
-      // console.log('here...')
       if (Math.floor(Date.now() / 10) % 200 === 0) {
         if (this.moveTurn === "x") {
           this.speedy = 0;
@@ -234,14 +232,12 @@ function Components(x, y, type, color, width, height) {
           if (!this.speedy) this.speedy = -1;
           this.moveTurn = "x";
         }
-        // console.log(this.speedx, this.speedy);
       }
 
       if (this.x + this.speedx > left && this.x + this.speedx < right) {
-        // console.log('inside...')
         this.x = this.x + this.speedx;
         this.changeAnimation();
-      } else {
+      } else  {
         if (this.moveTurn === "x") {
           this.speedy = 0;
           this.speedx = getRandom(0, 1);
@@ -254,7 +250,6 @@ function Components(x, y, type, color, width, height) {
           this.moveTurn = "x";
         }
       }
-      // console.log(this.btmPos1, this.topPos1);
       if (this.y + this.speedy > top && this.y + this.speedy < btm) {
         this.y = this.y + this.speedy;
         this.changeAnimation();
@@ -273,6 +268,8 @@ function Components(x, y, type, color, width, height) {
       }
     }
   };
+
+  //for oppponent's animation
   this.changeAnimation = function () {
     if (this.speedx === 1) {
       console.log("moving right");
@@ -286,13 +283,13 @@ function Components(x, y, type, color, width, height) {
       this.isOppLeft = true;
       this.isOppTop = false;
       this.isOppDown = false;
-    }else if (this.speedy === 1) {
+    } else if (this.speedy === 1) {
       console.log("moving btm");
       this.isOppRight = false;
       this.isOppLeft = false;
       this.isOppTop = false;
       this.isOppDown = true;
-    } else if (this.speedy === -1){
+    } else if (this.speedy === -1) {
       console.log("moving top");
       this.isOppRight = false;
       this.isOppLeft = false;
@@ -300,48 +297,6 @@ function Components(x, y, type, color, width, height) {
       this.isOppDown = false;
     }
   };
-  //petroling opponents in x-axis
-  // this.moveOpponentsXaxis = function () {
-  //   this.isOppMoving = true;
-  //   if (!collisionDetection(player, opponents[0])) {
-  //     if (this.positionX >= this.rightPos) {
-  //       this.speed = -this.speed;
-  //       this.isOppLeft = true;
-  //       this.isOppRight = false;
-  //       // coughSound.play();
-  //     } else if (this.positionX == this.leftPos) {
-  //       this.speed = 1;
-  //       this.isOppRight = true;
-  //       this.isOppLeft = false;
-  //     }
-
-  //     this.positionX = this.positionX + this.speed;
-  //     this.x = this.positionX;
-  //   }
-  // };
-
-  //petroling opponents in y-axis
-  // this.moveOpponentsYaxis = function () {
-  //   this.isOppMoving = true;
-  //   //this.isOppRight = false;
-  //   if (!collisionDetection(player, opponents[1])) {
-  //     if (this.positionY >= this.btmPos) {
-  //       this.speed = -this.speed;
-  //       this.isOppTop = true;
-  //       this.isOppDown = false;
-  //       // clearThroatSound.play();
-  //     } else if (this.positionY == this.topPos) {
-  //       this.speed = 1;
-  //       this.isOppDown = true;
-  //       this.isOppTop = false;
-  //       // this.isOppRight = false;
-  //       // this.isOppLeft = false;
-  //     }
-
-  //     this.positionY = this.positionY + this.speed;
-  //     this.y = this.positionY;
-  //   }
-  // };
 
   this.follow = function () {
     this.isOppMoving = false;
