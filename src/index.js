@@ -85,6 +85,10 @@ const assets = [
   //new game and continue
   "./assets/continue.png",
   "assets/newgame.png",
+
+  //coin and heart
+  "./assets/coin.png",
+  "./assets/heart.png",
 ];
 
 /**
@@ -176,6 +180,9 @@ function loadingGame() {
     loadedImages.continueGame = images[48];
     loadedImages.newGame = images[49];
 
+    //coin and heart
+    loadedImages.coin = images[50];
+    loadedImages.heart = images[51];
     //load initial screen
     onLoad();
   });

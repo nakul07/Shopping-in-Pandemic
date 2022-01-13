@@ -14,6 +14,8 @@ let opponents = [];
 let virus = [];
 let shop;
 let stat;
+let coinImg;
+let heart;
 let health = 2;
 let itemsLeft = 6;
 let coins = 5;
@@ -24,6 +26,7 @@ let playerPosY = [];
 let audioControl;
 let audioControlSrc;
 let isMuted = false;
+
 //sounds
 let pointSound;
 let winSound;
@@ -69,6 +72,8 @@ function startAnimation() {
         100
       );
       exitDoor = new Entity(880, 550, loadedImages.exit, 90, 50);
+      coinImg = new Entity(1138, 328, loadedImages.coin, 27, 27);
+      heart = new Entity(1150, 228, loadedImages.heart, 27, 25);
       player = new Components(
         70,
         550,
@@ -144,7 +149,8 @@ function updateAnimationArea() {
   entryDoor.update();
   exitDoor.update();
   player.update(); // updates the player
-
+  coinImg.update();
+  heart.update();
   //time
   timer += (1 / fps) * 1000;
   countdown(timer);
@@ -179,7 +185,7 @@ function updateAnimationArea() {
 
   healthCalculator(); //calculates health
   textDisplay(1020, 200, "Level", currentLevel, "black"); //displayes level
-  textDisplay(1020, 250, "Health", health, "black"); //displays health
+  textDisplay(1020, 250, "Lives", health + " X", "black"); //displays health
   textDisplay(1020, 300, "Items Left", itemsLeft, "black"); //displays number of remaining items
   textDisplay(1020, 350, "Coins", coins, "black"); //displays coins
   textDisplay(1020, 400, "Mask", mask, "black"); //displays mask
