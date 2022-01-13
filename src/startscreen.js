@@ -1,6 +1,9 @@
 //initial screen setting up
 let click; //sound
 let currentLevel = 1;
+/**
+ * initial screen
+ */
 function onLoad() {
   click = new Sound("assets/audio/click1.wav");
   //background
@@ -52,13 +55,18 @@ function onLoad() {
   loadedImages.newGame.style.cursor = "pointer";
   instructionWrapper.append(loadedImages.newGame);
 
-  //click event on start game
+  /**
+   * on click event for continue game btn
+   */
   loadedImages.continueGame.addEventListener("mousedown", (Event) => {
     click.play();
     startAnimation();
     instructionWrapper.style.display = "none";
     loadedImages.startScreenBg.style.display = "none";
   });
+  /**
+   * on click event for new game btn
+   */
   loadedImages.newGame.addEventListener("mousedown", (Event) => {
     click.play();
     localStorage.setItem("currentLevel", currentLevel);

@@ -1,3 +1,11 @@
+/**
+ * to calculate distance between two points
+ * @param {number} x1
+ * @param {number} y1
+ * @param {number} x2
+ * @param {number} y2
+ * @returns distance between two points
+ */
 function calcDist(x1, y1, x2, y2) {
   let dx = x2 - x1;
   let dy = y2 - y1;
@@ -5,11 +13,22 @@ function calcDist(x1, y1, x2, y2) {
   return distance;
 }
 
+/**
+ * random number between max and min
+ * @param {number} min
+ * @param {number} max
+ * @returns random number
+ */
 function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-//collision detection
+/**
+ * collision detection between two objects
+ * @param {object} player
+ * @param {object} obstacles
+ * @returns collision true or false
+ */
 function collisionDetection(player, obstacles) {
   let playerLeft = player.x;
   let playerTop = player.y;
@@ -32,20 +51,35 @@ function collisionDetection(player, obstacles) {
   return collision;
 }
 
-//destruct the items
+/**
+ * to delete the objects
+ * @param {object} Components
+ */
 const destruct = (Components) => {
   const updatedItems = items.filter((items, index) => Components !== index);
   items = updatedItems;
 };
 
-//display texts
+/**
+ * displays the text at desired position
+ * @param {number} x
+ * @param {number} y
+ * @param {string} text
+ * @param {any} topic
+ * @param {string} color
+ */
 function textDisplay(x, y, text, topic, color) {
   animationArea.context.fillStyle = color;
   animationArea.context.font = "25px Comic Sans MS";
   animationArea.context.fillText(text + " : " + topic, x, y);
 }
 
-//checks collision along with directions
+/**
+ * checks collision along with directions
+ * @param {object} player
+ * @param {object} obstacles
+ * @returns side of collision
+ */
 function collide(player, obstacles) {
   let dx = player.x + player.width / 2 - (obstacles.x + obstacles.width / 2);
   let dy = player.y + player.height / 2 - (obstacles.y + obstacles.height / 2);

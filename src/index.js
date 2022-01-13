@@ -86,6 +86,10 @@ const assets = [
   "./assets/continue.png",
   "assets/newgame.png",
 ];
+
+/**
+ * loading the game initially
+ */
 function loadingGame() {
   const loading = document.createElement("div");
   loading.id = "loading";

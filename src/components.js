@@ -1,3 +1,12 @@
+/**
+ * generates player, opponents and obstacles
+ * @param {number} x x-coordinate
+ * @param {number} y y-coordinate
+ * @param {string} type component type
+ * @param {string} color component color
+ * @param {number} width  component width
+ * @param {number} height component height
+ */
 function Components(x, y, type, color, width, height) {
   this.type = type;
   this.color = color;
@@ -81,7 +90,10 @@ function Components(x, y, type, color, width, height) {
   this.oppColLeft = false;
   this.oppColTop = false;
   this.oppColBtm = false;
-  //update components
+
+  /**
+   * updates components
+   */
   this.update = function () {
     ctx = animationArea.context;
     ctx.fillStyle = this.color;
@@ -177,7 +189,10 @@ function Components(x, y, type, color, width, height) {
     }
   };
 
-  //move left
+  /**
+   *
+   * move player left
+   */
   this.moveLeft = function () {
     if (this.x < 0) {
       return;
@@ -189,12 +204,12 @@ function Components(x, y, type, color, width, height) {
     footSteps.play();
     this.isPlayerDown = false;
     this.isPlayerRight = false;
-
-    // playerPosY.push(this.y);
-    // playerPosX.push(this.x);
   };
 
-  //move right
+  /**
+   *
+   * move player right
+   */
   this.moveRight = function () {
     if (this.x > animationArea.canvas.width1 - (this.width + 3)) {
       return;
@@ -206,12 +221,12 @@ function Components(x, y, type, color, width, height) {
     footSteps.play();
     this.isPlayerDown = false;
     this.isPlayerLeft = false;
-
-    // playerPosY.push(this.y);
-    // playerPosX.push(this.x);
   };
 
-  //move top
+  /**
+   *
+   * move player top
+   */
   this.moveTop = function () {
     if (this.y < 0) {
       return;
@@ -226,7 +241,10 @@ function Components(x, y, type, color, width, height) {
     this.isPlayerLeft = false;
   };
 
-  //move bottom
+  /**
+   *
+   * move player bottom
+   */
   this.moveBottom = function () {
     if (this.y > animationArea.canvas.height - (this.height + 3)) {
       return;
@@ -240,7 +258,14 @@ function Components(x, y, type, color, width, height) {
     this.isPlayerLeft = false;
   };
 
-  // opponents movement
+  /**
+   * random movement of an opponents
+   * @param {number} oppNo number of opponents
+   * @param {number} left  left border for opponent
+   * @param {number} right  right border for opponent
+   * @param {number} top  top border for opponent
+   * @param {number} btm  bottom border for opponent
+   */
   this.moveOpponents = function (oppNo, left, right, top, btm) {
     this.isOppMoving = true;
     if (!collisionDetection(player, opponents[oppNo])) {
@@ -351,7 +376,9 @@ function Components(x, y, type, color, width, height) {
     }
   };
 
-  //for oppponent's animation
+  /**
+   * for opponents moving animation
+   */
   this.changeAnimation = function () {
     if (this.speedx === 1) {
       // console.log("moving right");
@@ -380,10 +407,11 @@ function Components(x, y, type, color, width, height) {
     }
   };
 
-  //follower
+  /**
+   * follower
+   */
   this.follow = function () {
     this.isOppMoving = false;
-    if (this.oppCol) return;
 
     let isPlayerLeft = false;
     let isPlayerRight = false;
@@ -400,8 +428,12 @@ function Components(x, y, type, color, width, height) {
       isPlayerBottom = true;
     }
 
-    if (calcDist(player.x, player.y, this.x, this.y) < this.minDistance) {
+    if (
+      calcDist(player.x, player.y, this.x, this.y) < this.minDistance &&
+      !this.oppCol
+    ) {
       this.isOppMoving = true;
+
       if (isPlayerRight) {
         if (!this.isFCollRight) {
           this.x += this.fSpeed;
@@ -410,7 +442,7 @@ function Components(x, y, type, color, width, height) {
           this.isOppLeft = false;
           this.isOppTop = false;
         } else {
-          if (!this.isFCollLeft || this.x > 0) {
+          if (!this.isFCollLeft && this.x > 0) {
             this.x -= this.fSpeed;
             this.isOppRight = false;
             this.isOppDown = false;
@@ -426,7 +458,7 @@ function Components(x, y, type, color, width, height) {
           this.isOppLeft = true;
           this.isOppTop = false;
         } else {
-          if (!this.isFCollRight || this.x < animationArea.canvas.width) {
+          if (!this.isFCollRight && this.x < animationArea.canvas.width1) {
             this.x += this.fSpeed;
             this.isOppRight = true;
             this.isOppDown = false;
@@ -442,7 +474,7 @@ function Components(x, y, type, color, width, height) {
           this.isOppLeft = false;
           this.isOppTop = true;
         } else {
-          if (!isFCollBtm || this.y < animationArea.canvas.height) {
+          if (!this.isFCollBtm && this.y < animationArea.canvas.height) {
             this.y += this.fSpeed;
             this.isOppRight = false;
             this.isOppDown = true;
@@ -458,7 +490,7 @@ function Components(x, y, type, color, width, height) {
           this.isOppLeft = false;
           this.isOppTop = false;
         } else {
-          if (!isFCollTop || this.y > 0) {
+          if (!this.isFCollTop && this.y > 0) {
             this.y -= this.fSpeed;
             this.isOppRight = false;
             this.isOppDown = false;
@@ -468,11 +500,59 @@ function Components(x, y, type, color, width, height) {
         }
       }
     } else {
-      this.isOppMoving = false;
+      if (this.oppColRight) {
+        if (!this.isFCollLeft && this.x > 0) {
+          this.isOppMoving = true;
+          this.isOppRight = false;
+          this.isOppDown = false;
+          this.isOppLeft = true;
+          this.isOppTop = false;
+          this.x -= this.fSpeed;
+          // console.log("collided")
+        }
+      } else if (this.oppColLeft) {
+        if (!this.isFCollRight && this.x < animationArea.canvas.width1) {
+          this.isOppMoving = true;
+          this.isOppRight = true;
+          this.isOppDown = false;
+          this.isOppLeft = false;
+          this.isOppTop = false;
+          this.x += this.fSpeed;
+          // console.log("collided")
+        }
+      } else if (this.oppColBtm) {
+        if (!this.isFCollTop && this.y > 0) {
+          this.isOppMoving = true;
+          this.isOppRight = false;
+          this.isOppDown = false;
+          this.isOppLeft = false;
+          this.isOppTop = true;
+          this.y -= this.fSpeed;
+          // console.log("collided")
+        }
+      } else if (this.oppColTop) {
+        if (!this.isFCollBtm && this.y < animationArea.canvas.height) {
+          this.isOppMoving = true;
+          this.isOppRight = false;
+          this.isOppDown = true;
+          this.isOppLeft = false;
+          this.isOppTop = false;
+          this.y += this.fSpeed;
+        }
+      }
+
+      if (Math.floor(Date.now() / 1000) % 3 === 0) {
+        this.oppColTop = false;
+        this.oppColBtm = false;
+        this.oppColLeft = false;
+        this.oppColRight = false;
+      }
     }
   };
 
-  //reset
+  /**
+   * to reset
+   */
   this.reset = function () {
     this.isMoving = false;
     this.isCollRight = false;
@@ -485,5 +565,6 @@ function Components(x, y, type, color, width, height) {
     this.isFCollBtm = false;
     this.isFCollRight = false;
     this.isFCollLeft = false;
+    this.isOppMoving = false;
   };
 }

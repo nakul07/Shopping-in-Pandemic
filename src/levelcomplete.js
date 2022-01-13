@@ -1,3 +1,6 @@
+/**
+ * after the completion of level
+ */
 function levelCompleted() {
   clearInterval(animationArea.interval);
   animationArea.container.position = "relative";
@@ -32,9 +35,10 @@ function levelCompleted() {
   loadedImages.gameOver.style.marginTop = "50px";
   popUp.append(loadedImages.levelUp);
 
-  //reload onclick action
+  /**
+   * reload button on click
+   */
   loadedImages.continue.onclick = function () {
-    //swoosh.play();
     popUp.style.display = "none"; //hide popup
     click.play();
     health = 2;

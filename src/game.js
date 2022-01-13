@@ -34,6 +34,9 @@ let backgroundSound;
 let soundA; //cough sound
 let soundB; //clear throat sound
 
+/**
+ * starts the game
+ */
 function startAnimation() {
   if (localStorage.getItem("currentLevel") !== null) {
     currentLevel = localStorage.getItem("currentLevel");
@@ -124,7 +127,9 @@ let animationArea = {
   },
 };
 
-//updates the games in each frame
+/**
+ * updates the games in each frame
+ */
 function updateAnimationArea() {
   animationArea.clear(); //clears everything on canvas
   floor.update();
@@ -182,7 +187,11 @@ function updateAnimationArea() {
   maskIndicator();
 }
 
-//get opponents
+/**
+ * getting opponents
+ * @param {number} number number of opponents
+ * @returns  array of opponents
+ */
 function getOpponents(number) {
   let newOpponents = [];
   let xCoordinates = levels[currentLevel].opponentXCoordinates;
@@ -202,7 +211,11 @@ function getOpponents(number) {
   return newOpponents;
 }
 
-//get obstacles
+/**
+ * getting obstacles
+ * @param {number} number of obstacle
+ * @returns array of obstacles
+ */
 function getObstacles(number) {
   let newObstacles = [];
   let xCoordinates = levels[currentLevel].obstacleXCoordinates;
@@ -224,7 +237,11 @@ function getObstacles(number) {
   return newObstacles;
 }
 
-//get followers
+/**
+ * getting followers
+ * @param {number} number number of followers
+ * @returns array of followers
+ */
 function getFollower(number) {
   let newFollower = [];
   let xCoordinates = levels[currentLevel].followerXCoordinates;
@@ -244,7 +261,11 @@ function getFollower(number) {
   return newFollower;
 }
 
-//get virus
+/**
+ * getting virus
+ * @param {number} number number of virus
+ * @returns array of virus
+ */
 function getVirus(number) {
   let newVirus = [];
   let xCoordinates = levels[currentLevel].virusXCoordinates;
@@ -255,6 +276,11 @@ function getVirus(number) {
   return newVirus;
 }
 
+/**
+ * getting items
+ * @param {number} noOfBalls number of items
+ * @returns array of items
+ */
 function getItems(noOfBalls) {
   //let newBall = [];
   let exportBall = [];
@@ -284,7 +310,10 @@ function getItems(noOfBalls) {
   return exportBall;
 }
 
-//handle click
+/**
+ * key press handle
+ * @param {event} event on key press event
+ */
 function handleClick(event) {
   if (event.keyCode == "37") {
     player.moveLeft();
@@ -295,17 +324,20 @@ function handleClick(event) {
   } else if (event.keyCode == "40") {
     player.moveBottom();
   } else if (event.keyCode == "32") {
-    if (coins >= 5 && collisionDetection(player, shop)) {
+    if (coins >= 4 && collisionDetection(player, shop)) {
       pointSound.play();
       mask++;
-      coins = coins - 5;
+      coins = coins - 4;
     } else {
       illegalsound.play();
     }
   }
 }
 
-//for keyup
+/**
+ * key up events
+ * @param {event} event on key up events
+ */
 function handleClick1(event) {
   if ((event.keyCode == "38", "39", "40", "37")) {
     player.reset();
@@ -315,7 +347,9 @@ function handleClick1(event) {
   }
 }
 
-//calculates health and game over
+/**
+ * calculates the health and detects the game over
+ */
 function healthCalculator() {
   for (let i = 0; i < opponents.length; i++) {
     for (let j = 0; j < follower.length; j++) {
@@ -347,7 +381,9 @@ function healthCalculator() {
   }
 }
 
-//collects items
+/**
+ * collects the items
+ */
 function collectItems() {
   for (let i = 0; i < items.length; i++) {
     if (calcDist(player.x, player.y, items[i].x, items[i].y) < 40) {
@@ -358,7 +394,9 @@ function collectItems() {
   }
 }
 
-//moves the opponents
+/**
+ * moves the opponents in ramdom
+ */
 function oppMovement() {
   for (let i = 0; i < levels[currentLevel].noOpp; i++) {
     opponents[i].moveOpponents(
@@ -371,7 +409,9 @@ function oppMovement() {
   }
 }
 
-//detects completion of level
+/**
+ * detects the completion of level
+ */
 function levelComplete() {
   if (collisionDetection(player, exitDoor)) {
     if (itemsLeft == 0) {
@@ -383,7 +423,9 @@ function levelComplete() {
     }
   }
 }
-//checks collision between player and walls
+/**
+ * checks the collision between player and obstacles
+ */
 function checksCollision() {
   for (let i = 0; i < obstacles.length; i++) {
     if (collide(player, obstacles[i]) === "right") {
@@ -398,22 +440,10 @@ function checksCollision() {
   }
 }
 
-//checks collision between follower and opponents
+/**
+ * checks collision between follower and opponents
+ */
 function checksOppCol() {
-  // for (let i = 0; i < opponents.length; i++) {
-  //   for (let j = 0; j < follower.length; j++) {
-  //     if (
-  //       collide(follower[j], opponents[i]) === "right" ||
-  //       collide(follower[j], opponents[i]) === "left" ||
-  //       collide(follower[j], opponents[i]) === "top" ||
-  //       collide(follower[j], opponents[i]) === "bottom"
-  //     ) {
-  //       // follower[j].oppCol = true;
-  //       opponents[i].oppCol = true;
-  //       follower[j].oppCol = true;
-  //     }
-  //   }
-  // }
   for (let i = 0; i < opponents.length; i++) {
     for (let j = 0; j < follower.length; j++) {
       if (
@@ -428,26 +458,23 @@ function checksOppCol() {
       if (collide(follower[j], opponents[i]) === "right") {
         opponents[i].oppColRight = true;
         follower[j].oppColLeft = true;
-        //console.log("right")
       } else if (collide(follower[j], opponents[i]) === "left") {
         opponents[i].oppColLeft = true;
         follower[j].oppColRight = true;
-        //console.log("left")
       } else if (collide(follower[j], opponents[i]) === "top") {
         opponents[i].oppColTop = true;
         follower[j].oppColBtm = true;
-
-        //console.log("top")
       } else if (collide(follower[j], opponents[i]) === "bottom") {
         opponents[i].oppColBtm = true;
         follower[j].oppColTop = true;
-        // console.log("btm")
       }
     }
   }
 }
 
-//checks collision between obstacles and follwer
+/**
+ * checks collision between obstacles and follwer
+ */
 function checksObsCol() {
   for (let i = 0; i < obstacles.length; i++) {
     for (let j = 0; j < follower.length; j++) {
@@ -463,11 +490,17 @@ function checksObsCol() {
     }
   }
 }
-
+/**
+ * playes the background music
+ */
 function playSoundInInterval() {
   backgroundSound.play();
 }
 
+/**
+ * for mute and unmute
+ * @param {*} event mouse click event
+ */
 function handleClick2(event) {
   click.play();
   if (
@@ -486,7 +519,10 @@ function handleClick2(event) {
     }
   }
 }
-
+/**
+ * for pointing  cursor
+ * @param {event} event mouse click event
+ */
 function handleClick3(event) {
   if (
     event.offsetX > audioControl.x &&
@@ -499,7 +535,9 @@ function handleClick3(event) {
     animationArea.canvas.style.cursor = "default";
   }
 }
-
+/**
+ * mask indicator
+ */
 function maskIndicator() {
   if (mask > 0) {
     player.isMaskOn = true;

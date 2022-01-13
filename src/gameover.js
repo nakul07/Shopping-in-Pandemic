@@ -1,3 +1,6 @@
+/**
+ * after game over
+ */
 function gameOver() {
   clearInterval(animationArea.interval);
   animationArea.container.position = "relative";
@@ -32,7 +35,9 @@ function gameOver() {
   loadedImages.gameOver.style.marginTop = "50px";
   popUp.append(loadedImages.gameOver);
 
-  //reload onclick action
+  /**
+   * on click replay button
+   */
   loadedImages.replay.onclick = function () {
     localStorage.setItem("currentLevel", currentLevel);
     popUp.style.display = "none"; //hide popup
