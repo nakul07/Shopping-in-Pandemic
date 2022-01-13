@@ -589,7 +589,7 @@ function countdown(time) {
 function displayTime() {
   let timeDisplay = gameTime - second;
   let color = "black";
-  if (displayTime < 10) {
+  if (timeDisplay < 10) {
     color = "red";
   }
   animationArea.context.fillStyle = color;
