@@ -1,5 +1,9 @@
 const fps = 60;
-//let gameTime = 5000;
+
+let timer = 0;
+let gameTime;
+let second;
+
 let player;
 let entryDoor;
 let exitDoor;
@@ -85,7 +89,7 @@ function startAnimation() {
       obstacles = getObstacles(levels[currentLevel].obstacleNumber);
       items = getItems(itemsLeft);
       virus = getVirus(levels[currentLevel].virusNumber);
-      audioControl = new SoundControl(1060, 50, audioControlSrc);
+      audioControl = new SoundControl(1070, 500, audioControlSrc);
 
       pointSound = new Sound("assets/audio/point.mp3");
       winSound = new Sound("assets/audio/win.mp3");
@@ -96,6 +100,7 @@ function startAnimation() {
       lifeSound = new Sound("assets/audio/life.mp3");
       clearThroatSound = new Sound("assets/audio/clearing-throat-female.mp3");
       footSteps = new Sound("assets/audio/footsteps2.mp3");
+      gameTime = levels[currentLevel].gameTime;
 
       soundA = setInterval(() => {
         clearThroatSound.play();
@@ -147,11 +152,10 @@ function updateAnimationArea() {
   exitDoor.update();
   player.update(); // updates the player
 
-  // //for time
-  // lastTime = timestamp;
-  // let deltatime = timestamp - lastTime;
-  // lastTime = timestamp;
-  // gameTimeInMs += deltatime;
+  //time
+  timer += (1 / fps) * 1000;
+  countdown(timer);
+  displayTime();
 
   //updates the opponents
   opponents.forEach((Components) => {
@@ -409,7 +413,7 @@ function collectItems() {
 }
 
 /**
- * moves the opponents in ramdom
+ * Moves the opponents in ramdom.
  */
 function oppMovement() {
   for (let i = 0; i < levels[currentLevel].noOpp; i++) {
@@ -424,7 +428,7 @@ function oppMovement() {
 }
 
 /**
- * detects the completion of level
+ * Detects the completion of level.
  */
 function levelComplete() {
   if (collisionDetection(player, exitDoor)) {
@@ -438,7 +442,7 @@ function levelComplete() {
   }
 }
 /**
- * checks the collision between player and obstacles
+ * Checks the collision between player and obstacles.
  */
 function checksCollision() {
   for (let i = 0; i < obstacles.length; i++) {
@@ -455,7 +459,7 @@ function checksCollision() {
 }
 
 /**
- * checks collision between follower and opponents
+ * Checks collision between follower and opponents.
  */
 function checksOppCol() {
   for (let i = 0; i < opponents.length; i++) {
@@ -487,7 +491,7 @@ function checksOppCol() {
 }
 
 /**
- * checks collision between obstacles and follwer
+ * Checks collision between obstacles and follwer.
  */
 function checksObsCol() {
   for (let i = 0; i < obstacles.length; i++) {
@@ -505,15 +509,16 @@ function checksObsCol() {
   }
 }
 /**
- * playes the background music
+ * Playes the background music.
  */
 function playSoundInInterval() {
   backgroundSound.play();
 }
 
 /**
- * for mute and unmute
- * @param {*} event mouse click event
+ * For mute and unmute.
+ *
+ * @param {*} event-mouse click event.
  */
 function handleClick2(event) {
   click.play();
@@ -534,8 +539,9 @@ function handleClick2(event) {
   }
 }
 /**
- * for pointing  cursor
- * @param {event} event mouse click event
+ * For pointing  cursor.
+ *
+ * @param {event} event-mouse click event.
  */
 function handleClick3(event) {
   if (
@@ -550,7 +556,7 @@ function handleClick3(event) {
   }
 }
 /**
- * mask indicator
+ * Mask indicator.
  */
 function maskIndicator() {
   if (mask > 0) {
@@ -558,4 +564,22 @@ function maskIndicator() {
   } else {
     player.isMaskOn = false;
   }
+}
+
+function countdown(time) {
+  second = Math.floor(time / 1000);
+  if (second == gameTime) {
+    gameOver();
+  }
+}
+function displayTime() {
+  let timeDisplay = gameTime - second;
+  let color = "black";
+  if (displayTime < 10) {
+    color = "red";
+  }
+  animationArea.context.fillStyle = color;
+  animationArea.context.font = "800 60px Comic Sans MS";
+  animationArea.context.textAlign = "center";
+  animationArea.context.fillText(timeDisplay, 1090, 100);
 }

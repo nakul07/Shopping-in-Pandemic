@@ -1,10 +1,11 @@
 /**
- * to draw differents entities
- * @param {number} x x-coordinate
- * @param {number} y y-coordinates
- * @param {object} img image obejct
- * @param {number} width width
- * @param {number} height height
+ * To draw differents entities.
+ *
+ * @param {number} x x-coordinate.
+ * @param {number} y y-coordinates.
+ * @param {object} img image obejct.
+ * @param {number} width width.
+ * @param {number} height height.
  */
 function Entity(x, y, img, width, height) {
   this.x = x;
@@ -13,7 +14,7 @@ function Entity(x, y, img, width, height) {
   this.height = height;
   this.img = img;
   /**
-   * update entities
+   * Udate entities.
    */
   this.update = function () {
     ctx = animationArea.context;

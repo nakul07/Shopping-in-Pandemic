@@ -1,11 +1,12 @@
 /**
- * generates player, opponents and obstacles
- * @param {number} x x-coordinate
- * @param {number} y y-coordinate
- * @param {string} type component type
- * @param {string} color component color
- * @param {number} width  component width
- * @param {number} height component height
+ * Generates player, opponents and obstacles.
+ *
+ * @param {number} x-x-coordinate.
+ * @param {number} y-y-coordinate.
+ * @param {string} type-component type.
+ * @param {string} color-component color.
+ * @param {number} width-component width.
+ * @param {number} height-component height.
  */
 function Components(x, y, type, color, width, height) {
   this.type = type;
@@ -92,7 +93,7 @@ function Components(x, y, type, color, width, height) {
   this.oppColBtm = false;
 
   /**
-   * updates components
+   * Updates components.
    */
   this.update = function () {
     ctx = animationArea.context;
@@ -191,7 +192,7 @@ function Components(x, y, type, color, width, height) {
 
   /**
    *
-   * move player left
+   * Move player left.
    */
   this.moveLeft = function () {
     if (this.x < 0) {
@@ -208,7 +209,7 @@ function Components(x, y, type, color, width, height) {
 
   /**
    *
-   * move player right
+   * Move player right.
    */
   this.moveRight = function () {
     if (this.x > animationArea.canvas.width1 - (this.width + 3)) {
@@ -225,7 +226,7 @@ function Components(x, y, type, color, width, height) {
 
   /**
    *
-   * move player top
+   * Move player top.
    */
   this.moveTop = function () {
     if (this.y < 0) {
@@ -243,7 +244,7 @@ function Components(x, y, type, color, width, height) {
 
   /**
    *
-   * move player bottom
+   * Move player bottom.
    */
   this.moveBottom = function () {
     if (this.y > animationArea.canvas.height - (this.height + 3)) {
@@ -259,12 +260,13 @@ function Components(x, y, type, color, width, height) {
   };
 
   /**
-   * random movement of an opponents
-   * @param {number} oppNo number of opponents
-   * @param {number} left  left border for opponent
-   * @param {number} right  right border for opponent
-   * @param {number} top  top border for opponent
-   * @param {number} btm  bottom border for opponent
+   * Random movement of an opponents.
+   *
+   * @param {number} oppNo-number of opponents.
+   * @param {number} left-left border for opponent.
+   * @param {number} right-right border for opponent.
+   * @param {number} top-top border for opponent.
+   * @param {number} btm-bottom border for opponent.
    */
   this.moveOpponents = function (oppNo, left, right, top, btm) {
     this.isOppMoving = true;
@@ -377,7 +379,7 @@ function Components(x, y, type, color, width, height) {
   };
 
   /**
-   * for opponents moving animation
+   * For opponents moving animation.
    */
   this.changeAnimation = function () {
     if (this.speedx === 1) {
@@ -408,7 +410,7 @@ function Components(x, y, type, color, width, height) {
   };
 
   /**
-   * follower
+   * Follower.
    */
   this.follow = function () {
     this.isOppMoving = false;
@@ -551,7 +553,7 @@ function Components(x, y, type, color, width, height) {
   };
 
   /**
-   * to reset
+   * To reset.
    */
   this.reset = function () {
     this.isMoving = false;

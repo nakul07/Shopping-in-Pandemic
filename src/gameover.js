@@ -50,6 +50,8 @@ function gameOver() {
     clearThroatSound.stop();
     clearInterval(soundA);
     clearInterval(soundB);
+    timer = 0;
+    gameTime = levels[currentLevel].gameTime;
     startAnimation();
   };
 }

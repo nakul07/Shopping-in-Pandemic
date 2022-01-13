@@ -1,6 +1,7 @@
 /**
- * to play ingame sound
- * @param {string} src audio source
+ * To play ingame sound.
+ * 
+ * @param {string} src-audio source.
  */
 function Sound(src) {
   this.sound = document.createElement("audio");

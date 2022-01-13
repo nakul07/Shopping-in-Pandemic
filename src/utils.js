@@ -70,6 +70,7 @@ const destruct = (Components) => {
  */
 function textDisplay(x, y, text, topic, color) {
   animationArea.context.fillStyle = color;
+  animationArea.context.textAlign = "left";
   animationArea.context.font = "25px Comic Sans MS";
   animationArea.context.fillText(text + " : " + topic, x, y);
 }

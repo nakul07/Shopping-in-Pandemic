@@ -49,6 +49,8 @@ function levelCompleted() {
       currentLevel = 1;
     }
     localStorage.setItem("currentLevel", currentLevel);
+    timer = 0;
+    gameTime = levels[currentLevel].gameTime;
     backgroundSound.stop();
     coughSound.stop();
     clearThroatSound.stop();
