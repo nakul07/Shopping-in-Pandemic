@@ -97,7 +97,10 @@ const assets = [
 function loadingGame() {
   const loading = document.createElement("div");
   loading.id = "loading";
-  loading.innerText = "LOADING...";
+  const loadingText = document.createElement("p");
+  loadingText.id = "loadingText";
+  loadingText.innerText = "LOADING...";
+  loading.append(loadingText);
   document.body.append(loading);
 
   const assetsLoaded = assets.map(
