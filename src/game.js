@@ -139,7 +139,6 @@ let animationArea = {
  * updates the games in each frame
  */
 function updateAnimationArea() {
-  timer();
   animationArea.clear(); //clears everything on canvas
   floor.update();
   dashBoard.update();
