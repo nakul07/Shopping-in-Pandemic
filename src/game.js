@@ -400,6 +400,20 @@ function checksCollision() {
 
 //checks collision between follower and opponents
 function checksOppCol() {
+  // for (let i = 0; i < opponents.length; i++) {
+  //   for (let j = 0; j < follower.length; j++) {
+  //     if (
+  //       collide(follower[j], opponents[i]) === "right" ||
+  //       collide(follower[j], opponents[i]) === "left" ||
+  //       collide(follower[j], opponents[i]) === "top" ||
+  //       collide(follower[j], opponents[i]) === "bottom"
+  //     ) {
+  //       // follower[j].oppCol = true;
+  //       opponents[i].oppCol = true;
+  //       follower[j].oppCol = true;
+  //     }
+  //   }
+  // }
   for (let i = 0; i < opponents.length; i++) {
     for (let j = 0; j < follower.length; j++) {
       if (
@@ -409,6 +423,25 @@ function checksOppCol() {
         collide(follower[j], opponents[i]) === "bottom"
       ) {
         follower[j].oppCol = true;
+      }
+
+      if (collide(follower[j], opponents[i]) === "right") {
+        opponents[i].oppColRight = true;
+        follower[j].oppColLeft = true;
+        //console.log("right")
+      } else if (collide(follower[j], opponents[i]) === "left") {
+        opponents[i].oppColLeft = true;
+        follower[j].oppColRight = true;
+        //console.log("left")
+      } else if (collide(follower[j], opponents[i]) === "top") {
+        opponents[i].oppColTop = true;
+        follower[j].oppColBtm = true;
+
+        //console.log("top")
+      } else if (collide(follower[j], opponents[i]) === "bottom") {
+        opponents[i].oppColBtm = true;
+        follower[j].oppColTop = true;
+        // console.log("btm")
       }
     }
   }
