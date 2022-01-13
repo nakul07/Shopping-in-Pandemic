@@ -88,7 +88,7 @@ const assets = [
 ];
 
 /**
- * loading the game initially
+ * Loading the game initially.
  */
 function loadingGame() {
   const loading = document.createElement("div");

@@ -1,8 +1,9 @@
 /**
- * to generate items
- * @param {number} x x-coordinates
- * @param {number} y y-coordinates
- * @param {object} img image object
+ * To generate items.
+ *
+ * @param {number} x x-coordinates.
+ * @param {number} y y-coordinates.
+ * @param {object} img image object.
  */
 function Items(x, y, img) {
   this.x = x;
@@ -11,7 +12,7 @@ function Items(x, y, img) {
   this.height = 40;
   this.img = img;
   /**
-   * object items
+   * Update items.
    */
   this.update = function () {
     ctx = animationArea.context;

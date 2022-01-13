@@ -1,6 +1,6 @@
 /**
  * To play ingame sound.
- * 
+ *
  * @param {string} src-audio source.
  */
 function Sound(src) {
@@ -11,7 +11,7 @@ function Sound(src) {
   this.sound.style.display = "none";
   document.body.appendChild(this.sound);
   /**
-   * play audio
+   * Play audio.
    */
   this.play = function () {
     if (!isMuted) {
@@ -19,7 +19,7 @@ function Sound(src) {
     }
   };
   /**
-   * pause audio
+   * Pause audio.
    */
   this.stop = function () {
     this.sound.pause();

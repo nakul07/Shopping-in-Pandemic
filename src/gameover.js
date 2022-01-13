@@ -1,5 +1,5 @@
 /**
- * after game over
+ * After game over.
  */
 function gameOver() {
   clearInterval(animationArea.interval);
@@ -36,7 +36,7 @@ function gameOver() {
   popUp.append(loadedImages.gameOver);
 
   /**
-   * on click replay button
+   * On click replay button.
    */
   loadedImages.replay.onclick = function () {
     localStorage.setItem("currentLevel", currentLevel);

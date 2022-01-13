@@ -1,10 +1,12 @@
 /**
- * to calculate distance between two points
+ * To calculate distance between two points.
+ *
  * @param {number} x1
  * @param {number} y1
  * @param {number} x2
  * @param {number} y2
- * @returns distance between two points
+ *
+ * @returns distance between two points.
  */
 function calcDist(x1, y1, x2, y2) {
   let dx = x2 - x1;
@@ -14,20 +16,24 @@ function calcDist(x1, y1, x2, y2) {
 }
 
 /**
- * random number between max and min
- * @param {number} min
- * @param {number} max
- * @returns random number
+ * Random number between max and min
+ *
+ * @param {number} min min-number.
+ * @param {number} max max-number.
+ *
+ * @returns random number.
  */
 function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 /**
- * collision detection between two objects
- * @param {object} player
- * @param {object} obstacles
- * @returns collision true or false
+ * Collision detection between two objects.
+ *
+ * @param {object} player object 1.
+ * @param {object} obstacles object 2.
+ *
+ * @returns collision true or false.
  */
 function collisionDetection(player, obstacles) {
   let playerLeft = player.x;
@@ -52,7 +58,8 @@ function collisionDetection(player, obstacles) {
 }
 
 /**
- * to delete the objects
+ * To delete the objects.
+ *
  * @param {object} Components
  */
 const destruct = (Components) => {
@@ -61,12 +68,13 @@ const destruct = (Components) => {
 };
 
 /**
- * displays the text at desired position
- * @param {number} x
- * @param {number} y
- * @param {string} text
- * @param {any} topic
- * @param {string} color
+ * Displays the text at desired position.
+ *
+ * @param {number} x x-coordinates.
+ * @param {number} y y-coordinates.
+ * @param {string} text text to be displayed.
+ * @param {any} topic variable ti be displayed.
+ * @param {string} color color of text.
  */
 function textDisplay(x, y, text, topic, color) {
   animationArea.context.fillStyle = color;
@@ -76,10 +84,12 @@ function textDisplay(x, y, text, topic, color) {
 }
 
 /**
- * checks collision along with directions
+ * Checks collision along with directions.
+ *
  * @param {object} player
  * @param {object} obstacles
- * @returns side of collision
+ *
+ * @returns side of collision.
  */
 function collide(player, obstacles) {
   let dx = player.x + player.width / 2 - (obstacles.x + obstacles.width / 2);

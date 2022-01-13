@@ -1,8 +1,9 @@
 /**
- * for sound control buttons
- * @param {number} x x-coordinate
- * @param {number} y y-coordinate
- * @param {object} img image object
+ * for sound control buttons.
+ *
+ * @param {number} x x-coordinate.
+ * @param {number} y y-coordinate.
+ * @param {object} img image object.
  */
 function SoundControl(x, y, img) {
   this.x = x;
@@ -11,7 +12,7 @@ function SoundControl(x, y, img) {
   this.height = 50;
   this.img = img;
   /**
-   * update
+   * update.
    */
   this.update = function () {
     ctx = animationArea.context;

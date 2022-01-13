@@ -1,5 +1,5 @@
 /**
- * after the completion of level
+ * After the completion of level.
  */
 function levelCompleted() {
   clearInterval(animationArea.interval);
@@ -36,7 +36,7 @@ function levelCompleted() {
   popUp.append(loadedImages.levelUp);
 
   /**
-   * reload button on click
+   * Reload button on click.
    */
   loadedImages.continue.onclick = function () {
     popUp.style.display = "none"; //hide popup
@@ -56,7 +56,6 @@ function levelCompleted() {
     clearThroatSound.stop();
     clearInterval(soundA);
     clearInterval(soundB);
-    // console.log(coins);
     startAnimation();
   };
 }

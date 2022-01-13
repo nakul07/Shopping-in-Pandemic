@@ -1,7 +1,8 @@
 /**
- * generates the virus at required position
- * @param {number} x x-coordinates
- * @param {number} y y-coordinates
+ * Generates the virus at required position.
+ *
+ * @param {number} x x-coordinates.
+ * @param {number} y y-coordinates.
  */
 function Virus(x, y) {
   this.x = x;
@@ -10,7 +11,7 @@ function Virus(x, y) {
   this.height = 40;
   this.img = loadedImages.virus;
   /**
-   * updates image
+   * Updates image.
    */
   this.update = function () {
     ctx = animationArea.context;

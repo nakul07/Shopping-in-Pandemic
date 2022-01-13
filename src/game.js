@@ -1,9 +1,7 @@
 const fps = 60;
-
 let timer = 0;
 let gameTime;
 let second;
-
 let player;
 let entryDoor;
 let exitDoor;
@@ -26,7 +24,6 @@ let playerPosY = [];
 let audioControl;
 let audioControlSrc;
 let isMuted = false;
-
 //sounds
 let pointSound;
 let winSound;
@@ -40,12 +37,8 @@ let backgroundSound;
 let soundA; //cough sound
 let soundB; //clear throat sound
 
-// //for timer
-// let gameTime = 60;
-// let gameTimeInMs = 0;
-
 /**
- * starts the game
+ * Starts the game.
  */
 function startAnimation() {
   if (localStorage.getItem("currentLevel") !== null) {
@@ -141,7 +134,7 @@ let animationArea = {
 };
 
 /**
- * updates the games in each frame
+ * Updates the games in each frame.
  */
 function updateAnimationArea() {
   animationArea.clear(); //clears everything on canvas
@@ -206,8 +199,10 @@ function updateAnimationArea() {
 }
 
 /**
- * getting opponents
+ * Getting opponents.
+ *
  * @param {number} number number of opponents
+ *
  * @returns  array of opponents
  */
 function getOpponents(number) {
@@ -230,9 +225,11 @@ function getOpponents(number) {
 }
 
 /**
- * getting obstacles
- * @param {number} number of obstacle
- * @returns array of obstacles
+ * Getting obstacles.
+ *
+ * @param {number} number of obstacle.
+ *
+ * @returns array of obstacles.
  */
 function getObstacles(number) {
   let newObstacles = [];
@@ -256,9 +253,11 @@ function getObstacles(number) {
 }
 
 /**
- * getting followers
- * @param {number} number number of followers
- * @returns array of followers
+ * Getting followers.
+ *
+ * @param {number} number number of followers.
+ *
+ * @returns array of followers.
  */
 function getFollower(number) {
   let newFollower = [];
@@ -280,9 +279,11 @@ function getFollower(number) {
 }
 
 /**
- * getting virus
- * @param {number} number number of virus
- * @returns array of virus
+ * Getting virus.
+ *
+ * @param {number} number number of virus.
+ *
+ * @returns Array of virus.
  */
 function getVirus(number) {
   let newVirus = [];
@@ -295,9 +296,11 @@ function getVirus(number) {
 }
 
 /**
- * getting items
- * @param {number} noOfBalls number of items
- * @returns array of items
+ * Getting items.
+ *
+ * @param {number} noOfBalls number of items.
+ *
+ * @returns array of items.
  */
 function getItems(noOfBalls) {
   //let newBall = [];
@@ -329,8 +332,9 @@ function getItems(noOfBalls) {
 }
 
 /**
- * key press handle
- * @param {event} event on key press event
+ * Key press handle.
+ *
+ * @param {event} event on key press event.
  */
 function handleClick(event) {
   if (event.keyCode == "37") {
@@ -353,8 +357,9 @@ function handleClick(event) {
 }
 
 /**
- * key up events
- * @param {event} event on key up events
+ * Key up events.
+ *
+ * @param {event} event on key up events.
  */
 function handleClick1(event) {
   if ((event.keyCode == "38", "39", "40", "37")) {
@@ -366,7 +371,7 @@ function handleClick1(event) {
 }
 
 /**
- * calculates the health and detects the game over
+ * Calculates the health and detects the game over.
  */
 function healthCalculator() {
   for (let i = 0; i < opponents.length; i++) {
@@ -400,7 +405,7 @@ function healthCalculator() {
 }
 
 /**
- * collects the items
+ * Collects the items.
  */
 function collectItems() {
   for (let i = 0; i < items.length; i++) {
@@ -566,12 +571,21 @@ function maskIndicator() {
   }
 }
 
+/**
+ * Calculates time in second.
+ *
+ * @param {numer} time-time stamp of game.
+ */
 function countdown(time) {
   second = Math.floor(time / 1000);
   if (second == gameTime) {
     gameOver();
   }
 }
+
+/**
+ * Displays count down.
+ */
 function displayTime() {
   let timeDisplay = gameTime - second;
   let color = "black";
