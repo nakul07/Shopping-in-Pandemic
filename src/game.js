@@ -1,3 +1,5 @@
+const fps = 60;
+//let gameTime = 5000;
 let player;
 let entryDoor;
 let exitDoor;
@@ -34,6 +36,10 @@ let backgroundSound;
 let soundA; //cough sound
 let soundB; //clear throat sound
 
+// //for timer
+// let gameTime = 60;
+// let gameTimeInMs = 0;
+
 /**
  * starts the game
  */
@@ -48,6 +54,7 @@ function startAnimation() {
   } else {
     audioControlSrc = loadedImages.soundOn;
   }
+
   fetch("src/data/levels.json")
     .then((response) => {
       return response.json();
@@ -101,7 +108,8 @@ function startAnimation() {
         setTimeout(() => {
           coughSound.stop();
         }, 2000);
-      }, 12000);
+      }, 13000);
+
       animationArea.start();
     });
 }
@@ -120,7 +128,7 @@ let animationArea = {
     document.body.addEventListener("mousedown", handleClick2);
     document.body.addEventListener("mousemove", handleClick3);
 
-    this.interval = setInterval(updateAnimationArea, 16.67);
+    this.interval = setInterval(updateAnimationArea, (1 / fps) * 1000);
   },
   clear: function () {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -131,6 +139,7 @@ let animationArea = {
  * updates the games in each frame
  */
 function updateAnimationArea() {
+  timer();
   animationArea.clear(); //clears everything on canvas
   floor.update();
   dashBoard.update();
@@ -138,6 +147,12 @@ function updateAnimationArea() {
   entryDoor.update();
   exitDoor.update();
   player.update(); // updates the player
+
+  // //for time
+  // lastTime = timestamp;
+  // let deltatime = timestamp - lastTime;
+  // lastTime = timestamp;
+  // gameTimeInMs += deltatime;
 
   //updates the opponents
   opponents.forEach((Components) => {
